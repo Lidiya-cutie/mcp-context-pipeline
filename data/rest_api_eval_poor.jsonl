@@ -1,0 +1,8 @@
+{"id": "GET-001", "method": "GET", "path": "/getUserList", "version": null, "params": {}, "response": [{"id": 1, "name": "User 1"}, {"id": 2, "name": "User 2"}], "status_code": 200, "headers": {}}
+{"id": "POST-001", "method": "POST", "path": "/createUser", "version": null, "params": {}, "response": {"success": true, "user_id": 3}, "status_code": 200, "headers": {}}
+{"id": "GET-002", "method": "GET", "path": "/getUser", "version": null, "params": {"id": 1}, "response": {"id": 1, "name": "User 1"}, "status_code": 200, "headers": {}}
+{"id": "PUT-001", "method": "POST", "path": "/updateUser", "version": null, "params": {"id": 1}, "response": {"status": "ok"}, "status_code": 200, "headers": {}}
+{"id": "DELETE-001", "method": "GET", "path": "/deleteUser", "version": null, "params": {"id": 1}, "response": {"deleted": true}, "status_code": 200, "headers": {}}
+{"id": "GET-003", "method": "GET", "path": "/searchUsers", "version": null, "params": {}, "response": {"results": [{"id": 1, "name": "User 1"}]}, "status_code": 200, "headers": {}}
+{"id": "GET-004", "method": "GET", "path": "/getUser/999", "version": null, "params": {}, "response": {"error": "Not found"}, "status_code": 200, "headers": {}}
+{"id": "POST-002", "method": "POST", "path": "/addUser", "version": null, "params": {}, "response": null, "status_code": 500, "headers": {}}

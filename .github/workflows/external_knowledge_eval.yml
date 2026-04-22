@@ -1,0 +1,71 @@
+name: external_knowledge_eval
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "src/external_knowledge/**"
+      - "run_external_knowledge_eval.py"
+      - "eval_queries_v*.jsonl"
+      - "tests/test_external_knowledge_eval_stage4.py"
+      - ".github/workflows/external_knowledge_eval.yml"
+  pull_request:
+    paths:
+      - "src/external_knowledge/**"
+      - "run_external_knowledge_eval.py"
+      - "eval_queries_v*.jsonl"
+      - "tests/test_external_knowledge_eval_stage4.py"
+      - ".github/workflows/external_knowledge_eval.yml"
+
+jobs:
+  external_knowledge_eval:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run offline external knowledge eval
+        env:
+          EXTERNAL_KNOWLEDGE_USE_REDIS: "false"
+          EXTERNAL_MASK_PII_QUERIES: "true"
+          EVAL_DATASET_PATH: "eval_queries_v3.jsonl"
+          EVAL_RECORD_LIMIT: "300"
+          EVAL_TOP_K: "5"
+          EVAL_CACHE_WARM_REPEAT: "1"
+          EVAL_MIN_RECALL_AT_K: "0.60"
+          EVAL_MIN_MRR: "0.45"
+          EVAL_MIN_SOURCE_COVERAGE: "0.95"
+          EVAL_MIN_PROVENANCE_COVERAGE: "0.95"
+          EVAL_MAX_NOT_FOUND_RATE: "0.20"
+          EVAL_MAX_P95_MS: "8000"
+          EVAL_MIN_CACHE_HIT_RATE: "0.20"
+          EVAL_MIN_FALLBACK_SUCCESS_RATE: "0.95"
+          EVAL_OUTPUT_DIR: "artifacts/external_knowledge_eval"
+        run: python run_external_knowledge_eval.py
+
+      - name: Upload eval artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: external-knowledge-eval-artifacts
+          path: artifacts/external_knowledge_eval/
+
+      - name: Check gate status
+        run: |
+          if [ -f "artifacts/external_knowledge_eval/external_knowledge_eval_report.json" ]; then
+            status=$(python -c "import json; print(json.load(open('artifacts/external_knowledge_eval/external_knowledge_eval_report.json'))['status'])")
+            if [ "$status" != "pass" ]; then
+              echo "External knowledge eval failed"
+              exit 1
+            fi
+          fi

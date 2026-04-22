@@ -1,0 +1,20 @@
+services:
+  singbox-vless:
+    image: ghcr.io/sagernet/sing-box:with-utls
+    container_name: mcp-singbox-vless
+    restart: unless-stopped
+    ports:
+      - "${XRAY_SOCKS_PORT:-10809}:2080"  # SOCKS5
+      - "${XRAY_HTTP_PORT:-10808}:2081"   # HTTP
+    volumes:
+      - ./xray-config/config-singbox.json:/etc/sing-box/config.json:ro
+    environment:
+      - TZ=UTC
+      - ENABLE_DEPRECATED_LEGACY_DNS_SERVERS=true
+    command: ["run", "-c", "/etc/sing-box/config.json"]
+    networks:
+      - mcp-network
+
+networks:
+  mcp-network:
+    driver: bridge

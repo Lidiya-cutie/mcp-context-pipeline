@@ -1,0 +1,39 @@
+# HELP rest_api_eval_resource_orientation Resource orientation score
+# TYPE rest_api_eval_resource_orientation gauge
+rest_api_eval_resource_orientation 1.0
+# HELP rest_api_eval_pagination Pagination score
+# TYPE rest_api_eval_pagination gauge
+rest_api_eval_pagination 0.7333333333333334
+# HELP rest_api_eval_versioning Versioning score
+# TYPE rest_api_eval_versioning gauge
+rest_api_eval_versioning 0.9
+# HELP rest_api_eval_error_codes Error codes score
+# TYPE rest_api_eval_error_codes gauge
+rest_api_eval_error_codes 0.8166666666666667
+# HELP rest_api_eval_structural_redundancy Structural redundancy score
+# TYPE rest_api_eval_structural_redundancy gauge
+rest_api_eval_structural_redundancy 0.9416666666666667
+# HELP rest_api_eval_overall_score Overall REST API quality score
+# TYPE rest_api_eval_overall_score gauge
+rest_api_eval_overall_score 0.8741666666666666
+# HELP rest_api_eval_gate_status Overall gate status (1=pass,0=fail)
+# TYPE rest_api_eval_gate_status gauge
+rest_api_eval_gate_status 1
+# HELP rest_api_eval_check_{name} Gate check status (1=pass,0=fail)
+# TYPE rest_api_eval_check_{name} gauge
+rest_api_eval_check{name="resource_orientation"} 1
+# HELP rest_api_eval_check_{name} Gate check status (1=pass,0=fail)
+# TYPE rest_api_eval_check_{name} gauge
+rest_api_eval_check{name="pagination"} 1
+# HELP rest_api_eval_check_{name} Gate check status (1=pass,0=fail)
+# TYPE rest_api_eval_check_{name} gauge
+rest_api_eval_check{name="versioning"} 1
+# HELP rest_api_eval_check_{name} Gate check status (1=pass,0=fail)
+# TYPE rest_api_eval_check_{name} gauge
+rest_api_eval_check{name="error_codes"} 1
+# HELP rest_api_eval_check_{name} Gate check status (1=pass,0=fail)
+# TYPE rest_api_eval_check_{name} gauge
+rest_api_eval_check{name="structural_redundancy"} 1
+# HELP rest_api_eval_check_{name} Gate check status (1=pass,0=fail)
+# TYPE rest_api_eval_check_{name} gauge
+rest_api_eval_check{name="overall_score"} 1
