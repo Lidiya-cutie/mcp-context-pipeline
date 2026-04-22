@@ -1,0 +1,97 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Inventory API",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/api/inventory": {
+      "get": {
+        "summary": "List inventory items",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {"type": "integer"},
+                          "sku": {"type": "string"},
+                          "name": {"type": "string"},
+                          "quantity": {"type": "integer"},
+                          "location": {
+                            "type": "object",
+                            "properties": {
+                              "warehouse_id": {"type": "integer"},
+                              "zone": {"type": "string"},
+                              "shelf": {"type": "string"}
+                            },
+                            "required": ["warehouse_id", "zone"]
+                          }
+                        },
+                        "required": ["id", "sku", "name", "quantity"]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Add inventory item",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "sku": {"type": "string"},
+                  "name": {"type": "string"},
+                  "quantity": {"type": "integer"},
+                  "location": {
+                    "type": "object",
+                    "properties": {
+                      "warehouse_id": {"type": "integer"},
+                      "zone": {"type": "string"},
+                      "shelf": {"type": "string"}
+                    },
+                    "required": ["warehouse_id", "zone"]
+                  }
+                },
+                "required": ["sku", "name", "quantity"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {"type": "integer"},
+                    "sku": {"type": "string"},
+                    "name": {"type": "string"},
+                    "quantity": {"type": "integer"}
+                  },
+                  "required": ["id", "sku", "name", "quantity"]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

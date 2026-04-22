@@ -1,0 +1,112 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Payments API",
+    "version": "2.0.0"
+  },
+  "paths": {
+    "/api/payments": {
+      "get": {
+        "summary": "List payments",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {"type": "integer"},
+                          "amount": {"type": "integer"},
+                          "currency": {"type": "string"},
+                          "status": {"type": "string"},
+                          "created_at": {"type": "string", "format": "date-time"}
+                        },
+                        "required": ["id", "amount", "currency", "status"]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create payment",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "amount": {"type": "integer"},
+                  "currency": {"type": "string"},
+                  "payment_method": {"type": "string"},
+                  "description": {"type": "string"},
+                  "metadata": {"type": "object"}
+                },
+                "required": ["amount", "currency", "payment_method"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {"type": "integer"},
+                    "amount": {"type": "integer"},
+                    "currency": {"type": "string"},
+                    "status": {"type": "string"},
+                    "created_at": {"type": "string", "format": "date-time"}
+                  },
+                  "required": ["id", "amount", "currency", "status"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/payments/{id}": {
+      "get": {
+        "summary": "Get payment",
+        "parameters": [
+          {"name": "id", "in": "path", "required": true, "schema": {"type": "integer"}}
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {"type": "integer"},
+                    "amount": {"type": "integer"},
+                    "currency": {"type": "string"},
+                    "status": {"type": "string"},
+                    "payment_method": {"type": "string"},
+                    "created_at": {"type": "string", "format": "date-time"}
+                  },
+                  "required": ["id", "amount", "currency", "status"]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
