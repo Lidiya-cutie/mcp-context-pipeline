@@ -131,6 +131,31 @@ EVAL_MIN_FALLBACK_SUCCESS_RATE=0.95
 
 **Реализация:** `src/external_knowledge/router.py:587-610`
 
+## Мини-чеклист перед push (безопасность секретов)
+
+Перед отправкой изменений в удаленный репозиторий выполнить:
+
+```bash
+git status
+git check-ignore -v .env
+git ls-files .env
+git diff --cached --name-only
+```
+
+Обязательные условия:
+- `.env` находится в ignore.
+- `git ls-files .env` возвращает пустой вывод.
+- В staged-списке отсутствуют `.env` и другие файлы с ключами/токенами.
+
+Безопасная последовательность:
+
+```bash
+git add .
+git restore --staged .env
+git commit -m "your message"
+git push origin master
+```
+
 ## Сценарии использования
 
 ### Сценарий 1: Документация библиотек с Context7
