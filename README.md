@@ -102,6 +102,8 @@ docker compose ps
 ### Шаг 2: Установка зависимостей Python
 
 ```bash
+python3 -m venv .venv
+source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
@@ -672,10 +674,10 @@ docker-compose down -v
 
 ```bash
 # Проверьте статус Redis
-docker-compose ps
+docker compose ps
 
 # Перезапустите Redis
-docker-compose restart redis
+docker compose restart redis
 ```
 
 ### Проблема: OpenAI API ошибка
@@ -734,6 +736,20 @@ ALL_PROXY=socks5://127.0.0.1:10809
 python3 test_vless.py
 ```
 
+Если контейнер `mcp-xray-vless` уходит в `Restarting` с ошибкой:
+`invalid "privateKey"`, выполните:
+
+```bash
+./run_vless.sh stop
+./run_vless.sh start
+docker ps | grep mcp-xray-vless
+docker logs --tail 30 mcp-xray-vless
+```
+
+Ожидаемый корректный статус: контейнер в `Up`, в логах есть строка `Xray ... started`.
+Актуальный compose-монтаж для Xray должен использовать сгенерированный файл:
+`./xray-config/config.json:/config.json:ro`.
+
 **Вариант 2: Прямой прокси**
 
 1. Убедитесь, что `httpx` установлен:
@@ -756,6 +772,31 @@ python3 test_proxy.py
 Подробнее:
 - [docs/VLESS_HIDDIFY_SETUP.md](docs/VLESS_HIDDIFY_SETUP.md) - VLESS настройка
 - [docs/PROXY_CONFIGURATION.md](docs/PROXY_CONFIGURATION.md) - Прямой прокси
+
+## Чеклист перед push
+
+Перед отправкой изменений в удаленный репозиторий выполните:
+
+```bash
+git status
+git check-ignore -v .env
+git ls-files .env
+git diff --cached --name-only
+```
+
+Критерии безопасности:
+- `.env` должен быть в ignore.
+- `git ls-files .env` должен возвращать пустой вывод.
+- В `git diff --cached --name-only` не должно быть `.env` и других файлов с секретами.
+
+Рекомендуемый безопасный поток:
+
+```bash
+git add .
+git restore --staged .env
+git commit -m "your message"
+git push origin master
+```
 
 ## Лицензия
 
