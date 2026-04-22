@@ -1,0 +1,68 @@
+name: rest_api_eval
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "src/rest_api_metrics.py"
+      - "src/rest_api_metrics_formulas.py"
+      - "src/rest_api_evaluator.py"
+      - "run_rest_api_eval.py"
+      - "data/rest_api_eval_*.jsonl"
+      - "tests/test_rest_api_*.py"
+      - ".github/workflows/rest_api_eval.yml"
+  pull_request:
+    paths:
+      - "src/rest_api_metrics.py"
+      - "src/rest_api_metrics_formulas.py"
+      - "src/rest_api_evaluator.py"
+      - "run_rest_api_eval.py"
+      - "data/rest_api_eval_*.jsonl"
+      - "tests/test_rest_api_*.py"
+      - ".github/workflows/rest_api_eval.yml"
+
+jobs:
+  rest_api_eval:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run REST API eval (good)
+        env:
+          REST_API_EVAL_DATASET: "data/rest_api_eval_good.jsonl"
+          REST_API_EVAL_OUTPUT: "artifacts/rest_api_eval"
+          REST_API_MIN_RESOURCE_ORIENTATION: "0.8"
+          REST_API_MIN_PAGINATION: "0.7"
+          REST_API_MIN_VERSIONING: "0.6"
+          REST_API_MIN_ERROR_CODES: "0.7"
+          REST_API_MIN_STRUCTURAL_REDUNDANCY: "0.6"
+          REST_API_MIN_OVERALL_SCORE: "0.7"
+        run: python run_rest_api_eval.py
+
+      - name: Upload eval artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rest-api-eval-artifacts
+          path: artifacts/rest_api_eval/
+
+      - name: Check gate status
+        run: |
+          if [ -f "artifacts/rest_api_eval/rest_api_eval_report.json" ]; then
+            status=$(python -c "import json; print(json.load(open('artifacts/rest_api_eval/rest_api_eval_report.json'))['status'])")
+            if [ "$status" != "pass" ]; then
+              echo "REST API eval failed"
+              exit 1
+            fi
+          fi

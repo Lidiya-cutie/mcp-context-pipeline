@@ -1,0 +1,24 @@
+========================================================================
+UNIFIED EVALUATION REPORT
+========================================================================
+timestamp: 2026-04-22T10:40:07.601978+00:00
+overall_status: pass
+------------------------------------------------------------------------
+External Knowledge Evaluation:
+  status: pass
+  records: 300
+  recall@k: 1.0000
+  mrr: 0.5000
+  latency_p95_ms: 0.45
+  cache_hit_rate: 1.0000
+------------------------------------------------------------------------
+REST API Evaluation:
+  status: pass
+  endpoints: 12
+  resource_orientation: 1.0000
+  pagination: 0.7333
+  versioning: 0.9000
+  error_codes: 0.8167
+  structural_redundancy: 0.9417
+  overall_score: 0.8742
+========================================================================

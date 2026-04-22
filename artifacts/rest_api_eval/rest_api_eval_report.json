@@ -1,0 +1,133 @@
+{
+  "timestamp": "2026-04-22T10:47:26.376199+00:00",
+  "dataset_path": "/mldata/mcp_context_pipeline/data/rest_api_eval_good.jsonl",
+  "status": "pass",
+  "quality": {
+    "count": 12,
+    "resource_orientation": {
+      "score": 1.0,
+      "details": {
+        "total_endpoints": 12,
+        "noun_oriented_paths": 12,
+        "verb_oriented_paths": 0,
+        "http_method_compliance": 12,
+        "noun_path_ratio": 1.0
+      }
+    },
+    "pagination": {
+      "score": 0.7333333333333334,
+      "details": {
+        "total_list_endpoints": 6,
+        "endpoints_with_pagination": 4,
+        "has_limit_param": 4,
+        "has_offset_param": 4,
+        "has_page_param": 0,
+        "has_total_count": 4,
+        "has_next_link": 3,
+        "pagination_strategies": {
+          "offset_limit": 4,
+          "page_size": 0,
+          "cursor": 0
+        },
+        "consistent_strategy": 1
+      }
+    },
+    "versioning": {
+      "score": 0.9,
+      "details": {
+        "total_endpoints": 12,
+        "version_in_path": 12,
+        "version_in_header": 12,
+        "version_in_query": 0,
+        "path_versions": [
+          "/v1/"
+        ],
+        "header_versions": [
+          "v1"
+        ],
+        "consistent_versioning": 1
+      }
+    },
+    "error_codes": {
+      "score": 0.8166666666666667,
+      "details": {
+        "total_endpoints": 12,
+        "has_200": 9,
+        "has_201": 1,
+        "has_204": 1,
+        "has_400": 3,
+        "has_401": 0,
+        "has_403": 0,
+        "has_404": 1,
+        "has_409": 1,
+        "has_422": 1,
+        "has_500": 0,
+        "appropriate_2xx": 11,
+        "meaningful_4xx": 6
+      }
+    },
+    "structural_redundancy": {
+      "score": 0.9416666666666667,
+      "details": {
+        "total_endpoints": 12,
+        "has_data_wrapper": 11,
+        "has_meta_section": 11,
+        "has_errors_section": 11,
+        "consistent_response_structure": 1,
+        "has_pagination_meta": 4
+      }
+    },
+    "overall_score": 0.8741666666666666
+  },
+  "gates": {
+    "thresholds": {
+      "min_resource_orientation": 0.8,
+      "min_pagination": 0.7,
+      "min_versioning": 0.6,
+      "min_error_codes": 0.7,
+      "min_structural_redundancy": 0.6,
+      "min_overall_score": 0.7
+    },
+    "checks": [
+      {
+        "name": "resource_orientation",
+        "value": 1.0,
+        "threshold": 0.8,
+        "status": "pass"
+      },
+      {
+        "name": "pagination",
+        "value": 0.7333333333333334,
+        "threshold": 0.7,
+        "status": "pass"
+      },
+      {
+        "name": "versioning",
+        "value": 0.9,
+        "threshold": 0.6,
+        "status": "pass"
+      },
+      {
+        "name": "error_codes",
+        "value": 0.8166666666666667,
+        "threshold": 0.7,
+        "status": "pass"
+      },
+      {
+        "name": "structural_redundancy",
+        "value": 0.9416666666666667,
+        "threshold": 0.6,
+        "status": "pass"
+      },
+      {
+        "name": "overall_score",
+        "value": 0.8741666666666666,
+        "threshold": 0.7,
+        "status": "pass"
+      }
+    ],
+    "all_passed": true
+  },
+  "prometheus_snapshot": "# HELP rest_api_eval_resource_orientation Resource orientation score\n# TYPE rest_api_eval_resource_orientation gauge\nrest_api_eval_resource_orientation 1.0\n# HELP rest_api_eval_pagination Pagination score\n# TYPE rest_api_eval_pagination gauge\nrest_api_eval_pagination 0.7333333333333334\n# HELP rest_api_eval_versioning Versioning score\n# TYPE rest_api_eval_versioning gauge\nrest_api_eval_versioning 0.9\n# HELP rest_api_eval_error_codes Error codes score\n# TYPE rest_api_eval_error_codes gauge\nrest_api_eval_error_codes 0.8166666666666667\n# HELP rest_api_eval_structural_redundancy Structural redundancy score\n# TYPE rest_api_eval_structural_redundancy gauge\nrest_api_eval_structural_redundancy 0.9416666666666667\n# HELP rest_api_eval_overall_score Overall REST API quality score\n# TYPE rest_api_eval_overall_score gauge\nrest_api_eval_overall_score 0.8741666666666666\n# HELP rest_api_eval_gate_status Overall gate status (1=pass,0=fail)\n# TYPE rest_api_eval_gate_status gauge\nrest_api_eval_gate_status 1\n# HELP rest_api_eval_check_{name} Gate check status (1=pass,0=fail)\n# TYPE rest_api_eval_check_{name} gauge\nrest_api_eval_check{name=\"resource_orientation\"} 1\n# HELP rest_api_eval_check_{name} Gate check status (1=pass,0=fail)\n# TYPE rest_api_eval_check_{name} gauge\nrest_api_eval_check{name=\"pagination\"} 1\n# HELP rest_api_eval_check_{name} Gate check status (1=pass,0=fail)\n# TYPE rest_api_eval_check_{name} gauge\nrest_api_eval_check{name=\"versioning\"} 1\n# HELP rest_api_eval_check_{name} Gate check status (1=pass,0=fail)\n# TYPE rest_api_eval_check_{name} gauge\nrest_api_eval_check{name=\"error_codes\"} 1\n# HELP rest_api_eval_check_{name} Gate check status (1=pass,0=fail)\n# TYPE rest_api_eval_check_{name} gauge\nrest_api_eval_check{name=\"structural_redundancy\"} 1\n# HELP rest_api_eval_check_{name} Gate check status (1=pass,0=fail)\n# TYPE rest_api_eval_check_{name} gauge\nrest_api_eval_check{name=\"overall_score\"} 1\n",
+  "summary_text": "timestamp=2026-04-22T10:47:26.376199+00:00\ndataset=/mldata/mcp_context_pipeline/data/rest_api_eval_good.jsonl\nendpoints=12\nstatus=pass\n\nresource_orientation=1.0000\npagination=0.7333\nversioning=0.9000\nerror_codes=0.8167\nstructural_redundancy=0.9417\noverall_score=0.8742\n\ngate_checks:\n- resource_orientation status=pass value=1.0000 threshold=0.8\n- pagination status=pass value=0.7333 threshold=0.7\n- versioning status=pass value=0.9000 threshold=0.6\n- error_codes status=pass value=0.8167 threshold=0.7\n- structural_redundancy status=pass value=0.9417 threshold=0.6\n- overall_score status=pass value=0.8742 threshold=0.7\n"
+}

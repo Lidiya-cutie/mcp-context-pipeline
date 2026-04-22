@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  xray-vless:
+    image: ghcr.io/xtls/xray-core:latest
+    container_name: mcp-xray-vless
+    restart: unless-stopped
+    ports:
+      - "${XRAY_SOCKS_PORT:-10809}:10809"  # SOCKS5
+      - "${XRAY_HTTP_PORT:-10808}:10808"   # HTTP
+    volumes:
+      - ./xray-config/config-reality.json:/config.json:ro
+    environment:
+      - TZ=UTC
+    entrypoint: ["xray", "run", "-config", "/config.json"]
+    networks:
+      - mcp-network
+
+networks:
+  mcp-network:
+    driver: bridge

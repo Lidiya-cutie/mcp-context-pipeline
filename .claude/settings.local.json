@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python *)",
+      "Bash(python3 *)",
+      "Bash(EVAL_DATASET_PATH=\"/mldata/mcp_context_pipeline/eval_queries_v3.jsonl\" REST_API_EVAL_DATASET=\"/mldata/mcp_context_pipeline/data/rest_api_eval_good.jsonl\" python3 *)",
+      "Bash(git -C /mldata status)",
+      "Bash(git add *)"
+    ]
+  }
+}

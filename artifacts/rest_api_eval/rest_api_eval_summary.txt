@@ -1,0 +1,19 @@
+timestamp=2026-04-22T10:47:26.376199+00:00
+dataset=/mldata/mcp_context_pipeline/data/rest_api_eval_good.jsonl
+endpoints=12
+status=pass
+
+resource_orientation=1.0000
+pagination=0.7333
+versioning=0.9000
+error_codes=0.8167
+structural_redundancy=0.9417
+overall_score=0.8742
+
+gate_checks:
+- resource_orientation status=pass value=1.0000 threshold=0.8
+- pagination status=pass value=0.7333 threshold=0.7
+- versioning status=pass value=0.9000 threshold=0.6
+- error_codes status=pass value=0.8167 threshold=0.7
+- structural_redundancy status=pass value=0.9417 threshold=0.6
+- overall_score status=pass value=0.8742 threshold=0.7

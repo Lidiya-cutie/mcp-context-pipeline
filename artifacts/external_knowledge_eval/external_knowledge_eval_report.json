@@ -1,0 +1,1904 @@
+{
+  "timestamp": "2026-04-21T11:23:34.013533+00:00",
+  "dataset_path": "/mldata/mcp_context_pipeline/eval_queries_v3.jsonl",
+  "status": "pass",
+  "quality": {
+    "count": 120,
+    "recall_at_k": 1.0,
+    "mrr": 0.5,
+    "source_coverage": 1.0,
+    "provenance_coverage": 1.0,
+    "not_found_rate": 0.0,
+    "latency_ms_p50": 0.028351991204544902,
+    "latency_ms_p95": 0.043010004446841776,
+    "latency_ms_avg": 0.030402316284986835,
+    "cache_hit_rate": 0.5,
+    "router_metrics": {
+      "requests_total": 240,
+      "cache_hits": 120,
+      "cache_misses": 120,
+      "hit_rate": 0.5,
+      "provider_calls": 240,
+      "provider_errors": 0,
+      "latency_ms_p50": 0.006280999514274299,
+      "latency_ms_p95": 0.028202004614286125,
+      "latency_ms_avg": 0.014143421200666731,
+      "source_distribution": {
+        "local_index": 0.5,
+        "offline_gold": 0.5
+      },
+      "redis_cache_enabled": false
+    }
+  },
+  "degradation": {
+    "sample_size": 50,
+    "scenarios": [
+      {
+        "scenario": "empty",
+        "total": 50,
+        "exceptions": 0,
+        "success_rate": 1.0,
+        "fallback_success_rate": 1.0,
+        "provider_errors": 0
+      },
+      {
+        "scenario": "timeout",
+        "total": 50,
+        "exceptions": 0,
+        "success_rate": 1.0,
+        "fallback_success_rate": 1.0,
+        "provider_errors": 50
+      },
+      {
+        "scenario": "error",
+        "total": 50,
+        "exceptions": 0,
+        "success_rate": 1.0,
+        "fallback_success_rate": 1.0,
+        "provider_errors": 50
+      }
+    ]
+  },
+  "security": {
+    "pii_masking": {
+      "status": "ok",
+      "captured_query": "Контакт клиента [MASKED_EMAIL], телефон [MASKED_PHONE]"
+    }
+  },
+  "router_export": {
+    "current": {
+      "requests_total": 240,
+      "cache_hits": 120,
+      "cache_misses": 120,
+      "hit_rate": 0.5,
+      "provider_calls": 240,
+      "provider_errors": 0,
+      "latency_ms_p50": 0.006280999514274299,
+      "latency_ms_p95": 0.028202004614286125,
+      "latency_ms_avg": 0.014143421200666731,
+      "source_distribution": {
+        "local_index": 0.5,
+        "offline_gold": 0.5
+      },
+      "redis_cache_enabled": false
+    },
+    "history": [
+      {
+        "timestamp": 1776770613.0017986,
+        "query_hash": "525cb897e537125f",
+        "cached": true,
+        "result_count": 2,
+        "providers_used": [
+          "offline_gold",
+          "local_index"
+        ],
+        "provider_errors_count": 0,
+        "latency_ms": 0.0032469979487359524,
+        "metrics_snapshot": {
+          "requests_total": 240,
+          "cache_hits": 120,
+          "cache_misses": 120,
+          "hit_rate": 0.5,
+          "provider_calls": 240,
+          "provider_errors": 0,
+          "latency_ms_p50": 0.006280999514274299,
+          "latency_ms_p95": 0.028202004614286125,
+          "latency_ms_avg": 0.014143421200666731,
+          "source_distribution": {
+            "local_index": 0.5,
+            "offline_gold": 0.5
+          },
+          "redis_cache_enabled": false
+        }
+      },
+      {
+        "timestamp": 1776770613.0017834,
+        "query_hash": "f87fd803b852b27d",
+        "cached": true,
+        "result_count": 2,
+        "providers_used": [
+          "offline_gold",
+          "local_index"
+        ],
+        "provider_errors_count": 0,
+        "latency_ms": 0.0032859970815479755,
+        "metrics_snapshot": {
+          "requests_total": 239,
+          "cache_hits": 119,
+          "cache_misses": 120,
+          "hit_rate": 0.497907949790795,
+          "provider_calls": 240,
+          "provider_errors": 0,
+          "latency_ms_p50": 0.018584993085823953,
+          "latency_ms_p95": 0.028463007765822113,
+          "latency_ms_avg": 0.014189012929754309,
+          "source_distribution": {
+            "local_index": 0.5,
+            "offline_gold": 0.5
+          },
+          "redis_cache_enabled": false
+        }
+      },
+      {
+        "timestamp": 1776770613.0017679,
+        "query_hash": "84e64d580592a7b4",
+        "cached": true,
+        "result_count": 2,
+        "providers_used": [
+          "offline_gold",
+          "local_index"
+        ],
+        "provider_errors_count": 0,
+        "latency_ms": 0.003216002369299531,
+        "metrics_snapshot": {
+          "requests_total": 238,
+          "cache_hits": 118,
+          "cache_misses": 120,
+          "hit_rate": 0.4957983193277311,
+          "provider_calls": 240,
+          "provider_errors": 0,
+          "latency_ms_p50": 0.018584993085823953,
+          "latency_ms_p95": 0.028463007765822113,
+          "latency_ms_avg": 0.014234823920713159,
+          "source_distribution": {
+            "local_index": 0.5,
+            "offline_gold": 0.5
+          },
+          "redis_cache_enabled": false
+        }
+      },
+      {
+        "timestamp": 1776770613.00175,
+        "query_hash": "3c11b02986e15752",
+        "cached": true,
+        "result_count": 2,
+        "providers_used": [
+          "offline_gold",
+          "local_index"
+        ],
+        "provider_errors_count": 0,
+        "latency_ms": 0.0035959965316578746,
+        "metrics_snapshot": {
+          "requests_total": 237,
+          "cache_hits": 117,
+          "cache_misses": 120,
+          "hit_rate": 0.4936708860759494,
+          "provider_calls": 240,
+          "provider_errors": 0,
+          "latency_ms_p50": 0.018784994608722627,
+          "latency_ms_p95": 0.028463007765822113,
+          "latency_ms_avg": 0.014281316838651612,
+          "source_distribution": {
+            "local_index": 0.5,
+            "offline_gold": 0.5
+          },
+          "redis_cache_enabled": false
+        }
+      },
+      {
+        "timestamp": 1776770613.0017338,
+        "query_hash": "f377e91ce04e64c1",
+        "cached": true,
+        "result_count": 2,
+        "providers_used": [
+          "offline_gold",
+          "local_index"
+        ],
+        "provider_errors_count": 0,
+        "latency_ms": 0.0036470009945333004,
+        "metrics_snapshot": {
+          "requests_total": 236,
+          "cache_hits": 116,
+          "cache_misses": 120,
+          "hit_rate": 0.4915254237288136,
+          "provider_calls": 240,
+          "provider_errors": 0,
+          "latency_ms_p50": 0.018784994608722627,
+          "latency_ms_p95": 0.028463007765822113,
+          "latency_ms_avg": 0.014326593619613451,
+          "source_distribution": {
+            "local_index": 0.5,
+            "offline_gold": 0.5
+          },
+          "redis_cache_enabled": false
+        }
+      },
+      {
+        "timestamp": 1776770613.0017183,
+        "query_hash": "81ecd689b63ece19",
+        "cached": true,
+        "result_count": 2,
+        "providers_used": [
+          "offline_gold",
+          "local_index"
+        ],
+        "provider_errors_count": 0,
+        "latency_ms": 0.0032759999157860875,
+        "metrics_snapshot": {
+          "requests_total": 235,
+          "cache_hits": 115,
+          "cache_misses": 120,
+          "hit_rate": 0.48936170212765956,
+          "provider_calls": 240,
+          "provider_errors": 0,
+          "latency_ms_p50": 0.01893501030281186,
+          "latency_ms_p95": 0.028463007765822113,
+          "latency_ms_avg": 0.014372038694613792,
+          "source_distribution": {
+            "local_index": 0.5,
+            "offline_gold": 0.5
+          },
+          "redis_cache_enabled": false
+        }
+      },
+      {
+        "timestamp": 1776770613.001703,
+        "query_hash": "c89662c5ed338c55",
+        "cached": true,
+        "result_count": 2,
+        "providers_used": [
+          "offline_gold",
+          "local_index"
+        ],
+        "provider_errors_count": 0,
+        "latency_ms": 0.003927998477593064,
+        "metrics_snapshot": {
+          "requests_total": 234,
+          "cache_hits": 114,
+          "cache_misses": 120,
+          "hit_rate": 0.48717948717948717,
+          "provider_calls": 240,
+          "provider_errors": 0,
+          "latency_ms_p50": 0.01893501030281186,
+          "latency_ms_p95": 0.028463007765822113,
+          "latency_ms_avg": 0.014419457663754081,
+          "source_distribution": {
+            "local_index": 0.5,
+            "offline_gold": 0.5
+          },
+          "redis_cache_enabled": false
+        }
+      },
+      {
+        "timestamp": 1776770613.0016847,
+        "query_hash": "5ca06e3fc4b6436d",
+        "cached": true,
+        "result_count": 2,
+        "providers_used": [
+          "offline_gold",
+          "local_index"
+        ],
+        "provider_errors_count": 0,
+        "latency_ms": 0.003416003892198205,
+        "metrics_snapshot": {
+          "requests_total": 233,
+          "cache_hits": 113,
+          "cache_misses": 120,
+          "hit_rate": 0.48497854077253216,
+          "provider_calls": 240,
+          "provider_errors": 0,
+          "latency_ms_p50": 0.018955004634335637,
+          "latency_ms_p95": 0.028463007765822113,
+          "latency_ms_avg": 0.014464485385583098,
+          "source_distribution": {
+            "local_index": 0.5,
+            "offline_gold": 0.5
+          },
+          "redis_cache_enabled": false
+        }
+      },
+      {
+        "timestamp": 1776770613.0016685,
+        "query_hash": "856665a5471ba03f",
+        "cached": true,
+        "result_count": 2,
+        "providers_used": [
+          "offline_gold",
+          "local_index"
+        ],
+        "provider_errors_count": 0,
+        "latency_ms": 0.0037170102586969733,
+        "metrics_snapshot": {
+          "requests_total": 232,
+          "cache_hits": 112,
+          "cache_misses": 120,
+          "hit_rate": 0.4827586206896552,
+          "provider_calls": 240,
+          "provider_errors": 0,
+          "latency_ms_p50": 0.018955004634335637,
+          "latency_ms_p95": 0.028463007765822113,
+          "latency_ms_avg": 0.01451210815064079,
+          "source_distribution": {
+            "local_index": 0.5,
+            "offline_gold": 0.5
+          },
+          "redis_cache_enabled": false
+        }
+      },
+      {
+        "timestamp": 1776770613.0016499,
+        "query_hash": "154e4c13d1b42ea1",
+        "cached": true,
+        "result_count": 2,
+        "providers_used": [
+          "offline_gold",
+          "local_index"
+        ],
+        "provider_errors_count": 0,
+        "latency_ms": 0.004838992026634514,
+        "metrics_snapshot": {
+          "requests_total": 231,
+          "cache_hits": 111,
+          "cache_misses": 120,
+          "hit_rate": 0.4805194805194805,
+          "provider_calls": 240,
+          "provider_errors": 0,
+          "latency_ms_p50": 0.018974998965859413,
+          "latency_ms_p95": 0.028463007765822113,
+          "latency_ms_avg": 0.014558840176147041,
+          "source_distribution": {
+            "local_index": 0.5,
+            "offline_gold": 0.5
+          },
+          "redis_cache_enabled": false
+        }
+      },
+      {
+        "timestamp": 1776770613.001633,
+        "query_hash": "bbef684bbad25f10",
+        "cached": true,
+        "result_count": 2,
+        "providers_used": [
+          "offline_gold",
+          "local_index"
+        ],
+        "provider_errors_count": 0,
+        "latency_ms": 0.003926994395442307,
+        "metrics_snapshot": {
+          "requests_total": 230,
+          "cache_hits": 110,
+          "cache_misses": 120,
+          "hit_rate": 0.4782608695652174,
+          "provider_calls": 240,
+          "provider_errors": 0,
+          "latency_ms_p50": 0.018974998965859413,
+          "latency_ms_p95": 0.028463007765822113,
+          "latency_ms_avg": 0.01460110038549275,
+          "source_distribution": {
+            "local_index": 0.5,
+            "offline_gold": 0.5
+          },
+          "redis_cache_enabled": false
+        }
+      },
+      {
+        "timestamp": 1776770613.0016112,
+        "query_hash": "4d7c0a616e5a5b28",
+        "cached": true,
+        "result_count": 2,
+        "providers_used": [
+          "offline_gold",
+          "local_index"
+        ],
+        "provider_errors_count": 0,
+        "latency_ms": 0.0031759991543367505,
+        "metrics_snapshot": {
+          "requests_total": 229,
+          "cache_hits": 109,
+          "cache_misses": 120,
+          "hit_rate": 0.4759825327510917,
+          "provider_calls": 240,
+          "provider_errors": 0,
+          "latency_ms_p50": 0.0189849961316213,
+          "latency_ms_p95": 0.028463007765822113,
+          "latency_ms_avg": 0.014647712202043188,
+          "source_distribution": {
+            "local_index": 0.5,
+            "offline_gold": 0.5
+          },
+          "redis_cache_enabled": false
+        }
+      },
+      {
+        "timestamp": 1776770613.0015955,
+        "query_hash": "a009ebf26f943493",
+        "cached": true,
+        "result_count": 2,
+        "providers_used": [
+          "offline_gold",
+          "local_index"
+        ],
+        "provider_errors_count": 0,
+        "latency_ms": 0.003757013473659754,
+        "metrics_snapshot": {
+          "requests_total": 228,
+          "cache_hits": 108,
+          "cache_misses": 120,
+          "hit_rate": 0.47368421052631576,
+          "provider_calls": 240,
+          "provider_errors": 0,
+          "latency_ms_p50": 0.0189849961316213,
+          "latency_ms_p95": 0.028463007765822113,
+          "latency_ms_avg": 0.01469802673295418,
+          "source_distribution": {
+            "local_index": 0.5,
+            "offline_gold": 0.5
+          },
+          "redis_cache_enabled": false
+        }
+      },
+      {
+        "timestamp": 1776770613.0015795,
+        "query_hash": "dff886022cd420b1",
+        "cached": true,
+        "result_count": 2,
+        "providers_used": [
+          "offline_gold",
+          "local_index"
+        ],
+        "provider_errors_count": 0,
+        "latency_ms": 0.00377700780518353,
+        "metrics_snapshot": {
+          "requests_total": 227,
+          "cache_hits": 107,
+          "cache_misses": 120,
+          "hit_rate": 0.4713656387665198,
+          "provider_calls": 240,
+          "provider_errors": 0,
+          "latency_ms_p50": 0.018995007849298418,
+          "latency_ms_p95": 0.028463007765822113,
+          "latency_ms_avg": 0.014746225029250631,
+          "source_distribution": {
+            "local_index": 0.5,
+            "offline_gold": 0.5
+          },
+          "redis_cache_enabled": false
+        }
+      },
+      {
+        "timestamp": 1776770613.001562,
+        "query_hash": "877fd4eded8c0e33",
+        "cached": true,
+        "result_count": 2,
+        "providers_used": [
+          "offline_gold",
+          "local_index"
+        ],
+        "provider_errors_count": 0,
+        "latency_ms": 0.003616994945332408,
+        "metrics_snapshot": {
+          "requests_total": 226,
+          "cache_hits": 106,
+          "cache_misses": 120,
+          "hit_rate": 0.4690265486725664,
+          "provider_calls": 240,
+          "provider_errors": 0,
+          "latency_ms_p50": 0.018995007849298418,
+          "latency_ms_p95": 0.028463007765822113,
+          "latency_ms_avg": 0.014794761388649158,
+          "source_distribution": {
+            "local_index": 0.5,
+            "offline_gold": 0.5
+          },
+          "redis_cache_enabled": false
+        }
+      },
+      {
+        "timestamp": 1776770613.0015447,
+        "query_hash": "a75c57347794880e",
+        "cached": true,
+        "result_count": 2,
+        "providers_used": [
+          "offline_gold",
+          "local_index"
+        ],
+        "provider_errors_count": 0,
+        "latency_ms": 0.0031460076570510864,
+        "metrics_snapshot": {
+          "requests_total": 225,
+          "cache_hits": 105,
+          "cache_misses": 120,
+          "hit_rate": 0.4666666666666667,
+          "provider_calls": 240,
+          "provider_errors": 0,
+          "latency_ms_p50": 0.019095008610747755,
+          "latency_ms_p95": 0.028463007765822113,
+          "latency_ms_avg": 0.014844440350619456,
+          "source_distribution": {
+            "local_index": 0.5,
+            "offline_gold": 0.5
+          },
+          "redis_cache_enabled": false
+        }
+      },
+      {
+        "timestamp": 1776770613.001529,
+        "query_hash": "9e9f1ae3b7e8f0a8",
+        "cached": true,
+        "result_count": 2,
+        "providers_used": [
+          "offline_gold",
+          "local_index"
+        ],
+        "provider_errors_count": 0,
+        "latency_ms": 0.0036470009945333004,
+        "metrics_snapshot": {
+          "requests_total": 224,
+          "cache_hits": 104,
+          "cache_misses": 120,
+          "hit_rate": 0.4642857142857143,
+          "provider_calls": 240,
+          "provider_errors": 0,
+          "latency_ms_p50": 0.019095008610747755,
+          "latency_ms_p95": 0.028463007765822113,
+          "latency_ms_avg": 0.014896665496572885,
+          "source_distribution": {
+            "local_index": 0.5,
+            "offline_gold": 0.5
+          },
+          "redis_cache_enabled": false
+        }
+      },
+      {
+        "timestamp": 1776770613.0015137,
+        "query_hash": "dae983ec46041ef4",
+        "cached": true,
+        "result_count": 2,
+        "providers_used": [
+          "offline_gold",
+          "local_index"
+        ],
+        "provider_errors_count": 0,
+        "latency_ms": 0.003296998329460621,
+        "metrics_snapshot": {
+          "requests_total": 223,
+          "cache_hits": 103,
+          "cache_misses": 120,
+          "hit_rate": 0.4618834080717489,
+          "provider_calls": 240,
+          "provider_errors": 0,
+          "latency_ms_p50": 0.019126004190184176,
+          "latency_ms_p95": 0.028463007765822113,
+          "latency_ms_avg": 0.014947112422591,
+          "source_distribution": {
+            "local_index": 0.5,
+            "offline_gold": 0.5
+          },
+          "redis_cache_enabled": false
+        }
+      },
+      {
+        "timestamp": 1776770613.001499,
+        "query_hash": "b4ef0b83bef81eaf",
+        "cached": true,
+        "result_count": 2,
+        "providers_used": [
+          "offline_gold",
+          "local_index"
+        ],
+        "provider_errors_count": 0,
+        "latency_ms": 0.003416993422433734,
+        "metrics_snapshot": {
+          "requests_total": 222,
+          "cache_hits": 102,
+          "cache_misses": 120,
+          "hit_rate": 0.4594594594594595,
+          "provider_calls": 240,
+          "provider_errors": 0,
+          "latency_ms_p50": 0.019126004190184176,
+          "latency_ms_p95": 0.028463007765822113,
+          "latency_ms_avg": 0.014999590414001498,
+          "source_distribution": {
+            "local_index": 0.5,
+            "offline_gold": 0.5
+          },
+          "redis_cache_enabled": false
+        }
+      },
+      {
+        "timestamp": 1776770613.00148,
+        "query_hash": "4a518760a79cd91a",
+        "cached": true,
+        "result_count": 2,
+        "providers_used": [
+          "offline_gold",
+          "local_index"
+        ],
+        "provider_errors_count": 0,
+        "latency_ms": 0.0032759999157860875,
+        "metrics_snapshot": {
+          "requests_total": 221,
+          "cache_hits": 101,
+          "cache_misses": 120,
+          "hit_rate": 0.45701357466063347,
+          "provider_calls": 240,
+          "provider_errors": 0,
+          "latency_ms_p50": 0.019385988707654178,
+          "latency_ms_p95": 0.028463007765822113,
+          "latency_ms_avg": 0.015052000355139813,
+          "source_distribution": {
+            "local_index": 0.5,
+            "offline_gold": 0.5
+          },
+          "redis_cache_enabled": false
+        }
+      },
+      {
+        "timestamp": 1776770613.0014646,
+        "query_hash": "6790e573c87f1ecc",
+        "cached": true,
+        "result_count": 2,
+        "providers_used": [
+          "offline_gold",
+          "local_index"
+        ],
+        "provider_errors_count": 0,
+        "latency_ms": 0.003726992872543633,
+        "metrics_snapshot": {
+          "requests_total": 220,
+          "cache_hits": 100,
+          "cache_misses": 120,
+          "hit_rate": 0.45454545454545453,
+          "provider_calls": 240,
+          "provider_errors": 0,
+          "latency_ms_p50": 0.019385988707654178,
+          "latency_ms_p95": 0.028463007765822113,
+          "latency_ms_avg": 0.015105527629864147,
+          "source_distribution": {
+            "local_index": 0.5,
+            "offline_gold": 0.5
+          },
+          "redis_cache_enabled": false
+        }
+      },
+      {
+        "timestamp": 1776770613.001449,
+        "query_hash": "29adfd79ad44e223",
+        "cached": true,
+        "result_count": 2,
+        "providers_used": [
+          "offline_gold",
+          "local_index"
+        ],
+        "provider_errors_count": 0,
+        "latency_ms": 0.003206005203537643,
+        "metrics_snapshot": {
+          "requests_total": 219,
+          "cache_hits": 99,
+          "cache_misses": 120,
+          "hit_rate": 0.4520547945205479,
+          "provider_calls": 240,
+          "provider_errors": 0,
+          "latency_ms_p50": 0.019475992303341627,
+          "latency_ms_p95": 0.028613998438231647,
+          "latency_ms_avg": 0.01515748440957794,
+          "source_distribution": {
+            "local_index": 0.5,
+            "offline_gold": 0.5
+          },
+          "redis_cache_enabled": false
+        }
+      },
+      {
+        "timestamp": 1776770613.0014343,
+        "query_hash": "518f82cea437649d",
+        "cached": true,
+        "result_count": 2,
+        "providers_used": [
+          "offline_gold",
+          "local_index"
+        ],
+        "provider_errors_count": 0,
+        "latency_ms": 0.0034059921745210886,
+        "metrics_snapshot": {
+          "requests_total": 218,
+          "cache_hits": 98,
+          "cache_misses": 120,
+          "hit_rate": 0.44954128440366975,
+          "provider_calls": 240,
+          "provider_errors": 0,
+          "latency_ms_p50": 0.019475992303341627,
+          "latency_ms_p95": 0.028613998438231647,
+          "latency_ms_avg": 0.015212307708688217,
+          "source_distribution": {
+            "local_index": 0.5,
+            "offline_gold": 0.5
+          },
+          "redis_cache_enabled": false
+        }
+      },
+      {
+        "timestamp": 1776770613.0014172,
+        "query_hash": "bb19fbc4f2e8ba63",
+        "cached": true,
+        "result_count": 2,
+        "providers_used": [
+          "offline_gold",
+          "local_index"
+        ],
+        "provider_errors_count": 0,
+        "latency_ms": 0.004098008503206074,
+        "metrics_snapshot": {
+          "requests_total": 217,
+          "cache_hits": 97,
+          "cache_misses": 120,
+          "hit_rate": 0.4470046082949309,
+          "provider_calls": 240,
+          "provider_errors": 0,
+          "latency_ms_p50": 0.019526007235981524,
+          "latency_ms_p95": 0.028613998438231647,
+          "latency_ms_avg": 0.015266714692716636,
+          "source_distribution": {
+            "local_index": 0.5,
+            "offline_gold": 0.5
+          },
+          "redis_cache_enabled": false
+        }
+      },
+      {
+        "timestamp": 1776770613.0014012,
+        "query_hash": "5d543f8c08f1a917",
+        "cached": true,
+        "result_count": 2,
+        "providers_used": [
+          "offline_gold",
+          "local_index"
+        ],
+        "provider_errors_count": 0,
+        "latency_ms": 0.003326000296510756,
+        "metrics_snapshot": {
+          "requests_total": 216,
+          "cache_hits": 96,
+          "cache_misses": 120,
+          "hit_rate": 0.4444444444444444,
+          "provider_calls": 240,
+          "provider_errors": 0,
+          "latency_ms_p50": 0.019526007235981524,
+          "latency_ms_p95": 0.028613998438231647,
+          "latency_ms_avg": 0.015318421665816222,
+          "source_distribution": {
+            "local_index": 0.5,
+            "offline_gold": 0.5
+          },
+          "redis_cache_enabled": false
+        }
+      },
+      {
+        "timestamp": 1776770613.0013847,
+        "query_hash": "dbed9d859eaabdec",
+        "cached": true,
+        "result_count": 2,
+        "providers_used": [
+          "offline_gold",
+          "local_index"
+        ],
+        "provider_errors_count": 0,
+        "latency_ms": 0.00352600181940943,
+        "metrics_snapshot": {
+          "requests_total": 215,
+          "cache_hits": 95,
+          "cache_misses": 120,
+          "hit_rate": 0.4418604651162791,
+          "provider_calls": 240,
+          "provider_errors": 0,
+          "latency_ms_p50": 0.019535989849828184,
+          "latency_ms_p95": 0.028613998438231647,
+          "latency_ms_avg": 0.015374200369859503,
+          "source_distribution": {
+            "local_index": 0.5,
+            "offline_gold": 0.5
+          },
+          "redis_cache_enabled": false
+        }
+      },
+      {
+        "timestamp": 1776770613.0013697,
+        "query_hash": "59da12ca8414939d",
+        "cached": true,
+        "result_count": 2,
+        "providers_used": [
+          "offline_gold",
+          "local_index"
+        ],
+        "provider_errors_count": 0,
+        "latency_ms": 0.0034569966373965144,
+        "metrics_snapshot": {
+          "requests_total": 214,
+          "cache_hits": 94,
+          "cache_misses": 120,
+          "hit_rate": 0.4392523364485981,
+          "provider_calls": 240,
+          "provider_errors": 0,
+          "latency_ms_p50": 0.019535989849828184,
+          "latency_ms_p95": 0.028613998438231647,
+          "latency_ms_avg": 0.015429565783646654,
+          "source_distribution": {
+            "local_index": 0.5,
+            "offline_gold": 0.5
+          },
+          "redis_cache_enabled": false
+        }
+      },
+      {
+        "timestamp": 1776770613.0013504,
+        "query_hash": "5202be5279c59e18",
+        "cached": true,
+        "result_count": 2,
+        "providers_used": [
+          "offline_gold",
+          "local_index"
+        ],
+        "provider_errors_count": 0,
+        "latency_ms": 0.003235996700823307,
+        "metrics_snapshot": {
+          "requests_total": 213,
+          "cache_hits": 93,
+          "cache_misses": 120,
+          "hit_rate": 0.43661971830985913,
+          "provider_calls": 240,
+          "provider_errors": 0,
+          "latency_ms_p50": 0.019587008864618838,
+          "latency_ms_p95": 0.028613998438231647,
+          "latency_ms_avg": 0.015485775028464729,
+          "source_distribution": {
+            "local_index": 0.5,
+            "offline_gold": 0.5
+          },
+          "redis_cache_enabled": false
+        }
+      },
+      {
+        "timestamp": 1776770613.0013354,
+        "query_hash": "ae3b4f983b4ed4a7",
+        "cached": true,
+        "result_count": 2,
+        "providers_used": [
+          "offline_gold",
+          "local_index"
+        ],
+        "provider_errors_count": 0,
+        "latency_ms": 0.0037569989217445254,
+        "metrics_snapshot": {
+          "requests_total": 212,
+          "cache_hits": 92,
+          "cache_misses": 120,
+          "hit_rate": 0.4339622641509434,
+          "provider_calls": 240,
+          "provider_errors": 0,
+          "latency_ms_p50": 0.019587008864618838,
+          "latency_ms_p95": 0.028613998438231647,
+          "latency_ms_avg": 0.015543557001708322,
+          "source_distribution": {
+            "local_index": 0.5,
+            "offline_gold": 0.5
+          },
+          "redis_cache_enabled": false
+        }
+      },
+      {
+        "timestamp": 1776770613.0013182,
+        "query_hash": "bc51462e1acdcd68",
+        "cached": true,
+        "result_count": 2,
+        "providers_used": [
+          "offline_gold",
+          "local_index"
+        ],
+        "provider_errors_count": 0,
+        "latency_ms": 0.003716995706781745,
+        "metrics_snapshot": {
+          "requests_total": 211,
+          "cache_hits": 91,
+          "cache_misses": 120,
+          "hit_rate": 0.4312796208530806,
+          "provider_calls": 240,
+          "provider_errors": 0,
+          "latency_ms_p50": 0.019615996279753745,
+          "latency_ms_p95": 0.028613998438231647,
+          "latency_ms_avg": 0.015599417466542273,
+          "source_distribution": {
+            "local_index": 0.5,
+            "offline_gold": 0.5
+          },
+          "redis_cache_enabled": false
+        }
+      },
+      {
+        "timestamp": 1776770613.0013013,
+        "query_hash": "43e1cff6c5223978",
+        "cached": true,
+        "result_count": 2,
+        "providers_used": [
+          "offline_gold",
+          "local_index"
+        ],
+        "provider_errors_count": 0,
+        "latency_ms": 0.0037569989217445254,
+        "metrics_snapshot": {
+          "requests_total": 210,
+          "cache_hits": 90,
+          "cache_misses": 120,
+          "hit_rate": 0.42857142857142855,
+          "provider_calls": 240,
+          "provider_errors": 0,
+          "latency_ms_p50": 0.019615996279753745,
+          "latency_ms_p95": 0.028613998438231647,
+          "latency_ms_avg": 0.015656000427303036,
+          "source_distribution": {
+            "local_index": 0.5,
+            "offline_gold": 0.5
+          },
+          "redis_cache_enabled": false
+        }
+      },
+      {
+        "timestamp": 1776770613.001284,
+        "query_hash": "d162d68dddcc1dbd",
+        "cached": true,
+        "result_count": 2,
+        "providers_used": [
+          "offline_gold",
+          "local_index"
+        ],
+        "provider_errors_count": 0,
+        "latency_ms": 0.003626992111094296,
+        "metrics_snapshot": {
+          "requests_total": 209,
+          "cache_hits": 89,
+          "cache_misses": 120,
+          "hit_rate": 0.4258373205741627,
+          "provider_calls": 240,
+          "provider_errors": 0,
+          "latency_ms_p50": 0.01976601197384298,
+          "latency_ms_p95": 0.028613998438231647,
+          "latency_ms_avg": 0.015712933448860735,
+          "source_distribution": {
+            "local_index": 0.5,
+            "offline_gold": 0.5
+          },
+          "redis_cache_enabled": false
+        }
+      },
+      {
+        "timestamp": 1776770613.0012681,
+        "query_hash": "1cf7c69a11964d36",
+        "cached": true,
+        "result_count": 2,
+        "providers_used": [
+          "offline_gold",
+          "local_index"
+        ],
+        "provider_errors_count": 0,
+        "latency_ms": 0.004218003596179187,
+        "metrics_snapshot": {
+          "requests_total": 208,
+          "cache_hits": 88,
+          "cache_misses": 120,
+          "hit_rate": 0.4230769230769231,
+          "provider_calls": 240,
+          "provider_errors": 0,
+          "latency_ms_p50": 0.01976601197384298,
+          "latency_ms_p95": 0.028613998438231647,
+          "latency_ms_avg": 0.015771038936061535,
+          "source_distribution": {
+            "local_index": 0.5,
+            "offline_gold": 0.5
+          },
+          "redis_cache_enabled": false
+        }
+      },
+      {
+        "timestamp": 1776770613.0012517,
+        "query_hash": "a09c333f13e93ff5",
+        "cached": true,
+        "result_count": 2,
+        "providers_used": [
+          "offline_gold",
+          "local_index"
+        ],
+        "provider_errors_count": 0,
+        "latency_ms": 0.003196008037775755,
+        "metrics_snapshot": {
+          "requests_total": 207,
+          "cache_hits": 87,
+          "cache_misses": 120,
+          "hit_rate": 0.42028985507246375,
+          "provider_calls": 240,
+          "provider_errors": 0,
+          "latency_ms_p50": 0.01989699376281351,
+          "latency_ms_p95": 0.028613998438231647,
+          "latency_ms_avg": 0.015826850700988503,
+          "source_distribution": {
+            "local_index": 0.5,
+            "offline_gold": 0.5
+          },
+          "redis_cache_enabled": false
+        }
+      },
+      {
+        "timestamp": 1776770613.0012372,
+        "query_hash": "3112fffc73d1fc4d",
+        "cached": true,
+        "result_count": 2,
+        "providers_used": [
+          "offline_gold",
+          "local_index"
+        ],
+        "provider_errors_count": 0,
+        "latency_ms": 0.00330600596498698,
+        "metrics_snapshot": {
+          "requests_total": 206,
+          "cache_hits": 86,
+          "cache_misses": 120,
+          "hit_rate": 0.4174757281553398,
+          "provider_calls": 240,
+          "provider_errors": 0,
+          "latency_ms_p50": 0.01989699376281351,
+          "latency_ms_p95": 0.028613998438231647,
+          "latency_ms_avg": 0.015888165471198274,
+          "source_distribution": {
+            "local_index": 0.5,
+            "offline_gold": 0.5
+          },
+          "redis_cache_enabled": false
+        }
+      },
+      {
+        "timestamp": 1776770613.001221,
+        "query_hash": "a26c1e993e6f095d",
+        "cached": true,
+        "result_count": 2,
+        "providers_used": [
+          "offline_gold",
+          "local_index"
+        ],
+        "provider_errors_count": 0,
+        "latency_ms": 0.003767010639421642,
+        "metrics_snapshot": {
+          "requests_total": 205,
+          "cache_hits": 85,
+          "cache_misses": 120,
+          "hit_rate": 0.4146341463414634,
+          "provider_calls": 240,
+          "provider_errors": 0,
+          "latency_ms_p50": 0.0199269998120144,
+          "latency_ms_p95": 0.028613998438231647,
+          "latency_ms_avg": 0.01594954185903345,
+          "source_distribution": {
+            "local_index": 0.5,
+            "offline_gold": 0.5
+          },
+          "redis_cache_enabled": false
+        }
+      },
+      {
+        "timestamp": 1776770613.0012054,
+        "query_hash": "a067535d448bff27",
+        "cached": true,
+        "result_count": 2,
+        "providers_used": [
+          "offline_gold",
+          "local_index"
+        ],
+        "provider_errors_count": 0,
+        "latency_ms": 0.0037470017559826374,
+        "metrics_snapshot": {
+          "requests_total": 204,
+          "cache_hits": 84,
+          "cache_misses": 120,
+          "hit_rate": 0.4117647058823529,
+          "provider_calls": 240,
+          "provider_errors": 0,
+          "latency_ms_p50": 0.0199269998120144,
+          "latency_ms_p95": 0.028613998438231647,
+          "latency_ms_avg": 0.016009260149325664,
+          "source_distribution": {
+            "local_index": 0.5,
+            "offline_gold": 0.5
+          },
+          "redis_cache_enabled": false
+        }
+      },
+      {
+        "timestamp": 1776770613.0011907,
+        "query_hash": "c276cfb743cf2f95",
+        "cached": true,
+        "result_count": 2,
+        "providers_used": [
+          "offline_gold",
+          "local_index"
+        ],
+        "provider_errors_count": 0,
+        "latency_ms": 0.0033660035114735365,
+        "metrics_snapshot": {
+          "requests_total": 203,
+          "cache_hits": 83,
+          "cache_misses": 120,
+          "hit_rate": 0.4088669950738916,
+          "provider_calls": 240,
+          "provider_errors": 0,
+          "latency_ms_p50": 0.019986997358500957,
+          "latency_ms_p95": 0.028613998438231647,
+          "latency_ms_avg": 0.016069665363085975,
+          "source_distribution": {
+            "local_index": 0.5,
+            "offline_gold": 0.5
+          },
+          "redis_cache_enabled": false
+        }
+      },
+      {
+        "timestamp": 1776770613.0011764,
+        "query_hash": "3b65746149ed29cc",
+        "cached": true,
+        "result_count": 2,
+        "providers_used": [
+          "offline_gold",
+          "local_index"
+        ],
+        "provider_errors_count": 0,
+        "latency_ms": 0.0033959950087592006,
+        "metrics_snapshot": {
+          "requests_total": 202,
+          "cache_hits": 82,
+          "cache_misses": 120,
+          "hit_rate": 0.40594059405940597,
+          "provider_calls": 240,
+          "provider_errors": 0,
+          "latency_ms_p50": 0.019986997358500957,
+          "latency_ms_p95": 0.028613998438231647,
+          "latency_ms_avg": 0.016132554778192965,
+          "source_distribution": {
+            "local_index": 0.5,
+            "offline_gold": 0.5
+          },
+          "redis_cache_enabled": false
+        }
+      },
+      {
+        "timestamp": 1776770613.001159,
+        "query_hash": "fd19c5d37ce8dead",
+        "cached": true,
+        "result_count": 2,
+        "providers_used": [
+          "offline_gold",
+          "local_index"
+        ],
+        "provider_errors_count": 0,
+        "latency_ms": 0.003216002369299531,
+        "metrics_snapshot": {
+          "requests_total": 201,
+          "cache_hits": 81,
+          "cache_misses": 120,
+          "hit_rate": 0.40298507462686567,
+          "provider_calls": 240,
+          "provider_errors": 0,
+          "latency_ms_p50": 0.020086998119950294,
+          "latency_ms_p95": 0.028613998438231647,
+          "latency_ms_avg": 0.016195920747195124,
+          "source_distribution": {
+            "local_index": 0.5,
+            "offline_gold": 0.5
+          },
+          "redis_cache_enabled": false
+        }
+      },
+      {
+        "timestamp": 1776770613.0011442,
+        "query_hash": "664f30dbb8ec52d5",
+        "cached": true,
+        "result_count": 2,
+        "providers_used": [
+          "offline_gold",
+          "local_index"
+        ],
+        "provider_errors_count": 0,
+        "latency_ms": 0.0032159878173843026,
+        "metrics_snapshot": {
+          "requests_total": 200,
+          "cache_hits": 80,
+          "cache_misses": 120,
+          "hit_rate": 0.4,
+          "provider_calls": 240,
+          "provider_errors": 0,
+          "latency_ms_p50": 0.020086998119950294,
+          "latency_ms_p95": 0.028613998438231647,
+          "latency_ms_avg": 0.016260820339084603,
+          "source_distribution": {
+            "local_index": 0.5,
+            "offline_gold": 0.5
+          },
+          "redis_cache_enabled": false
+        }
+      },
+      {
+        "timestamp": 1776770613.0011287,
+        "query_hash": "edc8ad9924c7eb24",
+        "cached": true,
+        "result_count": 2,
+        "providers_used": [
+          "offline_gold",
+          "local_index"
+        ],
+        "provider_errors_count": 0,
+        "latency_ms": 0.003296008799225092,
+        "metrics_snapshot": {
+          "requests_total": 199,
+          "cache_hits": 79,
+          "cache_misses": 120,
+          "hit_rate": 0.3969849246231156,
+          "provider_calls": 240,
+          "provider_errors": 0,
+          "latency_ms_p50": 0.020107996533624828,
+          "latency_ms_p95": 0.02925399166997522,
+          "latency_ms_avg": 0.016326372261304203,
+          "source_distribution": {
+            "local_index": 0.5,
+            "offline_gold": 0.5
+          },
+          "redis_cache_enabled": false
+        }
+      },
+      {
+        "timestamp": 1776770613.0011148,
+        "query_hash": "257566c7a3afa216",
+        "cached": true,
+        "result_count": 2,
+        "providers_used": [
+          "offline_gold",
+          "local_index"
+        ],
+        "provider_errors_count": 0,
+        "latency_ms": 0.0033560063457116485,
+        "metrics_snapshot": {
+          "requests_total": 198,
+          "cache_hits": 78,
+          "cache_misses": 120,
+          "hit_rate": 0.3939393939393939,
+          "provider_calls": 240,
+          "provider_errors": 0,
+          "latency_ms_p50": 0.020107996533624828,
+          "latency_ms_p95": 0.02925399166997522,
+          "latency_ms_avg": 0.01639218217777935,
+          "source_distribution": {
+            "local_index": 0.5,
+            "offline_gold": 0.5
+          },
+          "redis_cache_enabled": false
+        }
+      },
+      {
+        "timestamp": 1776770613.001099,
+        "query_hash": "e1a997e314e03686",
+        "cached": true,
+        "result_count": 2,
+        "providers_used": [
+          "offline_gold",
+          "local_index"
+        ],
+        "provider_errors_count": 0,
+        "latency_ms": 0.003235996700823307,
+        "metrics_snapshot": {
+          "requests_total": 197,
+          "cache_hits": 77,
+          "cache_misses": 120,
+          "hit_rate": 0.39086294416243655,
+          "provider_calls": 240,
+          "provider_errors": 0,
+          "latency_ms_p50": 0.020206993212923408,
+          "latency_ms_p95": 0.02925399166997522,
+          "latency_ms_avg": 0.016458355659160404,
+          "source_distribution": {
+            "local_index": 0.5,
+            "offline_gold": 0.5
+          },
+          "redis_cache_enabled": false
+        }
+      },
+      {
+        "timestamp": 1776770613.001085,
+        "query_hash": "a0c2cf403e3220d2",
+        "cached": true,
+        "result_count": 2,
+        "providers_used": [
+          "offline_gold",
+          "local_index"
+        ],
+        "provider_errors_count": 0,
+        "latency_ms": 0.0032460084185004234,
+        "metrics_snapshot": {
+          "requests_total": 196,
+          "cache_hits": 76,
+          "cache_misses": 120,
+          "hit_rate": 0.3877551020408163,
+          "provider_calls": 240,
+          "provider_errors": 0,
+          "latency_ms_p50": 0.020206993212923408,
+          "latency_ms_p95": 0.02925399166997522,
+          "latency_ms_avg": 0.01652581667425396,
+          "source_distribution": {
+            "local_index": 0.5,
+            "offline_gold": 0.5
+          },
+          "redis_cache_enabled": false
+        }
+      },
+      {
+        "timestamp": 1776770613.0010707,
+        "query_hash": "449b3893044a6fe9",
+        "cached": true,
+        "result_count": 2,
+        "providers_used": [
+          "offline_gold",
+          "local_index"
+        ],
+        "provider_errors_count": 0,
+        "latency_ms": 0.004017987521365285,
+        "metrics_snapshot": {
+          "requests_total": 195,
+          "cache_hits": 75,
+          "cache_misses": 120,
+          "hit_rate": 0.38461538461538464,
+          "provider_calls": 240,
+          "provider_errors": 0,
+          "latency_ms_p50": 0.02022800617851317,
+          "latency_ms_p95": 0.02925399166997522,
+          "latency_ms_avg": 0.016593918255052697,
+          "source_distribution": {
+            "local_index": 0.5,
+            "offline_gold": 0.5
+          },
+          "redis_cache_enabled": false
+        }
+      },
+      {
+        "timestamp": 1776770613.0010562,
+        "query_hash": "e974e14fb7ac931b",
+        "cached": true,
+        "result_count": 2,
+        "providers_used": [
+          "offline_gold",
+          "local_index"
+        ],
+        "provider_errors_count": 0,
+        "latency_ms": 0.0032859970815479755,
+        "metrics_snapshot": {
+          "requests_total": 194,
+          "cache_hits": 74,
+          "cache_misses": 120,
+          "hit_rate": 0.38144329896907214,
+          "provider_calls": 240,
+          "provider_errors": 0,
+          "latency_ms_p50": 0.02022800617851317,
+          "latency_ms_p95": 0.02925399166997522,
+          "latency_ms_avg": 0.01665874264027789,
+          "source_distribution": {
+            "local_index": 0.5,
+            "offline_gold": 0.5
+          },
+          "redis_cache_enabled": false
+        }
+      },
+      {
+        "timestamp": 1776770613.001041,
+        "query_hash": "1c5eca69f05bbe5e",
+        "cached": true,
+        "result_count": 2,
+        "providers_used": [
+          "offline_gold",
+          "local_index"
+        ],
+        "provider_errors_count": 0,
+        "latency_ms": 0.0032560055842623115,
+        "metrics_snapshot": {
+          "requests_total": 193,
+          "cache_hits": 73,
+          "cache_misses": 120,
+          "hit_rate": 0.37823834196891193,
+          "provider_calls": 240,
+          "provider_errors": 0,
+          "latency_ms_p50": 0.020278006559237838,
+          "latency_ms_p95": 0.02925399166997522,
+          "latency_ms_avg": 0.016728031477369756,
+          "source_distribution": {
+            "local_index": 0.5,
+            "offline_gold": 0.5
+          },
+          "redis_cache_enabled": false
+        }
+      },
+      {
+        "timestamp": 1776770613.0010266,
+        "query_hash": "19815cded193a797",
+        "cached": true,
+        "result_count": 2,
+        "providers_used": [
+          "offline_gold",
+          "local_index"
+        ],
+        "provider_errors_count": 0,
+        "latency_ms": 0.0036860001273453236,
+        "metrics_snapshot": {
+          "requests_total": 192,
+          "cache_hits": 72,
+          "cache_misses": 120,
+          "hit_rate": 0.375,
+          "provider_calls": 240,
+          "provider_errors": 0,
+          "latency_ms_p50": 0.020278006559237838,
+          "latency_ms_p95": 0.02925399166997522,
+          "latency_ms_avg": 0.016798198278896354,
+          "source_distribution": {
+            "local_index": 0.5,
+            "offline_gold": 0.5
+          },
+          "redis_cache_enabled": false
+        }
+      },
+      {
+        "timestamp": 1776770613.0010111,
+        "query_hash": "2f79e4e7caf9ac19",
+        "cached": true,
+        "result_count": 2,
+        "providers_used": [
+          "offline_gold",
+          "local_index"
+        ],
+        "provider_errors_count": 0,
+        "latency_ms": 0.003396999090909958,
+        "metrics_snapshot": {
+          "requests_total": 191,
+          "cache_hits": 71,
+          "cache_misses": 120,
+          "hit_rate": 0.3717277486910995,
+          "provider_calls": 240,
+          "provider_errors": 0,
+          "latency_ms_p50": 0.02035799843724817,
+          "latency_ms_p95": 0.02925399166997522,
+          "latency_ms_avg": 0.016866848530998717,
+          "source_distribution": {
+            "local_index": 0.5,
+            "offline_gold": 0.5
+          },
+          "redis_cache_enabled": false
+        }
+      }
+    ],
+    "alerts": [
+      {
+        "name": "hit_rate_degradation",
+        "status": "ok",
+        "value": 0.5,
+        "threshold": 0.3,
+        "message": "hit_rate=0.5000, threshold_min=0.3000"
+      },
+      {
+        "name": "p95_latency_degradation",
+        "status": "ok",
+        "value": 0.028202004614286125,
+        "threshold": 5000.0,
+        "message": "latency_ms_p95=0.03, threshold_max=5000.00"
+      }
+    ],
+    "provider_health": {
+      "offline_gold": {
+        "provider": "offline_gold",
+        "status": "ok",
+        "last_ok": 1776770613.0000095,
+        "last_error": null,
+        "ok_count": 120,
+        "error_count": 0,
+        "updated_at": 1776770613.0000095
+      },
+      "local_index": {
+        "provider": "local_index",
+        "status": "ok",
+        "last_ok": 1776770613.000011,
+        "last_error": null,
+        "ok_count": 120,
+        "error_count": 0,
+        "updated_at": 1776770613.000011
+      }
+    },
+    "history_limit": 50
+  },
+  "sample_results": [
+    {
+      "id": "CH-RU-001",
+      "cached": false,
+      "count": 2,
+      "first_relevant_rank": 2,
+      "providers_used": [
+        "offline_gold",
+        "local_index"
+      ],
+      "provider_errors": {},
+      "latency_ms": 0.09761200635693967
+    },
+    {
+      "id": "NEXT-EN-002",
+      "cached": false,
+      "count": 2,
+      "first_relevant_rank": 2,
+      "providers_used": [
+        "offline_gold",
+        "local_index"
+      ],
+      "provider_errors": {},
+      "latency_ms": 0.04797900328412652
+    },
+    {
+      "id": "OBS-RU-003",
+      "cached": false,
+      "count": 2,
+      "first_relevant_rank": 2,
+      "providers_used": [
+        "offline_gold",
+        "local_index"
+      ],
+      "provider_errors": {},
+      "latency_ms": 0.043010004446841776
+    },
+    {
+      "id": "SEC-RU-004",
+      "cached": false,
+      "count": 2,
+      "first_relevant_rank": 2,
+      "providers_used": [
+        "offline_gold",
+        "local_index"
+      ],
+      "provider_errors": {},
+      "latency_ms": 0.031939009204506874
+    },
+    {
+      "id": "TER-EN-005",
+      "cached": false,
+      "count": 2,
+      "first_relevant_rank": 2,
+      "providers_used": [
+        "offline_gold",
+        "local_index"
+      ],
+      "provider_errors": {},
+      "latency_ms": 0.031549003324471414
+    },
+    {
+      "id": "MCP-RU-006",
+      "cached": false,
+      "count": 2,
+      "first_relevant_rank": 2,
+      "providers_used": [
+        "offline_gold",
+        "local_index"
+      ],
+      "provider_errors": {},
+      "latency_ms": 0.033402000553905964
+    },
+    {
+      "id": "LLM-RU-007",
+      "cached": false,
+      "count": 2,
+      "first_relevant_rank": 2,
+      "providers_used": [
+        "offline_gold",
+        "local_index"
+      ],
+      "provider_errors": {},
+      "latency_ms": 0.033352000173181295
+    },
+    {
+      "id": "API-RU-008",
+      "cached": false,
+      "count": 2,
+      "first_relevant_rank": 2,
+      "providers_used": [
+        "offline_gold",
+        "local_index"
+      ],
+      "provider_errors": {},
+      "latency_ms": 0.059300000430084765
+    },
+    {
+      "id": "TRI-RU-009",
+      "cached": false,
+      "count": 2,
+      "first_relevant_rank": 2,
+      "providers_used": [
+        "offline_gold",
+        "local_index"
+      ],
+      "provider_errors": {},
+      "latency_ms": 0.03148900577798486
+    },
+    {
+      "id": "DB-RU-010",
+      "cached": false,
+      "count": 2,
+      "first_relevant_rank": 2,
+      "providers_used": [
+        "offline_gold",
+        "local_index"
+      ],
+      "provider_errors": {},
+      "latency_ms": 0.03229999856557697
+    },
+    {
+      "id": "STR-EN-011",
+      "cached": false,
+      "count": 2,
+      "first_relevant_rank": 2,
+      "providers_used": [
+        "offline_gold",
+        "local_index"
+      ],
+      "provider_errors": {},
+      "latency_ms": 0.02461599069647491
+    },
+    {
+      "id": "PGV-RU-012",
+      "cached": false,
+      "count": 2,
+      "first_relevant_rank": 2,
+      "providers_used": [
+        "offline_gold",
+        "local_index"
+      ],
+      "provider_errors": {},
+      "latency_ms": 0.09106899960897863
+    },
+    {
+      "id": "PREF-EN-013",
+      "cached": false,
+      "count": 2,
+      "first_relevant_rank": 2,
+      "providers_used": [
+        "offline_gold",
+        "local_index"
+      ],
+      "provider_errors": {},
+      "latency_ms": 0.028502996428869665
+    },
+    {
+      "id": "CH-RU-014",
+      "cached": false,
+      "count": 2,
+      "first_relevant_rank": 2,
+      "providers_used": [
+        "offline_gold",
+        "local_index"
+      ],
+      "provider_errors": {},
+      "latency_ms": 0.02942499122582376
+    },
+    {
+      "id": "NEXT-RU-015",
+      "cached": false,
+      "count": 2,
+      "first_relevant_rank": 2,
+      "providers_used": [
+        "offline_gold",
+        "local_index"
+      ],
+      "provider_errors": {},
+      "latency_ms": 0.03054698754567653
+    },
+    {
+      "id": "OBS-EN-016",
+      "cached": false,
+      "count": 2,
+      "first_relevant_rank": 2,
+      "providers_used": [
+        "offline_gold",
+        "local_index"
+      ],
+      "provider_errors": {},
+      "latency_ms": 0.02757200854830444
+    },
+    {
+      "id": "SEC-RU-017",
+      "cached": false,
+      "count": 2,
+      "first_relevant_rank": 2,
+      "providers_used": [
+        "offline_gold",
+        "local_index"
+      ],
+      "provider_errors": {},
+      "latency_ms": 0.026879992219619453
+    },
+    {
+      "id": "TER-RU-018",
+      "cached": false,
+      "count": 2,
+      "first_relevant_rank": 2,
+      "providers_used": [
+        "offline_gold",
+        "local_index"
+      ],
+      "provider_errors": {},
+      "latency_ms": 0.026658992283046246
+    },
+    {
+      "id": "MCP-EN-019",
+      "cached": false,
+      "count": 2,
+      "first_relevant_rank": 2,
+      "providers_used": [
+        "offline_gold",
+        "local_index"
+      ],
+      "provider_errors": {},
+      "latency_ms": 0.02560699067544192
+    },
+    {
+      "id": "LLM-RU-020",
+      "cached": false,
+      "count": 2,
+      "first_relevant_rank": 2,
+      "providers_used": [
+        "offline_gold",
+        "local_index"
+      ],
+      "provider_errors": {},
+      "latency_ms": 0.030076000257395208
+    },
+    {
+      "id": "API-EN-021",
+      "cached": false,
+      "count": 2,
+      "first_relevant_rank": 2,
+      "providers_used": [
+        "offline_gold",
+        "local_index"
+      ],
+      "provider_errors": {},
+      "latency_ms": 0.029103990527801216
+    },
+    {
+      "id": "TRI-EN-022",
+      "cached": false,
+      "count": 2,
+      "first_relevant_rank": 2,
+      "providers_used": [
+        "offline_gold",
+        "local_index"
+      ],
+      "provider_errors": {},
+      "latency_ms": 0.022460997570306063
+    },
+    {
+      "id": "DB-EN-023",
+      "cached": false,
+      "count": 2,
+      "first_relevant_rank": 2,
+      "providers_used": [
+        "offline_gold",
+        "local_index"
+      ],
+      "provider_errors": {},
+      "latency_ms": 0.024816006771288812
+    },
+    {
+      "id": "STR-EN-024",
+      "cached": false,
+      "count": 2,
+      "first_relevant_rank": 2,
+      "providers_used": [
+        "offline_gold",
+        "local_index"
+      ],
+      "provider_errors": {},
+      "latency_ms": 0.02771099389065057
+    },
+    {
+      "id": "PGV-EN-025",
+      "cached": false,
+      "count": 2,
+      "first_relevant_rank": 2,
+      "providers_used": [
+        "offline_gold",
+        "local_index"
+      ],
+      "provider_errors": {},
+      "latency_ms": 0.023244007024914026
+    }
+  ],
+  "gates": {
+    "thresholds": {
+      "min_recall_at_k": 0.6,
+      "min_mrr": 0.45,
+      "min_source_coverage": 0.95,
+      "max_not_found_rate": 0.2,
+      "max_p95_latency_ms": 8000.0,
+      "min_cache_hit_rate": 0.2,
+      "min_provenance_coverage": 0.95,
+      "min_fallback_success_rate": 0.95
+    },
+    "checks": [
+      {
+        "name": "recall_at_k",
+        "value": 1.0,
+        "threshold": 0.6,
+        "status": "pass"
+      },
+      {
+        "name": "mrr",
+        "value": 0.5,
+        "threshold": 0.45,
+        "status": "pass"
+      },
+      {
+        "name": "source_coverage",
+        "value": 1.0,
+        "threshold": 0.95,
+        "status": "pass"
+      },
+      {
+        "name": "provenance_coverage",
+        "value": 1.0,
+        "threshold": 0.95,
+        "status": "pass"
+      },
+      {
+        "name": "not_found_rate",
+        "value": 0.0,
+        "threshold": 0.2,
+        "status": "pass"
+      },
+      {
+        "name": "latency_ms_p95",
+        "value": 0.043010004446841776,
+        "threshold": 8000.0,
+        "status": "pass"
+      },
+      {
+        "name": "cache_hit_rate",
+        "value": 0.5,
+        "threshold": 0.2,
+        "status": "pass"
+      },
+      {
+        "name": "degradation_fallback_success_min",
+        "value": 1.0,
+        "threshold": 0.95,
+        "status": "pass"
+      },
+      {
+        "name": "degradation_success_min",
+        "value": 1.0,
+        "threshold": 1.0,
+        "status": "pass"
+      },
+      {
+        "name": "pii_masking",
+        "value": "ok",
+        "threshold": "ok",
+        "status": "pass"
+      }
+    ],
+    "all_passed": true
+  },
+  "prometheus_snapshot": "# HELP external_knowledge_requests_total Total external knowledge requests\n# TYPE external_knowledge_requests_total counter\nexternal_knowledge_requests_total 240\n# HELP external_knowledge_cache_hits_total Total cache hits\n# TYPE external_knowledge_cache_hits_total counter\nexternal_knowledge_cache_hits_total 120\n# HELP external_knowledge_cache_misses_total Total cache misses\n# TYPE external_knowledge_cache_misses_total counter\nexternal_knowledge_cache_misses_total 120\n# HELP external_knowledge_hit_rate Cache hit rate\n# TYPE external_knowledge_hit_rate gauge\nexternal_knowledge_hit_rate 0.5\n# HELP external_knowledge_latency_ms_p95 P95 latency in milliseconds\n# TYPE external_knowledge_latency_ms_p95 gauge\nexternal_knowledge_latency_ms_p95 0.028202004614286125\n# HELP external_knowledge_latency_ms_p50 P50 latency in milliseconds\n# TYPE external_knowledge_latency_ms_p50 gauge\nexternal_knowledge_latency_ms_p50 0.006280999514274299\n# HELP external_knowledge_provider_errors_total Total provider errors\n# TYPE external_knowledge_provider_errors_total counter\nexternal_knowledge_provider_errors_total 0\n# HELP external_knowledge_source_share Share of chunks by source\n# TYPE external_knowledge_source_share gauge\nexternal_knowledge_source_share{source=\"local_index\"} 0.5\n# HELP external_knowledge_source_share Share of chunks by source\n# TYPE external_knowledge_source_share gauge\nexternal_knowledge_source_share{source=\"offline_gold\"} 0.5\n# HELP external_knowledge_alert_status Alert status (1=firing,0=ok)\n# TYPE external_knowledge_alert_status gauge\nexternal_knowledge_alert_status{name=\"hit_rate_degradation\"} 0\n# HELP external_knowledge_alert_status Alert status (1=firing,0=ok)\n# TYPE external_knowledge_alert_status gauge\nexternal_knowledge_alert_status{name=\"p95_latency_degradation\"} 0\n\n# HELP external_knowledge_eval_recall_at_k Offline eval recall@k\n# TYPE external_knowledge_eval_recall_at_k gauge\nexternal_knowledge_eval_recall_at_k 1.0\n# HELP external_knowledge_eval_mrr Offline eval MRR\n# TYPE external_knowledge_eval_mrr gauge\nexternal_knowledge_eval_mrr 0.5\n# HELP external_knowledge_eval_source_coverage Answers with sources ratio\n# TYPE external_knowledge_eval_source_coverage gauge\nexternal_knowledge_eval_source_coverage 1.0\n# HELP external_knowledge_eval_not_found_rate Not found answers ratio\n# TYPE external_knowledge_eval_not_found_rate gauge\nexternal_knowledge_eval_not_found_rate 0.0\n# HELP external_knowledge_eval_provenance_coverage Chunks with provenance ratio\n# TYPE external_knowledge_eval_provenance_coverage gauge\nexternal_knowledge_eval_provenance_coverage 1.0\n# HELP external_knowledge_eval_gate_status Overall gate status (1=pass,0=fail)\n# TYPE external_knowledge_eval_gate_status gauge\nexternal_knowledge_eval_gate_status 1\n",
+  "summary_text": "timestamp=2026-04-21T11:23:34.013533+00:00\ndataset=/mldata/mcp_context_pipeline/eval_queries_v3.jsonl\nrecords=120\nstatus=pass\n\nrecall_at_k=1.0000\nmrr=0.5000\nsource_coverage=1.0000\nprovenance_coverage=1.0000\nnot_found_rate=0.0000\nlatency_ms_p50=0.03\nlatency_ms_p95=0.04\ncache_hit_rate=0.5000\n\ngate_checks:\n- recall_at_k status=pass value=1.0 threshold=0.6\n- mrr status=pass value=0.5 threshold=0.45\n- source_coverage status=pass value=1.0 threshold=0.95\n- provenance_coverage status=pass value=1.0 threshold=0.95\n- not_found_rate status=pass value=0.0 threshold=0.2\n- latency_ms_p95 status=pass value=0.043010004446841776 threshold=8000.0\n- cache_hit_rate status=pass value=0.5 threshold=0.2\n- degradation_fallback_success_min status=pass value=1.0 threshold=0.95\n- degradation_success_min status=pass value=1.0 threshold=1.0\n- pii_masking status=pass value=ok threshold=ok\n"
+}

@@ -1,0 +1,52 @@
+# HELP external_knowledge_requests_total Total external knowledge requests
+# TYPE external_knowledge_requests_total counter
+external_knowledge_requests_total 240
+# HELP external_knowledge_cache_hits_total Total cache hits
+# TYPE external_knowledge_cache_hits_total counter
+external_knowledge_cache_hits_total 120
+# HELP external_knowledge_cache_misses_total Total cache misses
+# TYPE external_knowledge_cache_misses_total counter
+external_knowledge_cache_misses_total 120
+# HELP external_knowledge_hit_rate Cache hit rate
+# TYPE external_knowledge_hit_rate gauge
+external_knowledge_hit_rate 0.5
+# HELP external_knowledge_latency_ms_p95 P95 latency in milliseconds
+# TYPE external_knowledge_latency_ms_p95 gauge
+external_knowledge_latency_ms_p95 0.028202004614286125
+# HELP external_knowledge_latency_ms_p50 P50 latency in milliseconds
+# TYPE external_knowledge_latency_ms_p50 gauge
+external_knowledge_latency_ms_p50 0.006280999514274299
+# HELP external_knowledge_provider_errors_total Total provider errors
+# TYPE external_knowledge_provider_errors_total counter
+external_knowledge_provider_errors_total 0
+# HELP external_knowledge_source_share Share of chunks by source
+# TYPE external_knowledge_source_share gauge
+external_knowledge_source_share{source="local_index"} 0.5
+# HELP external_knowledge_source_share Share of chunks by source
+# TYPE external_knowledge_source_share gauge
+external_knowledge_source_share{source="offline_gold"} 0.5
+# HELP external_knowledge_alert_status Alert status (1=firing,0=ok)
+# TYPE external_knowledge_alert_status gauge
+external_knowledge_alert_status{name="hit_rate_degradation"} 0
+# HELP external_knowledge_alert_status Alert status (1=firing,0=ok)
+# TYPE external_knowledge_alert_status gauge
+external_knowledge_alert_status{name="p95_latency_degradation"} 0
+
+# HELP external_knowledge_eval_recall_at_k Offline eval recall@k
+# TYPE external_knowledge_eval_recall_at_k gauge
+external_knowledge_eval_recall_at_k 1.0
+# HELP external_knowledge_eval_mrr Offline eval MRR
+# TYPE external_knowledge_eval_mrr gauge
+external_knowledge_eval_mrr 0.5
+# HELP external_knowledge_eval_source_coverage Answers with sources ratio
+# TYPE external_knowledge_eval_source_coverage gauge
+external_knowledge_eval_source_coverage 1.0
+# HELP external_knowledge_eval_not_found_rate Not found answers ratio
+# TYPE external_knowledge_eval_not_found_rate gauge
+external_knowledge_eval_not_found_rate 0.0
+# HELP external_knowledge_eval_provenance_coverage Chunks with provenance ratio
+# TYPE external_knowledge_eval_provenance_coverage gauge
+external_knowledge_eval_provenance_coverage 1.0
+# HELP external_knowledge_eval_gate_status Overall gate status (1=pass,0=fail)
+# TYPE external_knowledge_eval_gate_status gauge
+external_knowledge_eval_gate_status 1
