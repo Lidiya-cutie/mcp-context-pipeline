@@ -13,7 +13,7 @@
       "tag": "socks-in"
     },
     {
-      "port": 10810,
+      "port": 10808,
       "protocol": "http",
       "settings": {},
       "tag": "http-in"
@@ -41,13 +41,8 @@
         "network": "tcp",
         "security": "reality",
         "realitySettings": {
-          "target": "ads.x5.ru:443",
-          "serverNames": [
-            "ads.x5.ru"
-          ],
-          "shortIds": [
-            "e7f9540c0e"
-          ],
+          "serverName": "ads.x5.ru",
+          "shortId": "e7f9540c0e",
           "publicKey": "FQ_KxAqeA5Fb3QAs8DHE5loBj895THT2f_Uz-7DhdAE",
           "fingerprint": "chrome",
           "spiderX": "/"

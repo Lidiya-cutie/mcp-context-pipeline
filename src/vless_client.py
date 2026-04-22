@@ -237,14 +237,9 @@ class VLESSClient:
         # Добавляем Reality если указан
         if vless_config["params"].get("security") == "reality":
             sni = vless_config["params"].get("sni", "www.microsoft.com")
-            # Добавляем порт если его нет
-            if ":" not in sni:
-                sni = f"{sni}:443"
-
             reality_settings = {
-                "target": sni,
-                "serverNames": [sni.split(":")[0]],
-                "shortIds": [vless_config["params"].get("sid", "")],
+                "serverName": sni.split(":")[0],
+                "shortId": vless_config["params"].get("sid", ""),
                 "publicKey": vless_config["params"].get("pbk", ""),
                 "fingerprint": vless_config["params"].get("fp", "chrome"),
                 "spiderX": vless_config["params"].get("spx", "/")
@@ -449,13 +444,19 @@ def setup_vless_from_env() -> Optional[VLESSClient]:
     """
     vless_url = os.getenv("VLESS_URL")
     subscription_url = os.getenv("VLESS_SUBSCRIPTION")
-    listen_port = int(os.getenv("XRAY_LISTEN_PORT", "10809"))
+    listen_port = int(
+        os.getenv("XRAY_LISTEN_PORT")
+        or os.getenv("XRAY_SOCKS_PORT")
+        or "10809"
+    )
+    http_port = int(os.getenv("XRAY_HTTP_PORT", str(listen_port + 1)))
 
     if not vless_url and not subscription_url:
         print("[WARN] VLESS_URL или VLESS_SUBSCRIPTION не указаны")
         return None
 
     client = VLESSClient(listen_port=listen_port)
+    client.http_port = http_port
 
     try:
         server_index = int(os.getenv("VLESS_SERVER_INDEX", "0"))
