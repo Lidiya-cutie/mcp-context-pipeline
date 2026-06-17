@@ -1,0 +1,387 @@
+{
+  "run_timestamp": "2026-06-17T13:41:59.418809+00:00",
+  "model": "glm-4.7",
+  "max_iterations": 5,
+  "f1_threshold": 0.95,
+  "drift_threshold": 0.18,
+  "total_cases": 5,
+  "converged": 5,
+  "not_converged": 0,
+  "avg_iterations": 1.4,
+  "avg_final_f1": 1.0,
+  "avg_final_drift": 0.0882,
+  "results": [
+    {
+      "test_case_id": "tc1",
+      "converged": true,
+      "total_iterations": 1,
+      "final_f1": 1.0,
+      "final_drift": 0.14938721110562325,
+      "final_text": "Инфраструктура Data-Science-Core на ml6 (62.152.32.131). Администратор Иван Петров настраивает деплой через GitLab CI/CD: https://git.imbalanced.tech/mcdis-dep/data-science. Версия 2.4.1, 125 ГБ RAM, 3.6 ТБ диска. Отклик 42 мс, throughput 1500 запросов/с. Инциденты: ops@imbalanced.tech. Канал: https://t.me/imbalanced_ops.",
+      "iterations": [
+        {
+          "iteration": 1,
+          "f1": 1.0,
+          "semantic_similarity": 0.8506127888943767,
+          "context_drift": 0.14938721110562325,
+          "compression_ratio": 0.6369,
+          "original_tokens": 168,
+          "compressed_tokens": 107,
+          "latency_ms": 5204.6,
+          "converged": true,
+          "hint": null,
+          "per_type": {
+            "url": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "found": 2,
+              "expected": 2
+            },
+            "project": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "found": 1,
+              "expected": 1
+            },
+            "email": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "found": 1,
+              "expected": 1
+            },
+            "person": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "found": 1,
+              "expected": 1
+            },
+            "number": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "found": 8,
+              "expected": 8
+            }
+          },
+          "generated_text": "Инфраструктура Data-Science-Core на ml6 (62.152.32.131). Администратор Иван Петров настраивает деплой через GitLab CI/CD: https://git.imbalanced.tech/mcdis-dep/data-science. Версия 2.4.1, 125 ГБ RAM, 3.6 ТБ диска. Отклик 42 мс, throughput 1500 запросов/с. Инциденты: ops@imbalanced.tech. Канал: https://t.me/imbalanced_ops."
+        }
+      ]
+    },
+    {
+      "test_case_id": "tc2",
+      "converged": true,
+      "total_iterations": 2,
+      "final_f1": 1.0,
+      "final_drift": 0.05103544771449953,
+      "final_text": "Сотрудник Алексей Смирнов принят 15.01.2023 в отдел Data Science. Оклад — 180000 рублей, премия за Q1 — 45000. Руководитель — Елена Кузнецова. Дата следующей аттестации — 10.02.2025. Алексей окончил МФТИ в 2019 году, опыт в NLP — 3 года. Email для связи — a.smirnov@imbalanced.tech. Табельный номер — 7742.",
+      "iterations": [
+        {
+          "iteration": 1,
+          "f1": 0.9286,
+          "semantic_similarity": 0.7999629777767294,
+          "context_drift": 0.20003702222327058,
+          "compression_ratio": 0.6231,
+          "original_tokens": 130,
+          "compressed_tokens": 81,
+          "latency_ms": 3856.9,
+          "converged": false,
+          "hint": "При сжатии текста были допущены следующие ошибки:\n- Потеряны сущности: person=Сотрудник Алексей Смирнов\n- Семантический дрейф слишком велик: 0.20 (допустимо < 0.18)\n- Слабо передан фрагмент «Табельный номер — 7742.» — утеряны: Табельный, номер\n- Слабо передан фрагмент «Дата следующей аттестации — 10.02.2025.» — утеряны: Дата, следующей, аттестации\n- Слабо передан фрагмент «Email для связи — a.smirnov@imbalanced.tech.» — утеряны: связи\n- Низкий F1 по типам: person (F1=0.50)\n\nПерегенерируй сжатую версию, устранив эти проблемы. Обязательно сохрани все перечисленные сущности дословно.",
+          "per_type": {
+            "email": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "found": 1,
+              "expected": 1
+            },
+            "person": {
+              "precision": 0.5,
+              "recall": 0.5,
+              "f1": 0.5,
+              "found": 2,
+              "expected": 2
+            },
+            "date": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "found": 2,
+              "expected": 2
+            },
+            "number": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "found": 9,
+              "expected": 9
+            }
+          },
+          "generated_text": "Алексей Смирнов (таб. № 7742, email: a.smirnov@imbalanced.tech) принят 15.01.2023 в Data Science. Оклад 180000 руб., премия Q1 — 45000. Руководитель — Елена Кузнецова. Окончил МФТИ в 2019, опыт в NLP — 3 года. Аттестация — 10.02.2025."
+        },
+        {
+          "iteration": 2,
+          "f1": 1.0,
+          "semantic_similarity": 0.9489645522855005,
+          "context_drift": 0.05103544771449953,
+          "compression_ratio": 0.8846,
+          "original_tokens": 130,
+          "compressed_tokens": 115,
+          "latency_ms": 4414.9,
+          "converged": true,
+          "hint": null,
+          "per_type": {
+            "email": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "found": 1,
+              "expected": 1
+            },
+            "person": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "found": 2,
+              "expected": 2
+            },
+            "date": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "found": 2,
+              "expected": 2
+            },
+            "number": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "found": 9,
+              "expected": 9
+            }
+          },
+          "generated_text": "Сотрудник Алексей Смирнов принят 15.01.2023 в отдел Data Science. Оклад — 180000 рублей, премия за Q1 — 45000. Руководитель — Елена Кузнецова. Дата следующей аттестации — 10.02.2025. Алексей окончил МФТИ в 2019 году, опыт в NLP — 3 года. Email для связи — a.smirnov@imbalanced.tech. Табельный номер — 7742."
+        }
+      ]
+    },
+    {
+      "test_case_id": "tc3",
+      "converged": true,
+      "total_iterations": 2,
+      "final_f1": 1.0,
+      "final_drift": 0.019077041706604625,
+      "final_text": "Релиз MLOps-Stack версии 3.0.0 запланирован на 20.06.2025. В него входят: новый пайплайн для Data-Pipeline (версия 1.8.2), обновлённый Tools (версия 2.1.0) и Research (версия 0.9.5). Документация: https://docs.imbalanced.tech/mlops/v3. Координатор релиза — Мария Сидорова. Дата финального ревью — 15.06.2025. Исправлено 47 багов, добавлено 12 новых фич. Pull requests: https://git.imbalanced.tech/mcdis-dep/mlops-stack/-/merge_requests.",
+      "iterations": [
+        {
+          "iteration": 1,
+          "f1": 1.0,
+          "semantic_similarity": 0.8099727777037437,
+          "context_drift": 0.19002722229625635,
+          "compression_ratio": 0.6606,
+          "original_tokens": 165,
+          "compressed_tokens": 109,
+          "latency_ms": 3794.5,
+          "converged": false,
+          "hint": "При сжатии текста были допущены следующие ошибки:\n- Семантический дрейф слишком велик: 0.19 (допустимо < 0.18)\n- Слабо передан фрагмент «В него входят: новый пайплайн для Data-Pipeline (версия 1.8.2), обновлённый Tools (версия 2.1.0) ...» — утеряны: него, входят, пайплайн, версия, версия, версия\n- Слабо передан фрагмент «Дата финального ревью — 15.06.2025.» — утеряны: Дата, финального\n- Слабо передан фрагмент «Координатор релиза — Мария Сидорова.» — утеряны: релиза\n\nПерегенерируй сжатую версию, устранив эти проблемы. Обязательно сохрани все перечисленные сущности дословно.",
+          "per_type": {
+            "url": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "found": 2,
+              "expected": 2
+            },
+            "project": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "found": 1,
+              "expected": 1
+            },
+            "person": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "found": 1,
+              "expected": 1
+            },
+            "number": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "found": 12,
+              "expected": 12
+            },
+            "date": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "found": 2,
+              "expected": 2
+            }
+          },
+          "generated_text": "Релиз MLOps-Stack 3.0.0 запланирован на 20.06.2025. Включает Data-Pipeline 1.8.2, Tools 2.1.0 и Research 0.9.5. Исправлено 47 багов, добавлено 12 фич. Документация: https://docs.imbalanced.tech/mlops/v3. PR: https://git.imbalanced.tech/mcdis-dep/mlops-stack/-/merge_requests. Координатор — Мария Сидорова, финальное ревью — 15.06.2025."
+        },
+        {
+          "iteration": 2,
+          "f1": 1.0,
+          "semantic_similarity": 0.9809229582933954,
+          "context_drift": 0.019077041706604625,
+          "compression_ratio": 0.9212,
+          "original_tokens": 165,
+          "compressed_tokens": 152,
+          "latency_ms": 5128.8,
+          "converged": true,
+          "hint": null,
+          "per_type": {
+            "url": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "found": 2,
+              "expected": 2
+            },
+            "project": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "found": 1,
+              "expected": 1
+            },
+            "person": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "found": 1,
+              "expected": 1
+            },
+            "number": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "found": 12,
+              "expected": 12
+            },
+            "date": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "found": 2,
+              "expected": 2
+            }
+          },
+          "generated_text": "Релиз MLOps-Stack версии 3.0.0 запланирован на 20.06.2025. В него входят: новый пайплайн для Data-Pipeline (версия 1.8.2), обновлённый Tools (версия 2.1.0) и Research (версия 0.9.5). Документация: https://docs.imbalanced.tech/mlops/v3. Координатор релиза — Мария Сидорова. Дата финального ревью — 15.06.2025. Исправлено 47 багов, добавлено 12 новых фич. Pull requests: https://git.imbalanced.tech/mcdis-dep/mlops-stack/-/merge_requests."
+        }
+      ]
+    },
+    {
+      "test_case_id": "tc4",
+      "converged": true,
+      "total_iterations": 1,
+      "final_f1": 1.0,
+      "final_drift": 0.06438428003123398,
+      "final_text": "Инцидент INC-2024-0831 зафиксирован 03.03.2024 в 14:27 UTC. Сервис: data-pipeline. Ответственный: Дмитрий Волков. Причина: отказ Redis-кластера на ноде redis-03. Простой: 23 минуты. Затронуто пользователей: 4200. Отчёт отправлен на incident@imbalanced.tech. Эскалация: Анна Морозова (телефон недоступен до 05.03.2024). Восстановление в 14:50 UTC, подтверждено 3 проверками.",
+      "iterations": [
+        {
+          "iteration": 1,
+          "f1": 1.0,
+          "semantic_similarity": 0.935615719968766,
+          "context_drift": 0.06438428003123398,
+          "compression_ratio": 0.8571,
+          "original_tokens": 168,
+          "compressed_tokens": 144,
+          "latency_ms": 3500.4,
+          "converged": true,
+          "hint": null,
+          "per_type": {
+            "email": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "found": 1,
+              "expected": 1
+            },
+            "person": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "found": 2,
+              "expected": 2
+            },
+            "date": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "found": 2,
+              "expected": 2
+            },
+            "number": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "found": 11,
+              "expected": 11
+            }
+          },
+          "generated_text": "Инцидент INC-2024-0831 зафиксирован 03.03.2024 в 14:27 UTC. Сервис: data-pipeline. Ответственный: Дмитрий Волков. Причина: отказ Redis-кластера на ноде redis-03. Простой: 23 минуты. Затронуто пользователей: 4200. Отчёт отправлен на incident@imbalanced.tech. Эскалация: Анна Морозова (телефон недоступен до 05.03.2024). Восстановление в 14:50 UTC, подтверждено 3 проверками."
+        }
+      ]
+    },
+    {
+      "test_case_id": "tc5",
+      "converged": true,
+      "total_iterations": 1,
+      "final_f1": 1.0,
+      "final_drift": 0.15736008705068283,
+      "final_text": "Протокол от 12.04.2024. Участники: Сергей Иванов (Data-Science-Core), Ольга Жукова (Research), Никита Лебедев. Спринт 42: 15 задач из 18, 2 перенесены, 1 отменена. Проект Data-Pipeline: новый коннектор PostgreSQL, загрузка быстрее на 35%. Бюджет: 2400000 руб. Следующая встреча: 26.04.2024. Решение по MLOps-Stack отложено до 19.04.2024.",
+      "iterations": [
+        {
+          "iteration": 1,
+          "f1": 1.0,
+          "semantic_similarity": 0.8426399129493172,
+          "context_drift": 0.15736008705068283,
+          "compression_ratio": 0.6684,
+          "original_tokens": 187,
+          "compressed_tokens": 125,
+          "latency_ms": 3775.3,
+          "converged": true,
+          "hint": null,
+          "per_type": {
+            "project": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "found": 2,
+              "expected": 2
+            },
+            "person": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "found": 3,
+              "expected": 3
+            },
+            "date": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "found": 3,
+              "expected": 3
+            },
+            "number": {
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "found": 11,
+              "expected": 11
+            }
+          },
+          "generated_text": "Протокол от 12.04.2024. Участники: Сергей Иванов (Data-Science-Core), Ольга Жукова (Research), Никита Лебедев. Спринт 42: 15 задач из 18, 2 перенесены, 1 отменена. Проект Data-Pipeline: новый коннектор PostgreSQL, загрузка быстрее на 35%. Бюджет: 2400000 руб. Следующая встреча: 26.04.2024. Решение по MLOps-Stack отложено до 19.04.2024."
+        }
+      ]
+    }
+  ]
+}
