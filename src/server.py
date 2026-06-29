@@ -52,6 +52,12 @@ llm_client = None
 secure_middleware = None
 anthropic_api_key = os.getenv("ANTHROPIC_API_KEY")
 openai_api_key = os.getenv("OPENAI_API_KEY")
+anthropic_auth_token = os.getenv("ANTHROPIC_AUTH_TOKEN")
+anthropic_base_url = os.getenv("ANTHROPIC_BASE_URL", "").strip()
+
+
+def _get_anthropic_key() -> Optional[str]:
+    return anthropic_api_key or anthropic_auth_token
 
 # Redis import (moved to top level)
 import redis
@@ -153,25 +159,36 @@ def get_llm_client():
         proxy_url = os.getenv("HTTP_PROXY") or os.getenv("HTTPS_PROXY") or os.getenv("ALL_PROXY")
 
         if LLM_PROVIDER == "anthropic":
-            if not anthropic_api_key:
-                raise ValueError("ANTHROPIC_API_KEY not set in environment")
+            anthropic_key = _get_anthropic_key()
+            if not anthropic_key:
+                raise ValueError("ANTHROPIC_API_KEY/ANTHROPIC_AUTH_TOKEN not set in environment")
 
             try:
                 from anthropic import AsyncAnthropic
 
-                kwargs = {"api_key": anthropic_api_key}
+                kwargs = {"api_key": anthropic_key}
+                if anthropic_base_url:
+                    kwargs["base_url"] = anthropic_base_url
                 if proxy_url:
                     try:
                         import httpx
-                        proxies = {"http://": proxy_url, "https://": proxy_url}
-                        kwargs["http_client"] = httpx.AsyncClient(proxies=proxies, timeout=60.0)
+                        try:
+                            kwargs["http_client"] = httpx.AsyncClient(
+                                proxies={"http://": proxy_url, "https://": proxy_url},
+                                timeout=60.0
+                            )
+                        except TypeError:
+                            kwargs["http_client"] = httpx.AsyncClient(proxy=proxy_url, timeout=60.0)
                         print(f"[INFO] Anthropic Claude client with proxy: {proxy_url}")
                     except ImportError:
                         print("[WARN] httpx not installed, proxy will not be used")
 
                 llm_client = AsyncAnthropic(**kwargs)
                 if not proxy_url:
-                    print(f"[INFO] Anthropic Claude client initialized (model: {ANTHROPIC_MODEL})")
+                    if anthropic_base_url:
+                        print(f"[INFO] Anthropic-compatible client initialized (base_url: {anthropic_base_url}, model: {ANTHROPIC_MODEL})")
+                    else:
+                        print(f"[INFO] Anthropic Claude client initialized (model: {ANTHROPIC_MODEL})")
             except ImportError:
                 print("[ERROR] anthropic package not installed. Install with: pip install anthropic")
                 raise
@@ -222,7 +239,7 @@ def get_secure_middleware():
     try:
         from secure_middleware import SecureLLMMiddleware
 
-        api_key = anthropic_api_key if LLM_PROVIDER == "anthropic" else openai_api_key
+        api_key = _get_anthropic_key() if LLM_PROVIDER == "anthropic" else openai_api_key
         model = ANTHROPIC_MODEL if LLM_PROVIDER == "anthropic" else OPENAI_MODEL
 
         secure_middleware = SecureLLMMiddleware(
@@ -258,8 +275,8 @@ async def call_llm_for_summary(text: str, system_message: str, language: str = "
     fallback_mode = os.getenv("FALLBACK_SUMMARY", "false").lower() == "true"
 
     # Check API key availability
-    if LLM_PROVIDER == "anthropic" and not anthropic_api_key:
-        raise ValueError("ANTHROPIC_API_KEY not set in environment")
+    if LLM_PROVIDER == "anthropic" and not _get_anthropic_key():
+        raise ValueError("ANTHROPIC_API_KEY/ANTHROPIC_AUTH_TOKEN not set in environment")
     elif LLM_PROVIDER == "openai" and not openai_api_key:
         raise ValueError("OPENAI_API_KEY not set in environment")
 
@@ -689,10 +706,13 @@ async def check_connections():
 
         # Check LLM client based on provider
         if LLM_PROVIDER == "anthropic":
-            if anthropic_api_key:
-                print(f"[INFO] ANTHROPIC_API_KEY set - compression features available")
+            if _get_anthropic_key():
+                if anthropic_auth_token and anthropic_base_url:
+                    print("[INFO] ANTHROPIC_AUTH_TOKEN + ANTHROPIC_BASE_URL set - GLM/compatible endpoint available")
+                else:
+                    print(f"[INFO] ANTHROPIC_API_KEY set - compression features available")
             else:
-                print("[WARN] ANTHROPIC_API_KEY not set - compression features will fail")
+                print("[WARN] ANTHROPIC_API_KEY/ANTHROPIC_AUTH_TOKEN not set - compression features will fail")
         elif LLM_PROVIDER == "openai":
             if openai_api_key:
                 print(f"[INFO] OPENAI_API_KEY set - compression features available")

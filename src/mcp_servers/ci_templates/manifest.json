@@ -1,0 +1,18 @@
+{
+  "name": "ci_templates",
+  "version": "1.0.0",
+  "description": "CI/CD pipeline template generation",
+  "transport": "stdio",
+  "protocol": "MCP/2024-11-05",
+  "entry": "server.py",
+  "tools": [
+    "list_templates",
+    "get_template",
+    "generate_pipeline",
+    "generate_docker_stage",
+    "generate_test_stage",
+    "generate_deploy_stage",
+    "validate_pipeline",
+    "check_health"
+  ]
+}

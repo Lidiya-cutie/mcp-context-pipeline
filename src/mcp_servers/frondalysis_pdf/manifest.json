@@ -1,0 +1,21 @@
+{
+  "name": "frondalysis_pdf",
+  "version": "1.0.0",
+  "description": "Frondalysis LaTeX/PDF generation: LLM → MD → Pandoc → XeLaTeX → PDF",
+  "transport": "stdio",
+  "protocol": "json-rpc",
+  "mcpVersion": "2024-11-05",
+  "entry": "server.py",
+  "env": [
+    "FRONDALYSIS_PREAMBULA_PATH",
+    "FRONDALYSIS_OUTPUT_DIR",
+    "FRONDALYSIS_MAINFONT",
+    "FRONDALYSIS_MONOFONT"
+  ],
+  "tools": [
+    "generate_pdf",
+    "validate_markdown",
+    "list_templates",
+    "get_preamble"
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "name": "figma_api",
+  "version": "1.0.0",
+  "description": "Figma REST API proxy — MCP server (stdio transport)",
+  "transport": "stdio",
+  "command": "python3",
+  "args": ["/tmp/skills_deploy/mcp-servers/figma_api/server.py"],
+  "env": {
+    "FIGMA_ACCESS_TOKEN": "${FIGMA_ACCESS_TOKEN}"
+  },
+  "tools": [
+    "get_file",
+    "get_file_nodes",
+    "get_components",
+    "get_component",
+    "get_styles",
+    "get_style",
+    "get_images",
+    "check_health"
+  ]
+}

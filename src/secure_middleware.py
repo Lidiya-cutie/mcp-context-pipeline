@@ -13,7 +13,10 @@ Supports:
 
 import asyncio
 from typing import List, Dict, Any, Optional
-from .pii_guard import get_pii_guard
+try:
+    from .pii_guard import get_pii_guard
+except ImportError:
+    from pii_guard import get_pii_guard
 
 
 class SecureLLMMiddleware:
@@ -60,25 +63,30 @@ class SecureLLMMiddleware:
         try:
             import os
             proxy_url = os.getenv("HTTP_PROXY") or os.getenv("HTTPS_PROXY") or os.getenv("ALL_PROXY")
+            anthropic_base_url = os.getenv("ANTHROPIC_BASE_URL", "").strip()
 
             if self.provider == "anthropic":
                 from anthropic import AsyncAnthropic
 
                 kwargs = {"api_key": self.api_key}
+                if anthropic_base_url:
+                    kwargs["base_url"] = anthropic_base_url
                 if proxy_url:
                     try:
                         import httpx
-                        proxies = {"http://": proxy_url, "https://": proxy_url}
-                        kwargs["http_client"] = httpx.AsyncClient(proxies=proxies, timeout=60.0)
+                        kwargs["http_client"] = self._build_httpx_client(httpx, proxy_url)
                         print(f"[INFO] Anthropic client with proxy: {proxy_url}")
                     except ImportError:
                         print("[WARN] httpx not installed, proxy will not be used")
 
                 self.client = AsyncAnthropic(**kwargs)
                 if not self.model:
-                    self.model = "claude-sonnet-4-20250514"
+                    self.model = os.getenv("ANTHROPIC_MODEL", "claude-sonnet-4-20250514")
                 if not proxy_url:
-                    print(f"[INFO] Anthropic client initialized (model: {self.model})")
+                    if anthropic_base_url:
+                        print(f"[INFO] Anthropic-compatible client initialized (base_url: {anthropic_base_url}, model: {self.model})")
+                    else:
+                        print(f"[INFO] Anthropic client initialized (model: {self.model})")
 
             elif self.provider == "openai":
                 from openai import AsyncOpenAI
@@ -87,8 +95,7 @@ class SecureLLMMiddleware:
                 if proxy_url:
                     try:
                         import httpx
-                        proxies = {"http://": proxy_url, "https://": proxy_url}
-                        kwargs["http_client"] = httpx.AsyncClient(proxies=proxies, timeout=60.0)
+                        kwargs["http_client"] = self._build_httpx_client(httpx, proxy_url)
                         print(f"[INFO] OpenAI client with proxy: {proxy_url}")
                     except ImportError:
                         print("[WARN] httpx not installed, proxy will not be used")
@@ -105,6 +112,20 @@ class SecureLLMMiddleware:
         except Exception as e:
             print(f"[ERROR] Failed to initialize {self.provider} client: {e}")
             self.client = None
+
+    @staticmethod
+    def _build_httpx_client(httpx_module, proxy_url: str):
+        """
+        Build AsyncClient compatible with multiple httpx versions.
+        httpx<0.28 uses 'proxies', newer uses 'proxy'.
+        """
+        try:
+            return httpx_module.AsyncClient(
+                proxies={"http://": proxy_url, "https://": proxy_url},
+                timeout=60.0
+            )
+        except TypeError:
+            return httpx_module.AsyncClient(proxy=proxy_url, timeout=60.0)
 
     async def chat(
         self,
@@ -316,7 +337,7 @@ def create_secure_middleware(
     # Get API key from environment if not provided
     if api_key is None:
         if provider == "anthropic":
-            api_key = os.getenv("ANTHROPIC_API_KEY")
+            api_key = os.getenv("ANTHROPIC_API_KEY") or os.getenv("ANTHROPIC_AUTH_TOKEN")
         elif provider == "openai":
             api_key = os.getenv("OPENAI_API_KEY")
 

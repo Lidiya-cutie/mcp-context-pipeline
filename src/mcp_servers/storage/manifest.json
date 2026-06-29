@@ -1,0 +1,28 @@
+{
+  "name": "storage",
+  "version": "1.0.0",
+  "description": "S3-compatible object storage MCP server",
+  "transport": "stdio",
+  "protocol": "json-rpc",
+  "mcpVersion": "2024-11-05",
+  "entry": "server.py",
+  "env": [
+    "STORAGE_ENDPOINT",
+    "STORAGE_BUCKET",
+    "STORAGE_ACCESS_KEY",
+    "STORAGE_SECRET_KEY",
+    "STORAGE_REGION"
+  ],
+  "tools": [
+    "list_buckets",
+    "list_objects",
+    "get_object",
+    "put_object",
+    "delete_object",
+    "get_object_metadata",
+    "get_presigned_url",
+    "copy_object",
+    "get_bucket_stats",
+    "check_health"
+  ]
+}

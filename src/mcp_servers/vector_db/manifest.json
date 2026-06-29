@@ -1,0 +1,22 @@
+{
+  "description": "Vector DB MCP Server — cosine similarity search with NumPy or ChromaDB backend",
+  "version": "1.0.0",
+  "transport": "stdio",
+  "command": "python3",
+  "args": ["server.py"],
+  "env": {
+    "VECTOR_DB_PATH": "optional — persist directory for ChromaDB",
+    "VECTOR_DB_BACKEND": "auto|numpy|chromadb (default: auto — uses chromadb if installed)"
+  },
+  "tools": [
+    "create_collection",
+    "list_collections",
+    "delete_collection",
+    "upsert",
+    "search",
+    "get",
+    "delete",
+    "count",
+    "info"
+  ]
+}

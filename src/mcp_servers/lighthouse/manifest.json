@@ -1,0 +1,17 @@
+{
+  "name": "lighthouse",
+  "version": "1.0.0",
+  "description": "MCP server for Google Lighthouse web performance audits",
+  "transport": "stdio",
+  "protocolVersion": "2024-11-05",
+  "tools": [
+    "run_audit",
+    "run_performance",
+    "run_accessibility",
+    "run_seo",
+    "compare_urls",
+    "get_audit_history",
+    "get_budget_report",
+    "check_health"
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "description": "Secrets Manager MCP Server — encrypted secret storage with rotation, TTL, and full audit log",
+  "version": "1.0.0",
+  "transport": "stdio",
+  "command": "python3",
+  "args": ["server.py"],
+  "env": {
+    "SECRETS_DB_PATH": "optional — SQLite file path (default: in-memory)",
+    "SECRETS_MASTER_KEY": "encryption master key (change in production!)"
+  },
+  "tools": [
+    "write_secret",
+    "read_secret",
+    "delete_secret",
+    "list_secrets",
+    "rotate_secret",
+    "get_secret_history",
+    "get_audit_log",
+    "set_secret_ttl",
+    "check_health"
+  ]
+}

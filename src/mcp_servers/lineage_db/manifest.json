@@ -1,0 +1,17 @@
+{
+  "description": "Lineage DB MCP Server — data-to-model-to-deploy lineage graph with SQLite persistence",
+  "version": "1.0.0",
+  "transport": "stdio",
+  "command": "python3",
+  "args": ["server.py"],
+  "env": {
+    "LINEAGE_DB_PATH": "optional — SQLite file path (default: in-memory)"
+  },
+  "tools": [
+    "add_node", "get_node", "update_node", "delete_node", "list_nodes",
+    "add_edge", "get_edges", "delete_edge",
+    "get_lineage", "get_path", "get_subgraph",
+    "get_roots", "get_leaves",
+    "stats", "export_graph", "import_graph"
+  ]
+}

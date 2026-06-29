@@ -1,0 +1,15 @@
+{
+  "description": "Agent Bus MCP Server — pub/sub messaging, shared state, locks, and presence for multi-agent coordination",
+  "version": "1.0.0",
+  "transport": "stdio",
+  "command": "python3",
+  "args": ["server.py"],
+  "tools": [
+    "create_channel", "list_channels", "delete_channel",
+    "subscribe", "unsubscribe",
+    "publish", "poll_messages",
+    "get_state", "set_state", "delete_state", "list_state",
+    "acquire_lock", "release_lock", "list_locks",
+    "register_agent", "deregister_agent", "list_agents", "heartbeat"
+  ]
+}

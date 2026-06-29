@@ -1,0 +1,14 @@
+{
+  "name": "usage_api",
+  "version": "1.0.0",
+  "description": "Token usage and billing tracking MCP server",
+  "transport": "stdio",
+  "protocolVersion": "2024-11-05",
+  "entry": "server.py",
+  "env": {
+    "USAGE_DB_PATH": {
+      "description": "Path to SQLite database file",
+      "default": ":memory:"
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "name": "db_read",
+  "version": "1.0.0",
+  "description": "Read-only database access MCP server. Supports SQLite, PostgreSQL, MySQL.",
+  "transport": "stdio",
+  "protocolVersion": "2024-11-05",
+  "tools": [
+    "execute_query",
+    "list_tables",
+    "describe_table",
+    "get_table_create",
+    "get_indexes",
+    "get_foreign_keys",
+    "get_row_count",
+    "search_data",
+    "check_health"
+  ],
+  "env": {
+    "DB_TYPE": "sqlite|postgresql|mysql (default: sqlite)",
+    "DB_PATH": "SQLite database file path (default: :memory:)",
+    "PG_URL": "PostgreSQL connection URL",
+    "MYSQL_URL": "MySQL connection URL"
+  }
+}
