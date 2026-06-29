@@ -1,0 +1,25 @@
+{
+  "description": "ClickHouse Read MCP Server v1.0 — read-only ClickHouse client via HTTP interface. Query execution, schema introspection, table statistics, query log, schema graph, and health checks.",
+  "version": "1.0.0",
+  "transport": "stdio",
+  "command": "python3",
+  "args": ["server.py"],
+  "env": {
+    "CLICKHOUSE_URL": "ClickHouse HTTP URL (default: http://localhost:8123)",
+    "CLICKHOUSE_USER": "User name (default: default)",
+    "CLICKHOUSE_PASSWORD": "Password (default: empty)",
+    "CLICKHOUSE_DATABASE": "Default database (default: default)"
+  },
+  "tools": [
+    "query",
+    "query_raw",
+    "list_databases",
+    "list_tables",
+    "describe_table",
+    "get_table_create",
+    "get_table_stats",
+    "get_recent_queries",
+    "get_schema_graph",
+    "check_health"
+  ]
+}

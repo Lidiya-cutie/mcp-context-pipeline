@@ -1,0 +1,22 @@
+{
+  "name": "git_blame",
+  "version": "1.0.0",
+  "description": "Git blame/log/annotate wrapper MCP server",
+  "protocolVersion": "2024-11-05",
+  "transport": "stdio",
+  "command": "python3",
+  "args": ["server.py"],
+  "env": {
+    "GIT_REPO_PATH": "."
+  },
+  "tools": [
+    "blame_file",
+    "blame_lines",
+    "get_commit_history",
+    "get_commit_detail",
+    "get_author_stats",
+    "find_author",
+    "get_hotspots",
+    "check_health"
+  ]
+}

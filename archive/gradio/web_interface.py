@@ -66,6 +66,17 @@ class KnowledgeRequest(BaseModel):
     topic: Optional[str] = None
 
 
+class ExternalSearchRequest(BaseModel):
+    query: str
+    domain: str = "python"
+    library: Optional[str] = None
+    repo: Optional[str] = None
+    project_id: Optional[int] = None
+    limit: int = 5
+    intent: Optional[str] = None
+    task_type: Optional[str] = None
+
+
 @app.on_event("startup")
 async def startup_event():
     global orchestrator
@@ -318,6 +329,23 @@ async def get_external_provider_health():
     if not orchestrator:
         raise HTTPException(status_code=503, detail="Orchestrator not initialized")
     payload = await orchestrator.get_external_provider_health()
+    return JSONResponse(payload)
+
+
+@app.post("/api/external/search")
+async def external_search(request_data: ExternalSearchRequest):
+    if not orchestrator:
+        raise HTTPException(status_code=503, detail="Orchestrator not initialized")
+    payload = await orchestrator.external_search(
+        query=request_data.query,
+        domain=request_data.domain,
+        library=request_data.library,
+        repo=request_data.repo,
+        project_id=request_data.project_id,
+        limit=request_data.limit,
+        intent=request_data.intent,
+        task_type=request_data.task_type,
+    )
     return JSONResponse(payload)
 
 

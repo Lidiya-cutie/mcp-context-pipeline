@@ -12,7 +12,13 @@ import asyncio
 import ast
 import json
 import os
+import re
+import shutil
 import sys
+import tempfile
+import urllib.request
+import urllib.error
+from html import unescape
 from contextlib import AsyncExitStack
 from typing import List, Dict, Any, Optional
 from dotenv import load_dotenv
@@ -27,6 +33,7 @@ from mcp import ClientSession, stdio_client
 try:
     from .utils import count_tokens, generate_session_id
     from .translator import translate_en_to_ru
+    from .secure_middleware import create_secure_middleware
     from .external_knowledge import (
         ExternalKnowledgeRouter,
         Context7Provider,
@@ -42,6 +49,7 @@ try:
 except ImportError:
     from utils import count_tokens, generate_session_id
     from translator import translate_en_to_ru
+    from secure_middleware import create_secure_middleware
     from external_knowledge import (
         ExternalKnowledgeRouter,
         Context7Provider,
@@ -152,6 +160,355 @@ class ContextOrchestrator:
         self._context7_write_stream = None
         self.enable_external_knowledge = enable_external_knowledge
         self.external_knowledge_router: Optional[ExternalKnowledgeRouter] = None
+        self._secure_codegen_middleware = None
+
+    @staticmethod
+    def _normalize_task_type(intent: Optional[str] = None, task_type: Optional[str] = None) -> str:
+        normalized = (task_type or intent or "docs").strip().lower()
+        if normalized not in {"docs", "debug", "code"}:
+            return "docs"
+        return normalized
+
+    @staticmethod
+    def _extract_json_payload(raw_text: str) -> Optional[Dict[str, Any]]:
+        if not raw_text:
+            return None
+
+        candidate = raw_text.strip()
+        if candidate.startswith("{") and candidate.endswith("}"):
+            try:
+                parsed = json.loads(candidate)
+                if isinstance(parsed, dict):
+                    return parsed
+            except json.JSONDecodeError:
+                pass
+
+        fenced = re.search(r"```json\s*(\{.*?\})\s*```", raw_text, re.S)
+        if fenced:
+            try:
+                parsed = json.loads(fenced.group(1))
+                if isinstance(parsed, dict):
+                    return parsed
+            except json.JSONDecodeError:
+                return None
+
+        generic = re.search(r"(\{.*\})", raw_text, re.S)
+        if generic:
+            try:
+                parsed = json.loads(generic.group(1))
+                if isinstance(parsed, dict):
+                    return parsed
+            except json.JSONDecodeError:
+                return None
+        return None
+
+    @staticmethod
+    def _to_string_list(value: Any) -> List[str]:
+        if isinstance(value, list):
+            return [str(item).strip() for item in value if str(item).strip()]
+        if value is None:
+            return []
+        text = str(value).strip()
+        return [text] if text else []
+
+    @staticmethod
+    def _build_provenance(chunks: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        provenance = []
+        for chunk in chunks:
+            provenance.append(
+                {
+                    "title": chunk.get("title", ""),
+                    "source": chunk.get("source", ""),
+                    "url": chunk.get("url"),
+                    "metadata": chunk.get("metadata", {}) or {},
+                    "score": chunk.get("score", 0.0),
+                }
+            )
+        return provenance
+
+    @staticmethod
+    def _normalize_code_task(
+        prompt: str,
+        requirements: Optional[List[str]] = None,
+        language: str = "python",
+        framework: Optional[str] = None,
+        doc_urls: Optional[List[str]] = None,
+        repo: Optional[str] = None,
+        constraints: Optional[List[str]] = None,
+        tests_required: bool = True,
+        description: Optional[str] = None,
+        document: Optional[str] = None,
+    ) -> Dict[str, Any]:
+        return {
+            "prompt": (prompt or "").strip(),
+            "description": (description or "").strip(),
+            "document": (document or "").strip(),
+            "requirements": [str(x).strip() for x in (requirements or []) if str(x).strip()],
+            "language": (language or "python").strip().lower(),
+            "framework": (framework or "").strip(),
+            "doc_urls": [str(x).strip() for x in (doc_urls or []) if str(x).strip()],
+            "repo": (repo or "").strip() or None,
+            "constraints": [str(x).strip() for x in (constraints or []) if str(x).strip()],
+            "tests_required": bool(tests_required),
+        }
+
+    @staticmethod
+    def _strip_html(text: str) -> str:
+        no_script = re.sub(r"(?is)<script.*?>.*?</script>", " ", text)
+        no_style = re.sub(r"(?is)<style.*?>.*?</style>", " ", no_script)
+        no_tags = re.sub(r"(?is)<[^>]+>", " ", no_style)
+        return unescape(re.sub(r"\s+", " ", no_tags)).strip()
+
+    async def _fetch_doc_url_text(self, url: str) -> str:
+        proxy_url = os.getenv("HTTP_PROXY") or os.getenv("HTTPS_PROXY") or os.getenv("ALL_PROXY")
+
+        def _do_fetch() -> str:
+            opener = urllib.request.build_opener(
+                urllib.request.ProxyHandler({"http": proxy_url, "https": proxy_url}) if proxy_url else urllib.request.ProxyHandler({})
+            )
+            request = urllib.request.Request(url=url, headers={"User-Agent": "mcp-context-pipeline/1.0"}, method="GET")
+            with opener.open(request, timeout=20) as response:
+                body = response.read().decode("utf-8", errors="ignore")
+            stripped = self._strip_html(body)
+            return stripped if stripped else body[:8000]
+
+        try:
+            return await asyncio.to_thread(_do_fetch)
+        except Exception:
+            return ""
+
+    async def _ingest_doc_urls_into_local_index(self, doc_urls: List[str]) -> int:
+        if not self.external_knowledge_router or not doc_urls:
+            return 0
+        local_provider = None
+        for provider in self.external_knowledge_router.providers:
+            if getattr(provider, "name", "") == "local_index" and hasattr(provider, "ingest_documents"):
+                local_provider = provider
+                break
+        if local_provider is None:
+            return 0
+
+        docs = []
+        for url in doc_urls:
+            text = await self._fetch_doc_url_text(url)
+            if not text:
+                continue
+            docs.append({
+                "title": f"doc_url:{url}",
+                "content": text[:20000],
+                "url": url,
+                "source": "doc_url_ingest",
+            })
+
+        if not docs:
+            return 0
+        try:
+            return int(await local_provider.ingest_documents(docs))
+        except Exception:
+            return 0
+
+    async def _retrieve_doc_url_chunks(
+        self,
+        query: str,
+        doc_urls: List[str],
+        limit_per_url: int = 2
+    ) -> List[Dict[str, Any]]:
+        if not self.external_knowledge_router or not doc_urls:
+            return []
+        chunks: List[Dict[str, Any]] = []
+        for url in doc_urls:
+            direct_text = await self._fetch_doc_url_text(url)
+            if direct_text:
+                chunks.append({
+                    "title": f"Direct document fetch: {url}",
+                    "content": direct_text[:4000],
+                    "source": "doc_url_fetch",
+                    "score": 0.91,
+                    "url": url,
+                    "metadata": {"doc_url": url, "retrieval_mode": "direct_fetch"},
+                })
+
+            retrieved = await self.external_knowledge_router.search(
+                query=f"{query}\nsource_url:{url}",
+                context={"domain": "docs"},
+                limit=limit_per_url
+            )
+            for chunk in retrieved.get("chunks", []):
+                metadata = dict(chunk.get("metadata", {}) or {})
+                metadata["doc_url"] = url
+                metadata["retrieval_mode"] = "provider_search"
+                chunks.append({
+                    **chunk,
+                    "metadata": metadata
+                })
+        return chunks
+
+    def _get_secure_codegen_middleware(self):
+        if self._secure_codegen_middleware is not None:
+            return self._secure_codegen_middleware
+
+        provider = os.getenv("LLM_PROVIDER", "anthropic").lower()
+        try:
+            self._secure_codegen_middleware = create_secure_middleware(provider=provider)
+            return self._secure_codegen_middleware
+        except Exception as e:
+            print(f"[WARN] Code synthesis middleware unavailable: {e}")
+            return None
+
+    async def _synthesize_code_from_sources(
+        self,
+        query: str,
+        provenance: List[Dict[str, Any]],
+        code_task: Optional[Dict[str, Any]] = None,
+        language: str = "ru"
+    ) -> Dict[str, Any]:
+        middleware = self._get_secure_codegen_middleware()
+        if middleware is None:
+            return {
+                "status": "error",
+                "error": "Secure LLM middleware is unavailable for code synthesis"
+            }
+
+        source_blocks = []
+        for idx, item in enumerate(provenance[:8], 1):
+            source_blocks.append(
+                {
+                    "idx": idx,
+                    "title": item.get("title", ""),
+                    "source": item.get("source", ""),
+                    "url": item.get("url"),
+                    "metadata": item.get("metadata", {}),
+                }
+            )
+        sources_text = json.dumps(source_blocks, ensure_ascii=False, indent=2)
+        task = code_task or {}
+        style_rules = [
+            "Пиши осмысленный и минимально необходимый код без лишних комментариев.",
+            "Обрабатывай ошибки и валидацию входов.",
+            "Не придумывай API/классы, если их нет в источниках.",
+            "Соблюдай идиомы выбранного языка и фреймворка.",
+        ]
+        if task.get("tests_required"):
+            style_rules.append("Добавь рабочие тесты для ключевых сценариев.")
+        style_rules_text = "\n".join([f"- {rule}" for rule in style_rules])
+
+        system_prompt = (
+            "Ты инженер-эксперт. Верни ТОЛЬКО JSON без markdown.\n"
+            "Обязательные поля JSON: code, explanation, assumptions, dependencies, run_instructions, tests.\n"
+            "Для code: рабочий минимальный пример, обработка ошибок, валидация входа.\n"
+            "Не придумывай источники, опирайся только на переданные provenance."
+        )
+        user_prompt = (
+            f"Задача: {query}\n\n"
+            f"Code task:\n{json.dumps(task, ensure_ascii=False, indent=2)}\n\n"
+            f"Источники (provenance):\n{sources_text}\n\n"
+            f"Coding style rules:\n{style_rules_text}\n\n"
+            "Сформируй итог как JSON:\n"
+            "{\n"
+            '  "code": "str",\n'
+            '  "explanation": "str",\n'
+            '  "assumptions": ["str"],\n'
+            '  "dependencies": ["str"],\n'
+            '  "run_instructions": ["str"],\n'
+            '  "tests": "str"\n'
+            "}\n"
+            "Только JSON."
+        )
+
+        try:
+            raw = await middleware.chat(
+                messages=[{"role": "user", "content": user_prompt}],
+                max_tokens=2500,
+                temperature=0.2,
+                system_prompt=system_prompt,
+                language=language
+            )
+        except Exception as e:
+            return {
+                "status": "error",
+                "error": f"Code synthesis call failed: {e}"
+            }
+        parsed = self._extract_json_payload(raw)
+        if not parsed:
+            return {
+                "status": "error",
+                "error": "Failed to parse synthesis JSON response",
+                "raw": raw
+            }
+        return {"status": "ok", "payload": parsed, "raw": raw}
+
+    @staticmethod
+    async def _validate_python_code(code: str, timeout_sec: float = 5.0) -> Dict[str, Any]:
+        result = {
+            "language": "python",
+            "syntax": {"ok": False, "error": ""},
+            "linter": {"ok": False, "error": "", "tool": "ruff"},
+            "smoke_test": {"ok": False, "error": "", "output": ""},
+            "overall_ok": False,
+        }
+
+        try:
+            ast.parse(code)
+            result["syntax"] = {"ok": True, "error": ""}
+        except SyntaxError as e:
+            result["syntax"] = {"ok": False, "error": str(e)}
+            return result
+
+        with tempfile.NamedTemporaryFile("w", suffix=".py", delete=False, encoding="utf-8") as tmp:
+            tmp.write(code)
+            tmp_path = tmp.name
+
+        try:
+            ruff_path = shutil.which("ruff")
+            if ruff_path:
+                lint_proc = await asyncio.create_subprocess_exec(
+                    ruff_path,
+                    "check",
+                    "--quiet",
+                    tmp_path,
+                    stdout=asyncio.subprocess.PIPE,
+                    stderr=asyncio.subprocess.PIPE
+                )
+                lint_stdout, lint_stderr = await asyncio.wait_for(lint_proc.communicate(), timeout=timeout_sec)
+                lint_out = (lint_stdout or b"").decode("utf-8", errors="ignore")
+                lint_err = (lint_stderr or b"").decode("utf-8", errors="ignore")
+                if lint_proc.returncode == 0:
+                    result["linter"] = {"ok": True, "error": "", "tool": "ruff"}
+                else:
+                    result["linter"] = {"ok": False, "error": (lint_out or lint_err).strip(), "tool": "ruff"}
+            else:
+                result["linter"] = {"ok": True, "error": "ruff not installed, lint skipped", "tool": "ruff"}
+
+            run_proc = await asyncio.create_subprocess_exec(
+                sys.executable,
+                tmp_path,
+                stdout=asyncio.subprocess.PIPE,
+                stderr=asyncio.subprocess.PIPE
+            )
+            run_stdout, run_stderr = await asyncio.wait_for(run_proc.communicate(), timeout=timeout_sec)
+            run_out = (run_stdout or b"").decode("utf-8", errors="ignore")
+            run_err = (run_stderr or b"").decode("utf-8", errors="ignore")
+            if run_proc.returncode == 0:
+                result["smoke_test"] = {"ok": True, "error": "", "output": run_out.strip()}
+            else:
+                result["smoke_test"] = {"ok": False, "error": run_err.strip() or run_out.strip(), "output": run_out.strip()}
+        except TimeoutError:
+            result["smoke_test"] = {"ok": False, "error": f"smoke test timeout > {timeout_sec}s", "output": ""}
+        finally:
+            try:
+                os.unlink(tmp_path)
+            except OSError:
+                pass
+
+        result["overall_ok"] = bool(
+            result["syntax"]["ok"] and
+            result["linter"]["ok"] and
+            result["smoke_test"]["ok"]
+        )
+        return result
+
+    async def _validate_generated_code(self, code: str) -> Dict[str, Any]:
+        return await self._validate_python_code(code)
 
     async def connect(self):
         """
@@ -974,16 +1331,22 @@ When generating code or architecture:
         library: Optional[str] = None,
         repo: Optional[str] = None,
         project_id: Optional[int] = None,
-        limit: int = 5
+        limit: int = 5,
+        intent: Optional[str] = None,
+        task_type: Optional[str] = None,
+        code_task: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
         """
         Единый поиск по внешним источникам через роутер провайдеров.
         """
+        normalized_task = self._normalize_task_type(intent=intent, task_type=task_type)
+
         if not self.external_knowledge_router:
             return {
                 "status": "error",
                 "error": "External knowledge router not initialized",
-                "chunks": []
+                "chunks": [],
+                "intent": normalized_task
             }
 
         context = {
@@ -999,10 +1362,82 @@ When generating code or architecture:
             context=context,
             limit=limit
         )
+        base_payload = {
+            "status": "ok",
+            "intent": normalized_task,
+            **result
+        }
+        if normalized_task != "code":
+            return base_payload
+
+        chunks = list(result.get("chunks", []))
+        normalized_code_task = code_task or self._normalize_code_task(prompt=query, repo=repo, language="python")
+        doc_urls = normalized_code_task.get("doc_urls", [])
+        ingested_docs = await self._ingest_doc_urls_into_local_index(doc_urls)
+        doc_chunks = await self._retrieve_doc_url_chunks(query=query, doc_urls=doc_urls, limit_per_url=2)
+        combined_chunks = chunks + doc_chunks
+        provenance = self._build_provenance(combined_chunks)
+        synthesis = await self._synthesize_code_from_sources(
+            query=query,
+            provenance=provenance,
+            code_task=normalized_code_task,
+            language="ru"
+        )
+        if synthesis.get("status") != "ok":
+            return {
+                **base_payload,
+                "status": "error",
+                "stage": "code_synthesis",
+                "error": synthesis.get("error", "Unknown synthesis error"),
+                "raw_generation": synthesis.get("raw", "")
+            }
+
+        generated = synthesis.get("payload", {})
+        code = str(generated.get("code", "") or "").strip()
+        tests = str(generated.get("tests", "") or "").strip()
+        validation = await self._validate_generated_code(code) if code else {
+            "language": "python",
+            "syntax": {"ok": False, "error": "empty code"},
+            "linter": {"ok": False, "error": "empty code", "tool": "ruff"},
+            "smoke_test": {"ok": False, "error": "empty code", "output": ""},
+            "overall_ok": False,
+        }
+        if not validation.get("overall_ok", False):
+            return {
+                **base_payload,
+                "status": "error",
+                "stage": "code_synthesis",
+                "error": "Generated code failed validation",
+                "code": code,
+                "tests": tests,
+                "validation_result": validation,
+                "sources": provenance,
+                "code_task": normalized_code_task,
+            }
 
         return {
             "status": "ok",
-            **result
+            "intent": normalized_task,
+            "query": query,
+            "stage_a_retrieval": {
+                "providers_used": result.get("providers_used", []),
+                "provider_errors": result.get("provider_errors", {}),
+                "count": result.get("count", 0),
+            },
+            "code": code,
+            "tests": tests,
+            "explanation": str(generated.get("explanation", "") or ""),
+            "assumptions": self._to_string_list(generated.get("assumptions")),
+            "dependencies": self._to_string_list(generated.get("dependencies")),
+            "run_instructions": self._to_string_list(generated.get("run_instructions")),
+            "sources": provenance,
+            "code_task": normalized_code_task,
+            "doc_ingestion": {
+                "doc_urls_count": len(doc_urls),
+                "ingested_docs": ingested_docs,
+                "extra_doc_chunks": len(doc_chunks),
+            },
+            "validation_result": validation,
         }
 
     async def external_code(
@@ -1018,7 +1453,59 @@ When generating code or architecture:
             domain="python",
             library=library,
             repo=repo,
-            limit=limit
+            limit=limit,
+            intent="code"
+        )
+
+    async def generate_code(
+        self,
+        prompt: str,
+        description: Optional[str] = None,
+        document: Optional[str] = None,
+        requirements: Optional[List[str]] = None,
+        language: str = "python",
+        framework: Optional[str] = None,
+        doc_urls: Optional[List[str]] = None,
+        repo: Optional[str] = None,
+        constraints: Optional[List[str]] = None,
+        tests_required: bool = True,
+        limit: int = 5,
+    ) -> Dict[str, Any]:
+        code_task = self._normalize_code_task(
+            prompt=prompt,
+            description=description,
+            document=document,
+            requirements=requirements,
+            language=language,
+            framework=framework,
+            doc_urls=doc_urls,
+            repo=repo,
+            constraints=constraints,
+            tests_required=tests_required,
+        )
+        query_parts = [code_task["prompt"]]
+        if code_task["description"]:
+            query_parts.append(code_task["description"])
+        if code_task["document"]:
+            query_parts.append(code_task["document"][:1200])
+        if code_task["requirements"]:
+            query_parts.append("requirements: " + "; ".join(code_task["requirements"]))
+        if code_task["framework"]:
+            query_parts.append(f"framework: {code_task['framework']}")
+        if code_task["constraints"]:
+            query_parts.append("constraints: " + "; ".join(code_task["constraints"]))
+        if code_task["language"]:
+            query_parts.append(f"language: {code_task['language']}")
+        query = "\n".join([part for part in query_parts if part]).strip()
+
+        return await self.external_search(
+            query=query,
+            domain="python",
+            library=code_task["framework"] or None,
+            repo=code_task["repo"],
+            limit=limit,
+            intent="code",
+            code_task=code_task,
         )
 
     def get_external_knowledge_metrics(self) -> Dict[str, Any]:
@@ -1121,6 +1608,8 @@ async def interactive_session():
         print("  - 'ext-search <domain> <query>' - Search across external knowledge providers")
         print("  - 'ext-docs <lib> <query>' - External docs search with library context")
         print("  - 'ext-code <lib> <topic>' - Code-oriented external search (router alias)")
+        print("  - 'ext-task <intent> <library> <query>' - Intent-driven pipeline (docs|debug|code)")
+        print("  - 'gen-code <json>' - Unified code_task facade (prompt/requirements/language/framework/doc_urls/repo/constraints/tests_required)")
         print("  - 'ext-metrics' - External knowledge quality metrics")
         print("  - 'ext-metrics-history [limit]' - Metrics history from Redis/local store")
         print("  - 'ext-metrics-json [limit]' - JSON export (current + history + alerts)")
@@ -1211,6 +1700,39 @@ async def interactive_session():
                         print(json.dumps(result, ensure_ascii=False, indent=2))
                     else:
                         print("Usage: ext-code <library> <topic>")
+                elif user_input.lower().startswith("ext-task "):
+                    parts = user_input[9:].split(" ", 2)
+                    if len(parts) == 3:
+                        result = await orchestrator.external_search(
+                            query=parts[2],
+                            library=parts[1],
+                            domain="python",
+                            limit=3,
+                            intent=parts[0]
+                        )
+                        print(json.dumps(result, ensure_ascii=False, indent=2))
+                    else:
+                        print("Usage: ext-task <intent> <library> <query>")
+                elif user_input.lower().startswith("gen-code "):
+                    raw = user_input[9:].strip()
+                    try:
+                        payload = json.loads(raw)
+                        result = await orchestrator.generate_code(
+                            prompt=payload.get("prompt", ""),
+                            description=payload.get("description"),
+                            document=payload.get("document"),
+                            requirements=payload.get("requirements"),
+                            language=payload.get("language", "python"),
+                            framework=payload.get("framework"),
+                            doc_urls=payload.get("doc_urls"),
+                            repo=payload.get("repo"),
+                            constraints=payload.get("constraints"),
+                            tests_required=payload.get("tests_required", True),
+                            limit=int(payload.get("limit", 5)),
+                        )
+                        print(json.dumps(result, ensure_ascii=False, indent=2))
+                    except json.JSONDecodeError:
+                        print("Usage: gen-code <json>. Example: gen-code {\"prompt\":\"FastAPI auth\",\"framework\":\"fastapi\",\"doc_urls\":[\"https://fastapi.tiangolo.com/\"]}")
                 elif user_input.lower() == "ext-metrics":
                     metrics = orchestrator.get_external_knowledge_metrics()
                     print(json.dumps(metrics, ensure_ascii=False, indent=2))

@@ -1,0 +1,23 @@
+{
+  "name": "redis",
+  "version": "1.0.0",
+  "description": "Redis key-value store MCP server — get, set, delete, list, hash, list, set, info, health check",
+  "transport": "stdio",
+  "command": "python3",
+  "args": ["server.py"],
+  "env": {
+    "REDIS_URL": "redis://localhost:6379",
+    "REDIS_CLI_PATH": "redis-cli"
+  },
+  "tools": [
+    "get",
+    "set",
+    "delete",
+    "list_keys",
+    "get_hash",
+    "get_list",
+    "get_set",
+    "get_info",
+    "check_health"
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "name": "static_analysis",
+  "version": "1.0.0",
+  "description": "Code linting and security scanning MCP server. Runs ruff, pylint, bandit, mypy via subprocess.",
+  "transport": "stdio",
+  "command": "python3",
+  "args": ["/tmp/skills_deploy/mcp-servers/static_analysis/server.py"],
+  "tools": [
+    "lint_python",
+    "security_scan",
+    "type_check",
+    "analyze_file",
+    "analyze_directory",
+    "get_complexity",
+    "get_dependencies",
+    "list_available_tools",
+    "check_health"
+  ]
+}

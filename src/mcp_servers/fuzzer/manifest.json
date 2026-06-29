@@ -1,0 +1,23 @@
+{
+  "name": "fuzzer",
+  "version": "1.0.0",
+  "description": "HTTP fuzzing via ffuf/zzuf CLI wrappers — endpoint discovery, parameter fuzzing, header injection, auth bypass testing",
+  "transport": "stdio",
+  "protocol": "MCP",
+  "protocolVersion": "2024-11-05",
+  "command": "python3",
+  "args": ["/tmp/skills_deploy/mcp-servers/fuzzer/server.py"],
+  "env": {
+    "FUZZER_DB_PATH": "/tmp/fuzzer_results.db"
+  },
+  "tools": [
+    "fuzz_endpoints",
+    "fuzz_parameters",
+    "fuzz_headers",
+    "fuzz_auth",
+    "scan_dir",
+    "get_wordlists",
+    "get_results",
+    "check_health"
+  ]
+}

@@ -5,6 +5,7 @@
 import gradio as gr
 import asyncio
 import json
+import os
 import re
 from datetime import datetime
 from typing import List, Dict, Optional
@@ -24,6 +25,151 @@ DESCRIPTION_RE = re.compile(r"### Description\s*(.*?)\s*(?:###|$)", re.DOTALL)
 PARTICIPANT_RE = re.compile(r"-\s*([^—\n]+)\s*—\s*roles:\s*[^,]+,\s*tasks:\s*(\d+)")
 PROJECT_ID_RE = re.compile(r"\*\*projectId\*\*:\s*(\d+)", re.IGNORECASE)
 
+APP_CSS = """
+:root {
+  --bg-main: #0d1016;
+  --bg-panel: #141925;
+  --bg-elevated: #1b2232;
+  --text-main: #eef3ff;
+  --text-muted: #9aa7c1;
+  --accent-orange: #ff7a18;
+  --accent-amber: #ffb347;
+  --accent-cyan: #1fd9ff;
+  --border-soft: #2a344b;
+}
+
+.gradio-container {
+  background: radial-gradient(circle at 15% 0%, #1b2232 0%, var(--bg-main) 42%, #0a0d13 100%);
+  color: var(--text-main);
+}
+
+.app-hero {
+  border: 1px solid var(--border-soft);
+  border-radius: 16px;
+  padding: 16px 18px;
+  margin-bottom: 10px;
+  background: linear-gradient(120deg, #161d2c 0%, #121823 55%, #181f2f 100%);
+  box-shadow: 0 0 0 1px rgba(255, 122, 24, 0.08), 0 8px 26px rgba(0, 0, 0, 0.35);
+}
+
+.hero-title {
+  font-size: 28px;
+  font-weight: 800;
+  margin: 0 0 6px 0;
+}
+
+.hero-subtitle {
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.badge-row {
+  margin-top: 12px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.badge {
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  border: 1px solid transparent;
+}
+
+.badge-orange {
+  background: rgba(255, 122, 24, 0.18);
+  color: #ffd5b0;
+  border-color: rgba(255, 122, 24, 0.38);
+}
+
+.badge-cyan {
+  background: rgba(31, 217, 255, 0.14);
+  color: #b9f4ff;
+  border-color: rgba(31, 217, 255, 0.36);
+}
+
+.card {
+  border: 1px solid var(--border-soft);
+  border-radius: 14px;
+  padding: 12px;
+  background: linear-gradient(180deg, var(--bg-panel), #111725);
+}
+
+.card h2, .card h3 {
+  margin-top: 0;
+}
+
+.param-note {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+button.primary {
+  background: linear-gradient(90deg, var(--accent-orange), var(--accent-amber)) !important;
+  border: none !important;
+  color: #151515 !important;
+  font-weight: 800 !important;
+}
+
+button.secondary {
+  background: linear-gradient(90deg, #27314a, #303c5b) !important;
+  border: 1px solid #3e4d72 !important;
+  color: #dce6ff !important;
+}
+
+textarea, input, .wrap {
+  background: #0f1522 !important;
+  border-color: #2d3851 !important;
+}
+
+.ops-strip {
+  margin-top: 12px;
+  border: 1px solid var(--border-soft);
+  border-radius: 12px;
+  padding: 10px;
+  background: linear-gradient(90deg, #131a28, #171f2e);
+}
+
+.ops-title {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.ops-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.ops-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border-soft);
+  background: #0f1624;
+  font-size: 12px;
+}
+
+.ops-online {
+  color: #7dffb2;
+}
+
+.ops-offline {
+  color: #ff9b9b;
+}
+
+.ops-metric {
+  color: #ffd7b5;
+}
+"""
+
 
 def add_log(level: str, message: str):
     logs.append({
@@ -31,6 +177,73 @@ def add_log(level: str, message: str):
         "message": message,
         "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     })
+
+
+current_summary_threshold = 100000
+
+
+def _provider_statuses() -> Dict[str, bool]:
+    statuses: Dict[str, bool] = {}
+    try:
+        import host_orchestrator  # noqa: F401
+        statuses["Orchestrator"] = True
+    except Exception:
+        statuses["Orchestrator"] = False
+
+    try:
+        import pii_guard  # noqa: F401
+        statuses["PII Guard"] = True
+    except Exception:
+        statuses["PII Guard"] = False
+
+    statuses["Context7"] = bool(os.getenv("CONTEXT7_API_KEY"))
+    statuses["Tavily"] = bool(os.getenv("TAVILY_API_KEY"))
+    statuses["Exa"] = bool(os.getenv("EXA_SEARCH_API_KEY"))
+    statuses["Firecrawl"] = bool(os.getenv("FIRECRAWL_API_KEY"))
+    return statuses
+
+
+def render_operational_status_bar() -> str:
+    statuses = _provider_statuses()
+    pills: List[str] = []
+    for name, online in statuses.items():
+        state = "ONLINE" if online else "OFFLINE"
+        cls = "ops-online" if online else "ops-offline"
+        pills.append(f'<span class="ops-pill">{name}: <b class="{cls}">{state}</b></span>')
+
+    pills.append(
+        f'<span class="ops-pill">summary_threshold: <b class="ops-metric">{current_summary_threshold}</b></span>'
+    )
+    pills.append(
+        f'<span class="ops-pill">active_sessions: <b class="ops-metric">{len(sessions)}</b></span>'
+    )
+    return (
+        '<div class="ops-strip">'
+        '<div class="ops-title">ОПЕРАЦИОННЫЙ СТАТУС</div>'
+        f'<div class="ops-row">{"".join(pills)}</div>'
+        "</div>"
+    )
+
+
+def refresh_operational_status() -> str:
+    return render_operational_status_bar()
+
+
+def update_summary_threshold(value: int) -> str:
+    global current_summary_threshold
+    current_summary_threshold = int(value)
+    return render_operational_status_bar()
+
+
+def ensure_local_no_proxy() -> None:
+    bypass_values = ["localhost", "127.0.0.1", "::1"]
+    for key in ("NO_PROXY", "no_proxy"):
+        existing = os.getenv(key, "")
+        parts = [x.strip() for x in existing.split(",") if x.strip()]
+        for value in bypass_values:
+            if value not in parts:
+                parts.append(value)
+        os.environ[key] = ",".join(parts)
 
 
 def init_orchestrator() -> str:
@@ -376,112 +589,136 @@ def run_async(coro):
         loop.close()
 
 
-with gr.Blocks() as demo:
-    gr.Markdown("# MCP Context Pipeline - Визуальный интерфейс")
-    gr.Markdown("Управление контекстом, PII маскирование, Knowledge Bridge и Context7 интеграция")
-
+with gr.Blocks(title="MCP Context Pipeline Console") as demo:
+    gr.Markdown(
+        """
+<div class="app-hero">
+  <p class="hero-title">MCP Context Pipeline Console</p>
+  <p class="hero-subtitle">Тёмная операционная панель для управления контекстом, PII-защитой и внешними источниками знаний.</p>
+  <div class="badge-row">
+    <span class="badge badge-orange">Context Compression</span>
+    <span class="badge badge-cyan">PII Guard</span>
+    <span class="badge badge-orange">Knowledge Bridge</span>
+    <span class="badge badge-cyan">Context7 + External Router</span>
+  </div>
+</div>
+"""
+    )
     with gr.Row():
-        with gr.Column(scale=2):
+        status_bar = gr.HTML(value=render_operational_status_bar())
+        refresh_status_btn = gr.Button("Обновить операционный статус", size="sm", variant="secondary")
+
+    with gr.Tabs():
+        with gr.Tab("Операции"):
             with gr.Row():
-                with gr.Column():
-                    gr.Markdown("### Инициализация")
+                with gr.Column(scale=2, elem_classes="card"):
+                    gr.Markdown("### Инициализация и состояние")
                     init_btn = gr.Button("Инициализировать Orchestrator", variant="primary")
                     init_output = gr.Textbox(label="Статус", interactive=False)
-
-            with gr.Row():
-                with gr.Column():
-                    gr.Markdown("### Статистика")
-                    stats_text = gr.Textbox(label="", value="Нажмите кнопку для получения статистики", lines=8, interactive=False)
+                    stats_text = gr.Textbox(
+                        label="Статистика",
+                        value="Нажмите кнопку для получения статистики",
+                        lines=8,
+                        interactive=False
+                    )
                     refresh_stats_btn = gr.Button("Обновить статистику", size="sm")
 
-        with gr.Column(scale=1):
-            gr.Markdown("### Быстрые действия")
-            with gr.Row():
-                compress_btn = gr.Button("Сжать контекст", variant="secondary")
-                checkpoint_btn = gr.Button("Создать чекпоинт", variant="secondary")
-            with gr.Row():
-                compress_threshold = gr.Slider(50000, 128000, value=100000, label="Порог сжатия (токены)")
-            quick_action_output = gr.Textbox(label="Результат действия", lines=3, interactive=False)
-
-    with gr.Row():
-        with gr.Column():
-            gr.Markdown("## PII Маскирование")
-            gr.Markdown("Автоматическое маскирование персональных данных с помощью Microsoft Presidio")
-            pii_input = gr.Textbox(label="Текст для маскирования", lines=4, placeholder="Введите текст с персональными данными...")
-            pii_language = gr.Radio(["ru", "en"], value="ru", label="Язык")
-            pii_btn = gr.Button("Маскировать PII", variant="primary")
-            pii_output = gr.Textbox(label="Результат маскирования", lines=8, interactive=False)
-
-        with gr.Column():
-            gr.Markdown("## Knowledge Bridge")
-            gr.Markdown("Поиск в корпоративной базе знаний Context7")
-            kb_domain = gr.Dropdown(
-                ["api", "security", "db", "python", "deployment"],
-                value="api",
-                label="Домен"
-            )
-            kb_topic = gr.Textbox(label="Тема (опционально)", placeholder="Например: pagination")
-            kb_btn = gr.Button("Поиск в Knowledge Bridge", variant="secondary")
-            kb_output = gr.Textbox(label="Результаты поиска", lines=6, interactive=False)
-
-            gr.Markdown("## Context7 Документация")
-            ctx7_library = gr.Dropdown(
-                ["torch", "transformers", "fastapi", "anthropic", "openai", "redis", "postgresql"],
-                value="torch",
-                label="Библиотека"
-            )
-            ctx7_query = gr.Textbox(label="Запрос документации", placeholder="Например: tensor operations")
-            ctx7_btn = gr.Button("Запросить документацию", variant="secondary")
-            ctx7_output = gr.Textbox(label="Результаты запроса", lines=6, interactive=False)
-
-            gr.Markdown("## External Knowledge Router (включая SHIVA/DocFusion)")
-            ext_query = gr.Textbox(
-                label="Запрос",
-                placeholder="Например: Покажи сводку по проекту Data Science и статус спринта",
-            )
-            ext_domain = gr.Dropdown(
-                ["python", "api", "security", "db", "deployment", "project", "docs"],
-                value="python",
-                label="Домен"
-            )
-            ext_library = gr.Textbox(label="Library (опционально)", placeholder="Например: fastapi")
-            ext_repo = gr.Textbox(label="GitHub repo (опционально)", placeholder="owner/repo")
-            ext_project_id = gr.Textbox(label="SHIVA project_id (опционально)", placeholder="Например: 44")
-            ext_summary_mode = gr.Checkbox(
-                value=True,
-                label="Режим: краткая сводка поверх JSON"
-            )
-            ext_summary_format = gr.Radio(
-                ["Расширенная", "Строго как @shiva"],
-                value="Строго как @shiva",
-                label="Формат сводки"
-            )
-            ext_btn = gr.Button("Выполнить внешний поиск", variant="primary")
-            ext_summary_output = gr.Textbox(label="Краткая сводка", lines=10, interactive=False)
-            ext_output = gr.Textbox(label="Сырой JSON external_search", lines=10, interactive=False)
-
-    with gr.Row():
-        with gr.Column():
-            gr.Markdown("## Управление сессиями")
-            session_name = gr.Textbox(label="Имя сессии", placeholder="Введите имя...")
-            create_session_btn = gr.Button("Создать сессию", variant="primary")
-            session_output = gr.Textbox(label="Результат", lines=2, interactive=False)
+                with gr.Column(scale=1, elem_classes="card"):
+                    gr.Markdown("### Быстрые действия")
+                    gr.Markdown(
+                        '<div class="param-note">Порог сжатия влияет на момент активации компрессии контекста.</div>'
+                    )
+                    compress_threshold = gr.Slider(50000, 128000, value=100000, label="Порог сжатия (токены)")
+                    with gr.Row():
+                        compress_btn = gr.Button("Сжать контекст", variant="secondary")
+                        checkpoint_btn = gr.Button("Создать чекпоинт", variant="secondary")
+                    quick_action_output = gr.Textbox(label="Результат действия", lines=3, interactive=False)
 
             with gr.Row():
-                list_sessions_btn = gr.Button("Список сессий", size="sm")
-                delete_session_input = gr.Textbox(label="ID сессии для удаления", placeholder="sess_...")
-                delete_session_btn = gr.Button("Удалить сессию", variant="stop", size="sm")
+                with gr.Column(scale=1, elem_classes="card"):
+                    gr.Markdown("## PII Маскирование")
+                    gr.Markdown("Автоматическое маскирование персональных данных с помощью Microsoft Presidio.")
+                    pii_input = gr.Textbox(label="Текст для маскирования", lines=4, placeholder="Введите текст с персональными данными...")
+                    pii_language = gr.Radio(["ru", "en"], value="ru", label="Язык")
+                    pii_btn = gr.Button("Маскировать PII", variant="primary")
+                    pii_output = gr.Textbox(label="Результат маскирования", lines=8, interactive=False)
 
-            sessions_output = gr.Textbox(label="Активные сессии", lines=8, interactive=False)
+                with gr.Column(scale=1, elem_classes="card"):
+                    gr.Markdown("## Knowledge Bridge")
+                    gr.Markdown("Поиск по доменным знаниям и документации библиотек.")
+                    kb_domain = gr.Dropdown(
+                        ["api", "security", "db", "python", "deployment"],
+                        value="api",
+                        label="Домен"
+                    )
+                    kb_topic = gr.Textbox(label="Тема (опционально)", placeholder="Например: pagination")
+                    kb_btn = gr.Button("Поиск в Knowledge Bridge", variant="secondary")
+                    kb_output = gr.Textbox(label="Результаты поиска", lines=6, interactive=False)
 
-        with gr.Column():
-            gr.Markdown("## Системные логи")
-            refresh_logs_btn = gr.Button("Обновить логи", size="sm")
-            logs_output = gr.Textbox(label="", value="Логи будут отображаться здесь...", lines=12, interactive=False)
+                    gr.Markdown("### Context7 Документация")
+                    ctx7_library = gr.Dropdown(
+                        ["torch", "transformers", "fastapi", "anthropic", "openai", "redis", "postgresql"],
+                        value="torch",
+                        label="Библиотека"
+                    )
+                    ctx7_query = gr.Textbox(label="Запрос документации", placeholder="Например: tensor operations")
+                    ctx7_btn = gr.Button("Запросить документацию", variant="secondary")
+                    ctx7_output = gr.Textbox(label="Результаты запроса", lines=6, interactive=False)
 
-    with gr.Row():
-        gr.Markdown("---")
-        gr.Markdown("**MCP Context Pipeline** - Платформа управления контекстом с автоматическим сжатием и PII маскированием")
+            with gr.Row():
+                with gr.Column(elem_classes="card"):
+                    gr.Markdown("## External Knowledge Router (SHIVA/DocFusion)")
+                    gr.Markdown(
+                        '<div class="param-note">Сценарий похож на этапы Text2Image: сначала задаются параметры качества/формата, затем выполняется запрос и анализ результата.</div>'
+                    )
+                    ext_query = gr.Textbox(
+                        label="Запрос",
+                        placeholder="Например: Покажи сводку по проекту Data Science и статус спринта",
+                    )
+                    with gr.Row():
+                        ext_domain = gr.Dropdown(
+                            ["python", "api", "security", "db", "deployment", "project", "docs"],
+                            value="python",
+                            label="Домен"
+                        )
+                        ext_library = gr.Textbox(label="Library (опционально)", placeholder="Например: fastapi")
+                    with gr.Row():
+                        ext_repo = gr.Textbox(label="GitHub repo (опционально)", placeholder="owner/repo")
+                        ext_project_id = gr.Textbox(label="SHIVA project_id (опционально)", placeholder="Например: 44")
+                    ext_summary_mode = gr.Checkbox(
+                        value=True,
+                        label="Режим: краткая сводка поверх JSON"
+                    )
+                    ext_summary_format = gr.Radio(
+                        ["Расширенная", "Строго как @shiva"],
+                        value="Строго как @shiva",
+                        label="Формат сводки"
+                    )
+                    ext_btn = gr.Button("Выполнить внешний поиск", variant="primary")
+                    ext_summary_output = gr.Textbox(label="Краткая сводка", lines=10, interactive=False)
+                    ext_output = gr.Textbox(label="Сырой JSON external_search", lines=10, interactive=False)
+
+        with gr.Tab("Сессии и Логи"):
+            with gr.Row():
+                with gr.Column(elem_classes="card"):
+                    gr.Markdown("## Управление сессиями")
+                    session_name = gr.Textbox(label="Имя сессии", placeholder="Введите имя...")
+                    create_session_btn = gr.Button("Создать сессию", variant="primary")
+                    session_output = gr.Textbox(label="Результат", lines=2, interactive=False)
+
+                    with gr.Row():
+                        list_sessions_btn = gr.Button("Список сессий", size="sm")
+                        delete_session_input = gr.Textbox(label="ID сессии для удаления", placeholder="sess_...")
+                        delete_session_btn = gr.Button("Удалить сессию", variant="stop", size="sm")
+
+                    sessions_output = gr.Textbox(label="Активные сессии", lines=8, interactive=False)
+
+                with gr.Column(elem_classes="card"):
+                    gr.Markdown("## Системные логи")
+                    refresh_logs_btn = gr.Button("Обновить логи", size="sm")
+                    logs_output = gr.Textbox(label="", value="Логи будут отображаться здесь...", lines=12, interactive=False)
+
+    gr.Markdown("**MCP Context Pipeline** — визуальная консоль управления контекстом, PII и внешним знанием.")
 
     init_btn.click(init_orchestrator, outputs=init_output)
 
@@ -505,7 +742,13 @@ with gr.Blocks() as demo:
     delete_session_btn.click(delete_session, inputs=[delete_session_input], outputs=session_output)
 
     refresh_logs_btn.click(get_logs_text, outputs=logs_output)
+    refresh_status_btn.click(refresh_operational_status, outputs=status_bar)
+    compress_threshold.change(update_summary_threshold, inputs=[compress_threshold], outputs=status_bar)
+    create_session_btn.click(refresh_operational_status, outputs=status_bar)
+    delete_session_btn.click(refresh_operational_status, outputs=status_bar)
+    demo.load(refresh_operational_status, outputs=status_bar)
 
 
 if __name__ == "__main__":
-    demo.launch(server_name="0.0.0.0", server_port=7860, share=False)
+    ensure_local_no_proxy()
+    demo.launch(server_name="0.0.0.0", server_port=7860, share=False, css=APP_CSS)

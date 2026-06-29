@@ -1,0 +1,20 @@
+{
+  "name": "anthropic_api",
+  "version": "1.0.0",
+  "description": "Anthropic Messages API proxy with rate limiting and token tracking",
+  "transport": "stdio",
+  "protocol": "mcp",
+  "protocolVersion": "2024-11-05",
+  "entry": "server.py",
+  "env": ["ANTHROPIC_API_KEY", "ANTHROPIC_MODEL", "ANTHROPIC_MAX_TOKENS"],
+  "tools": [
+    "send_message",
+    "send_conversation",
+    "count_tokens",
+    "get_rate_limit",
+    "list_models",
+    "get_usage",
+    "stream_message",
+    "check_health"
+  ]
+}

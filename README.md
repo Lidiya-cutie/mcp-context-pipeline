@@ -179,6 +179,22 @@ run_host.bat
 python src/test_pipeline.py 4
 ```
 
+### Веб-консоль (NiceGUI)
+
+Управляющая консоль построена на **NiceGUI** (порт 7860, dark mode по умолчанию).
+6 вкладок: Поиск знаний, Документация, PII & Безопасность, Эксперты, MCP Серверы, Система.
+
+```bash
+bash run_nicegui.sh
+# или напрямую:
+venv/bin/python mcp_ui.py
+```
+
+Открыть: http://localhost:7860
+
+Предыдущая реализация на Gradio перенесена в `archive/gradio/` (Gradio 6 / Svelte 5
+ломал переключение вкладок при кастомном CSS; мигрировано на NiceGUI).
+
 ## Тестирование
 
 ### Основные тесты

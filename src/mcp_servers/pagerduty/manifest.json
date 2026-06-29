@@ -1,0 +1,22 @@
+{
+  "name": "pagerduty",
+  "version": "1.0.0",
+  "description": "PagerDuty incident and on-call management MCP server",
+  "transport": "stdio",
+  "command": "python3",
+  "args": ["server.py"],
+  "env": {
+    "PAGERDUTY_API_KEY": "",
+    "PAGERDUTY_ACCOUNT_SUBDOMAIN": ""
+  },
+  "tools": [
+    "list_incidents",
+    "get_incident",
+    "list_services",
+    "list_on_call",
+    "list_escalation_policies",
+    "list_teams",
+    "get_recent_alerts",
+    "check_health"
+  ]
+}

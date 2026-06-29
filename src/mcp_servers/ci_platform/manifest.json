@@ -1,0 +1,28 @@
+{
+  "name": "ci_platform",
+  "version": "1.0.0",
+  "description": "Unified CI/CD platform API — Jenkins + GitLab CI",
+  "transport": "stdio",
+  "protocol": "mcp",
+  "protocolVersion": "2024-11-05",
+  "entry": "server.py",
+  "env": [
+    "CI_TYPE",
+    "GITLAB_URL",
+    "GITLAB_TOKEN",
+    "JENKINS_URL",
+    "JENKINS_USER",
+    "JENKINS_TOKEN"
+  ],
+  "tools": [
+    "list_pipelines",
+    "get_pipeline",
+    "get_job_log",
+    "trigger_pipeline",
+    "retry_pipeline",
+    "cancel_pipeline",
+    "get_artifacts",
+    "get_queue",
+    "check_health"
+  ]
+}

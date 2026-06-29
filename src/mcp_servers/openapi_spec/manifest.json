@@ -1,0 +1,19 @@
+{
+  "name": "openapi_spec",
+  "version": "1.0.0",
+  "description": "OpenAPI/Swagger spec parser and explorer MCP server",
+  "transport": "stdio",
+  "command": "python3",
+  "args": ["/tmp/skills_deploy/mcp-servers/openapi_spec/server.py"],
+  "tools": [
+    "load_spec",
+    "list_endpoints",
+    "get_endpoint",
+    "find_endpoint",
+    "list_schemas",
+    "get_schema",
+    "generate_request_example",
+    "get_auth_requirements",
+    "check_health"
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "description": "PII Scanner MCP Server — detects and masks PII in files, strings, directories",
+  "version": "1.0.0",
+  "transport": "stdio",
+  "command": "python3",
+  "args": ["server.py"],
+  "tools": [
+    "scan_file",
+    "scan_string",
+    "scan_directory",
+    "mask_string",
+    "mask_file",
+    "get_rules",
+    "add_rule"
+  ],
+  "default_rules": [
+    "email", "phone_ru", "phone_international", "passport_ru", "snils",
+    "inn", "credit_card", "ip_address", "ipv6", "ru_address",
+    "full_name_ru", "date_of_birth", "jwt_token", "api_key_generic", "aws_key"
+  ]
+}

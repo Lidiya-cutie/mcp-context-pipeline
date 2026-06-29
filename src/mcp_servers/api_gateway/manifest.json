@@ -1,0 +1,26 @@
+{
+  "name": "api_gateway",
+  "version": "1.0.0",
+  "description": "MCP server for API Gateway management (Kong/Nginx). Provides tools for routes, services, plugins, health checks, rate limits, and consumer stats.",
+  "transport": "stdio",
+  "protocol": "mcp",
+  "protocolVersion": "2024-11-05",
+  "command": "python3",
+  "args": ["server.py"],
+  "env": {
+    "GATEWAY_TYPE": "kong",
+    "KONG_ADMIN_URL": "http://localhost:8001",
+    "NGINX_STATUS_URL": "http://localhost/nginx_status"
+  },
+  "tools": [
+    "list_routes",
+    "list_services",
+    "list_plugins",
+    "get_route_details",
+    "get_service_health",
+    "get_rate_limits",
+    "get_consumer_stats",
+    "get_gateway_stats",
+    "check_health"
+  ]
+}

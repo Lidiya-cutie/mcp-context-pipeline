@@ -1,0 +1,20 @@
+{
+  "name": "registry",
+  "version": "1.0.0",
+  "description": "Docker Registry API v2 MCP server",
+  "transport": "stdio",
+  "env": {
+    "REGISTRY_URL": {
+      "description": "Registry base URL",
+      "default": "http://localhost:5000"
+    },
+    "REGISTRY_USERNAME": {
+      "description": "Optional username for basic auth",
+      "required": false
+    },
+    "REGISTRY_PASSWORD": {
+      "description": "Optional password for basic auth",
+      "required": false
+    }
+  }
+}

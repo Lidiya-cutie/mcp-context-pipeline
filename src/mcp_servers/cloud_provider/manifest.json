@@ -1,0 +1,36 @@
+{
+  "name": "cloud_provider",
+  "version": "1.0.0",
+  "description": "MCP server wrapping AWS/GCP CLI for cloud resource management",
+  "protocol": "2024-11-05",
+  "transport": "stdio",
+  "runtime": {
+    "type": "python",
+    "entry": "server.py"
+  },
+  "env": {
+    "CLOUD_PROVIDER": {
+      "description": "Cloud provider: aws or gcp",
+      "default": "aws",
+      "required": false
+    }
+  },
+  "tools": [
+    "list_instances",
+    "get_instance",
+    "list_buckets",
+    "list_dns_records",
+    "get_costs",
+    "list_security_groups",
+    "get_load_balancers",
+    "list_functions",
+    "check_health"
+  ],
+  "requirements": {
+    "externalDependencies": false,
+    "cliTools": {
+      "aws": "AWS CLI v2 (when CLOUD_PROVIDER=aws)",
+      "gcloud": "Google Cloud SDK (when CLOUD_PROVIDER=gcp)"
+    }
+  }
+}

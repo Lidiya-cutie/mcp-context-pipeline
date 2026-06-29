@@ -1,0 +1,55 @@
+{
+  "name": "mlflow",
+  "version": "1.0.0",
+  "description": "MLflow REST API proxy MCP server",
+  "protocolVersion": "2024-11-05",
+  "transport": "stdio",
+  "runtime": "python3",
+  "entrypoint": "server.py",
+  "env": [
+    {
+      "name": "MLFLOW_URL",
+      "description": "MLflow tracking server URL",
+      "default": "http://localhost:5000",
+      "required": false
+    }
+  ],
+  "tools": [
+    {
+      "name": "list_experiments",
+      "description": "List all MLflow experiments with artifact location and lifecycle stage"
+    },
+    {
+      "name": "get_experiment",
+      "description": "Get detailed experiment info including tags"
+    },
+    {
+      "name": "list_runs",
+      "description": "List runs for an experiment, sorted by metric, filterable by status"
+    },
+    {
+      "name": "get_run",
+      "description": "Get detailed run info: params, metrics, tags, artifact URIs"
+    },
+    {
+      "name": "get_metrics",
+      "description": "Get metric history for a run (full time series)"
+    },
+    {
+      "name": "get_params",
+      "description": "Get all parameters for a run"
+    },
+    {
+      "name": "list_artifacts",
+      "description": "List artifacts for a run (files and directories)"
+    },
+    {
+      "name": "list_models",
+      "description": "List registered models with versions, stages, and description"
+    },
+    {
+      "name": "check_health",
+      "description": "Verify MLflow API connectivity, version, and tracking URI"
+    }
+  ]
+}

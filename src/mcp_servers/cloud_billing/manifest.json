@@ -1,0 +1,24 @@
+{
+  "name": "cloud_billing",
+  "version": "1.0.0",
+  "description": "Cloud cost analysis via CLI (AWS/GCP)",
+  "protocolVersion": "2024-11-05",
+  "transport": "stdio",
+  "env": {
+    "CLOUD_PROVIDER": {
+      "description": "Cloud provider: aws or gcp",
+      "default": "aws",
+      "required": false
+    }
+  },
+  "tools": [
+    "get_cost_summary",
+    "get_cost_by_service",
+    "get_cost_by_resource",
+    "get_budget_status",
+    "get_cost_anomalies",
+    "get_savings_recommendations",
+    "get_usage_report",
+    "check_health"
+  ]
+}

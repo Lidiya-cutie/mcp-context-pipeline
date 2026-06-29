@@ -1,0 +1,25 @@
+{
+  "name": "monitoring",
+  "version": "1.0.0",
+  "description": "MCP server for Prometheus queries, Alertmanager alerts, and health checks",
+  "protocolVersion": "2024-11-05",
+  "transport": "stdio",
+  "command": "python3",
+  "args": ["/tmp/skills_deploy/mcp-servers/monitoring/server.py"],
+  "env": {
+    "PROMETHEUS_URL": "http://localhost:9090",
+    "ALERTMANAGER_URL": "http://localhost:9093"
+  },
+  "tools": [
+    "prometheus_query",
+    "prometheus_range",
+    "prometheus_series",
+    "prometheus_labels",
+    "list_alerts",
+    "list_alert_rules",
+    "alertmanager_alerts",
+    "health_check",
+    "get_metrics_summary",
+    "check_slo"
+  ]
+}

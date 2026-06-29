@@ -1,0 +1,19 @@
+{
+  "name": "gpu_monitor",
+  "version": "1.0.0",
+  "description": "NVIDIA GPU monitoring via nvidia-smi",
+  "transport": "stdio",
+  "command": "python3",
+  "args": ["/tmp/skills_deploy/mcp-servers/gpu_monitor/server.py"],
+  "tools": [
+    "gpu_status",
+    "gpu_utilization",
+    "gpu_processes",
+    "gpu_memory",
+    "gpu_top",
+    "gpu_clocks",
+    "gpu_pcie",
+    "gpu_set_power_limit",
+    "check_health"
+  ]
+}

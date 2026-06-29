@@ -1,0 +1,42 @@
+{
+  "description": "Context Manager MCP Server v2.0 — long-dialogue context management with Tiered Storage, summarization (extractive + LLM), sliding window, token accounting, checkpoint/memory, semantic search, PII masking, cross-validation metrics, and system prompt re-injection",
+  "version": "2.0.0",
+  "transport": "stdio",
+  "command": "python3",
+  "args": ["server.py"],
+  "env": {
+    "CTX_DB_PATH": "optional — SQLite file path (default: in-memory)",
+    "CTX_MAX_TOKENS": "max context tokens (default: 128000)",
+    "CTX_SUMMARY_THRESHOLD": "token threshold to trigger summarization (default: 100000)",
+    "CTX_TARGET_COMPRESSION": "target compression ratio (default: 0.5)",
+    "CTX_SEGMENT_SIZE": "messages per segment for sliding window (default: 20)",
+    "CTX_LLM_PROVIDER": "LLM provider: openai | anthropic | empty=disabled",
+    "CTX_LLM_API_KEY": "API key for LLM summarization",
+    "CTX_LLM_MODEL": "model name (default: gpt-4o-mini)",
+    "CTX_REDIS_URL": "optional Redis URL for sessions",
+    "CTX_PG_URL": "optional PostgreSQL URL for long-term facts"
+  },
+  "tools": [
+    "summarize_and_store",
+    "recover_context",
+    "save_checkpoint",
+    "load_checkpoint",
+    "store_memory",
+    "retrieve_memory",
+    "get_current_timestamp",
+    "compress_context",
+    "estimate_tokens",
+    "get_context_limits",
+    "sliding_window",
+    "check_token_budget",
+    "reinject_system_prompt",
+    "validate_compression",
+    "list_sessions",
+    "delete_session",
+    "get_stats"
+  ],
+  "resources": [
+    "time://current",
+    "context://limits"
+  ]
+}

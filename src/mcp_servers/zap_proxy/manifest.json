@@ -1,0 +1,24 @@
+{
+  "name": "zap_proxy",
+  "version": "1.0.0",
+  "description": "OWASP ZAP API wrapper MCP server — spider, active scan, alerts, reports",
+  "transport": "stdio",
+  "protocol": "mcp",
+  "protocolVersion": "2024-11-05",
+  "command": "python3",
+  "args": ["/tmp/skills_deploy/mcp-servers/zap_proxy/server.py"],
+  "env": {
+    "ZAP_URL": "http://localhost:8080",
+    "ZAP_API_KEY": ""
+  },
+  "tools": [
+    "start_spider",
+    "start_active_scan",
+    "get_scan_status",
+    "get_alerts",
+    "get_scan_results",
+    "get_report",
+    "scan_url",
+    "check_health"
+  ]
+}
