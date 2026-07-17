@@ -1,0 +1,284 @@
+{
+  "experiment": "DS-744-compressing-instructions",
+  "timestamp": "2026-07-01T14:34:53Z",
+  "total_variants": 20,
+  "top_5": [
+    {
+      "instruction_id": "auto-000",
+      "system": "Сожми текст, сохранив сущности: имена, даты",
+      "entity_count": 2,
+      "test_case_id": "tc1",
+      "f1": 1.0,
+      "context_drift": 0.175,
+      "iterations_to_converge": 1,
+      "converged": true,
+      "compression_ratio": 0.6131
+    },
+    {
+      "instruction_id": "auto-001",
+      "system": "Сожми текст, сохранив сущности: имена, даты, числа",
+      "entity_count": 3,
+      "test_case_id": "tc1",
+      "f1": 1.0,
+      "context_drift": 0.1543,
+      "iterations_to_converge": 1,
+      "converged": true,
+      "compression_ratio": 0.6964
+    },
+    {
+      "instruction_id": "auto-002",
+      "system": "Сожми текст, сохранив сущности: имена, даты, числа, email",
+      "entity_count": 4,
+      "test_case_id": "tc1",
+      "f1": 1.0,
+      "context_drift": 0.1545,
+      "iterations_to_converge": 1,
+      "converged": true,
+      "compression_ratio": 0.6369
+    },
+    {
+      "instruction_id": "auto-003",
+      "system": "Сожми текст, сохранив сущности: имена, даты, числа, email, URL",
+      "entity_count": 5,
+      "test_case_id": "tc1",
+      "f1": 1.0,
+      "context_drift": 0.1765,
+      "iterations_to_converge": 1,
+      "converged": true,
+      "compression_ratio": 0.5833
+    },
+    {
+      "instruction_id": "auto-004",
+      "system": "Сожми текст, сохранив сущности: имена, даты, числа, email, URL, названия проектов",
+      "entity_count": 6,
+      "test_case_id": "tc1",
+      "f1": 1.0,
+      "context_drift": 0.1544,
+      "iterations_to_converge": 1,
+      "converged": true,
+      "compression_ratio": 0.625
+    }
+  ],
+  "results": [
+    {
+      "instruction_id": "auto-000",
+      "system": "Сожми текст, сохранив сущности: имена, даты",
+      "entity_count": 2,
+      "test_case_id": "tc1",
+      "f1": 1.0,
+      "context_drift": 0.175,
+      "iterations_to_converge": 1,
+      "converged": true,
+      "compression_ratio": 0.6131
+    },
+    {
+      "instruction_id": "auto-001",
+      "system": "Сожми текст, сохранив сущности: имена, даты, числа",
+      "entity_count": 3,
+      "test_case_id": "tc1",
+      "f1": 1.0,
+      "context_drift": 0.1543,
+      "iterations_to_converge": 1,
+      "converged": true,
+      "compression_ratio": 0.6964
+    },
+    {
+      "instruction_id": "auto-002",
+      "system": "Сожми текст, сохранив сущности: имена, даты, числа, email",
+      "entity_count": 4,
+      "test_case_id": "tc1",
+      "f1": 1.0,
+      "context_drift": 0.1545,
+      "iterations_to_converge": 1,
+      "converged": true,
+      "compression_ratio": 0.6369
+    },
+    {
+      "instruction_id": "auto-003",
+      "system": "Сожми текст, сохранив сущности: имена, даты, числа, email, URL",
+      "entity_count": 5,
+      "test_case_id": "tc1",
+      "f1": 1.0,
+      "context_drift": 0.1765,
+      "iterations_to_converge": 1,
+      "converged": true,
+      "compression_ratio": 0.5833
+    },
+    {
+      "instruction_id": "auto-004",
+      "system": "Сожми текст, сохранив сущности: имена, даты, числа, email, URL, названия проектов",
+      "entity_count": 6,
+      "test_case_id": "tc1",
+      "f1": 1.0,
+      "context_drift": 0.1544,
+      "iterations_to_converge": 1,
+      "converged": true,
+      "compression_ratio": 0.625
+    },
+    {
+      "instruction_id": "auto-005",
+      "system": "Сократи текст на 50%. Обязательно оставь: имена, даты",
+      "entity_count": 2,
+      "test_case_id": "tc1",
+      "f1": 1.0,
+      "context_drift": 0.1417,
+      "iterations_to_converge": 1,
+      "converged": true,
+      "compression_ratio": 0.7024
+    },
+    {
+      "instruction_id": "auto-006",
+      "system": "Сократи текст на 50%. Обязательно оставь: имена, даты, числа",
+      "entity_count": 3,
+      "test_case_id": "tc1",
+      "f1": 1.0,
+      "context_drift": 0.1417,
+      "iterations_to_converge": 1,
+      "converged": true,
+      "compression_ratio": 0.6905
+    },
+    {
+      "instruction_id": "auto-008",
+      "system": "Сократи текст на 50%. Обязательно оставь: имена, даты, числа, email, URL",
+      "entity_count": 5,
+      "test_case_id": "tc1",
+      "f1": 1.0,
+      "context_drift": 0.0869,
+      "iterations_to_converge": 1,
+      "converged": true,
+      "compression_ratio": 0.7857
+    },
+    {
+      "instruction_id": "auto-009",
+      "system": "Сократи текст на 50%. Обязательно оставь: имена, даты, числа, email, URL, названия проектов",
+      "entity_count": 6,
+      "test_case_id": "tc1",
+      "f1": 1.0,
+      "context_drift": 0.133,
+      "iterations_to_converge": 1,
+      "converged": true,
+      "compression_ratio": 0.6845
+    },
+    {
+      "instruction_id": "auto-001",
+      "system": "Сожми текст, сохранив сущности: имена, даты, числа",
+      "entity_count": 3,
+      "test_case_id": "tc2",
+      "f1": 0.9286,
+      "context_drift": 0.1306,
+      "iterations_to_converge": 3,
+      "converged": false,
+      "compression_ratio": 0.7231
+    },
+    {
+      "instruction_id": "auto-003",
+      "system": "Сожми текст, сохранив сущности: имена, даты, числа, email, URL",
+      "entity_count": 5,
+      "test_case_id": "tc2",
+      "f1": 0.9286,
+      "context_drift": 0.1284,
+      "iterations_to_converge": 3,
+      "converged": false,
+      "compression_ratio": 0.7077
+    },
+    {
+      "instruction_id": "auto-004",
+      "system": "Сожми текст, сохранив сущности: имена, даты, числа, email, URL, названия проектов",
+      "entity_count": 6,
+      "test_case_id": "tc2",
+      "f1": 0.9286,
+      "context_drift": 0.1348,
+      "iterations_to_converge": 3,
+      "converged": false,
+      "compression_ratio": 0.6923
+    },
+    {
+      "instruction_id": "auto-006",
+      "system": "Сократи текст на 50%. Обязательно оставь: имена, даты, числа",
+      "entity_count": 3,
+      "test_case_id": "tc2",
+      "f1": 0.9286,
+      "context_drift": 0.1284,
+      "iterations_to_converge": 3,
+      "converged": false,
+      "compression_ratio": 0.7308
+    },
+    {
+      "instruction_id": "auto-008",
+      "system": "Сократи текст на 50%. Обязательно оставь: имена, даты, числа, email, URL",
+      "entity_count": 5,
+      "test_case_id": "tc2",
+      "f1": 0.9286,
+      "context_drift": 0.1511,
+      "iterations_to_converge": 3,
+      "converged": false,
+      "compression_ratio": 0.7077
+    },
+    {
+      "instruction_id": "auto-009",
+      "system": "Сократи текст на 50%. Обязательно оставь: имена, даты, числа, email, URL, названия проектов",
+      "entity_count": 6,
+      "test_case_id": "tc2",
+      "f1": 0.9286,
+      "context_drift": 0.1159,
+      "iterations_to_converge": 3,
+      "converged": false,
+      "compression_ratio": 0.7615
+    },
+    {
+      "instruction_id": "auto-007",
+      "system": "Сократи текст на 50%. Обязательно оставь: имена, даты, числа, email",
+      "entity_count": 4,
+      "test_case_id": "tc1",
+      "f1": 0.9231,
+      "context_drift": 0.1764,
+      "iterations_to_converge": 3,
+      "converged": false,
+      "compression_ratio": 0.5774
+    },
+    {
+      "instruction_id": "auto-000",
+      "system": "Сожми текст, сохранив сущности: имена, даты",
+      "entity_count": 2,
+      "test_case_id": "tc2",
+      "f1": 0.8571,
+      "context_drift": 0.1486,
+      "iterations_to_converge": 3,
+      "converged": false,
+      "compression_ratio": 0.6692
+    },
+    {
+      "instruction_id": "auto-002",
+      "system": "Сожми текст, сохранив сущности: имена, даты, числа, email",
+      "entity_count": 4,
+      "test_case_id": "tc2",
+      "f1": 0.8571,
+      "context_drift": 0.1758,
+      "iterations_to_converge": 3,
+      "converged": false,
+      "compression_ratio": 0.6231
+    },
+    {
+      "instruction_id": "auto-005",
+      "system": "Сократи текст на 50%. Обязательно оставь: имена, даты",
+      "entity_count": 2,
+      "test_case_id": "tc2",
+      "f1": 0.8571,
+      "context_drift": 0.2623,
+      "iterations_to_converge": 3,
+      "converged": false,
+      "compression_ratio": 0.5538
+    },
+    {
+      "instruction_id": "auto-007",
+      "system": "Сократи текст на 50%. Обязательно оставь: имена, даты, числа, email",
+      "entity_count": 4,
+      "test_case_id": "tc2",
+      "f1": 0.8571,
+      "context_drift": 0.1463,
+      "iterations_to_converge": 3,
+      "converged": false,
+      "compression_ratio": 0.6769
+    }
+  ]
+}

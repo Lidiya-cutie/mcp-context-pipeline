@@ -1,0 +1,240 @@
+{
+  "experiment": "DS-742-cross-validation-mimo",
+  "timestamp": "2026-07-01T14:53:54Z",
+  "total_cases": 5,
+  "results": [
+    {
+      "test_case_id": "tc1",
+      "responses": [
+        {
+          "model": "glm-4.7",
+          "text": "Data-Science-Core развёрнут на сервере ml6 (62.152.32.131). Администратор Иван Петров настраивает деплой через GitLab CI/CD: https://git.example.com/internal-dep/data-science. Версия платформы 2.4.1, ресурсы: 125 ГБ RAM, 3.6 ТБ диска. Время отклика 42 мс, throughput 1500 запросов/с. Инциденты: ops@",
+          "latency_ms": 4895.1,
+          "error": null,
+          "tokens": 120
+        },
+        {
+          "model": "mimo-v2.5",
+          "text": "Проект Data-Science-Core на сервере ml6 (62.152.32.131). Админ Иван Петров, деплой через GitLab CI/CD: https://git.example.com/internal-dep/data-science. Версия 2.4.1, 125 ГБ RAM, 3.6 ТБ диска. Инциденты: ops@example.com. Отклик — 42 мс, throughput — 1500 запросов/с. Канал уведомлений: https://",
+          "latency_ms": 2062.8,
+          "error": null,
+          "tokens": 104
+        }
+      ],
+      "pairwise_similarity": {
+        "glm-4.7 <-> mimo-v2.5": 0.9
+      },
+      "avg_similarity": 0.9,
+      "consensus_fragments_count": 6,
+      "divergent_fragments_count": 0,
+      "entity_coverage": {
+        "person": {
+          "glm-4.7": 1.0,
+          "mimo-v2.5": 0.0
+        },
+        "email": {
+          "glm-4.7": 1.0,
+          "mimo-v2.5": 1.0
+        },
+        "number": {
+          "glm-4.7": 1.0,
+          "mimo-v2.5": 1.0
+        },
+        "url": {
+          "glm-4.7": 1.0,
+          "mimo-v2.5": 1.0
+        },
+        "project": {
+          "glm-4.7": 1.0,
+          "mimo-v2.5": 1.0
+        }
+      },
+      "hallucination_risk": 0.0,
+      "confidence": 1.0
+    },
+    {
+      "test_case_id": "tc2",
+      "responses": [
+        {
+          "model": "glm-4.7",
+          "text": "Алексей Смирнов принят 15.01.2023 в отдел Data Science. Оклад 180000 руб., премия за Q1 45000. Руководитель — Елена Кузнецова. Аттестация — 10.02.2025. Окончил МФТИ в 2019, опыт в NLP 3 года. Email: a.smirnov@example.com. Табельный номер 7742.",
+          "latency_ms": 4833.9,
+          "error": null,
+          "tokens": 89
+        },
+        {
+          "model": "mimo-v2.5",
+          "text": "Алексей Смирнов, таб. №7742, окончил МФТИ (2019), 3 года опыта в NLP. Принят 15.01.2023 в отдел Data Science (рук. — Елена Кузнецова). Оклад 180000 руб., премия Q1 — 45000 руб. Аттестация — 10.02.2025. Email: a.smirnov@example.com.",
+          "latency_ms": 1573.1,
+          "error": null,
+          "tokens": 82
+        }
+      ],
+      "pairwise_similarity": {
+        "glm-4.7 <-> mimo-v2.5": 0.9021
+      },
+      "avg_similarity": 0.9021,
+      "consensus_fragments_count": 5,
+      "divergent_fragments_count": 4,
+      "entity_coverage": {
+        "person": {
+          "glm-4.7": 0.5,
+          "mimo-v2.5": 0.5
+        },
+        "date": {
+          "glm-4.7": 1.0,
+          "mimo-v2.5": 1.0
+        },
+        "email": {
+          "glm-4.7": 1.0,
+          "mimo-v2.5": 1.0
+        },
+        "number": {
+          "glm-4.7": 1.0,
+          "mimo-v2.5": 1.0
+        }
+      },
+      "hallucination_risk": 0.1,
+      "confidence": 0.9
+    },
+    {
+      "test_case_id": "tc3",
+      "responses": [
+        {
+          "model": "glm-4.7",
+          "text": "Релиз MLOps-Stack 3.0.0 запланирован на 20.06.2025. Включает Data-Pipeline 1.8.2, Tools 2.1.0, Research 0.9.5. Документация: https://docs.example.com/mlops/v3. Координатор — Мария Сидорова. Дата финального ревью — 15.06.2025. Исправлено 47 багов, добавлено 12 фич. PR: https://git.example.com",
+          "latency_ms": 5120.3,
+          "error": null,
+          "tokens": 111
+        },
+        {
+          "model": "mimo-v2.5",
+          "text": "Релиз MLOps-Stack v3.0.0 — 20.06.2025. Компоненты: Data-Pipeline v1.8.2, Tools v2.1.0, Research v0.9.5. Документация: https://docs.example.com/mlops/v3. Координатор: Мария Сидорова. Финальное ревью: 15.06.2025. Исправлено 47 багов, добавлено 12 фич. PR: https://git.example.com/internal-dep/mlop",
+          "latency_ms": 13499.1,
+          "error": null,
+          "tokens": 104
+        }
+      ],
+      "pairwise_similarity": {
+        "glm-4.7 <-> mimo-v2.5": 0.9304
+      },
+      "avg_similarity": 0.9304,
+      "consensus_fragments_count": 6,
+      "divergent_fragments_count": 2,
+      "entity_coverage": {
+        "person": {
+          "glm-4.7": 1.0,
+          "mimo-v2.5": 1.0
+        },
+        "date": {
+          "glm-4.7": 1.0,
+          "mimo-v2.5": 1.0
+        },
+        "number": {
+          "glm-4.7": 1.0,
+          "mimo-v2.5": 0.4167
+        },
+        "url": {
+          "glm-4.7": 1.0,
+          "mimo-v2.5": 1.0
+        },
+        "project": {
+          "glm-4.7": 1.0,
+          "mimo-v2.5": 1.0
+        }
+      },
+      "hallucination_risk": 0.0389,
+      "confidence": 0.9611
+    },
+    {
+      "test_case_id": "tc4",
+      "responses": [
+        {
+          "model": "glm-4.7",
+          "text": "INC-2024-0831: 03.03.2024, 14:27 UTC, сервис data-pipeline, ответственный Дмитрий Волков. Причина — отказ Redis-кластера на ноде redis-03. Простой 23 минуты, затронуто 4200 пользователей. Отчёт на incident@example.com. Эскалация — Анна Морозова (телефон недоступен до 05.03.2024). Восстановление ",
+          "latency_ms": 4921.2,
+          "error": null,
+          "tokens": 128
+        },
+        {
+          "model": "mimo-v2.5",
+          "text": "Incident INC-2024-0831, 03.03.2024 14:27 UTC. Сервис: data-pipeline. Дежурный: Дмитрий Волков. Причина: отказ Redis на redis-03. Простой 23 мин, 4200 пользователей. Отчёт: incident@example.com. Эскалация: Анна Морозова (телефон недоступен до 05.03.2024). Восстановлено 14:50 UTC, подтверждено 3 п",
+          "latency_ms": 29636.3,
+          "error": null,
+          "tokens": 113
+        }
+      ],
+      "pairwise_similarity": {
+        "glm-4.7 <-> mimo-v2.5": 0.9031
+      },
+      "avg_similarity": 0.9031,
+      "consensus_fragments_count": 5,
+      "divergent_fragments_count": 4,
+      "entity_coverage": {
+        "person": {
+          "glm-4.7": 1.0,
+          "mimo-v2.5": 1.0
+        },
+        "date": {
+          "glm-4.7": 1.0,
+          "mimo-v2.5": 1.0
+        },
+        "email": {
+          "glm-4.7": 1.0,
+          "mimo-v2.5": 1.0
+        },
+        "number": {
+          "glm-4.7": 1.0,
+          "mimo-v2.5": 1.0
+        }
+      },
+      "hallucination_risk": 0.0,
+      "confidence": 1.0
+    },
+    {
+      "test_case_id": "tc5",
+      "responses": [
+        {
+          "model": "glm-4.7",
+          "text": "Протокол от 12.04.2024. Участники: Сергей Иванов (Data-Science-Core), Ольга Жукова (Research), Никита Лебедев. Спринт 42: 15/18 задач, 2 перенесены, 1 отменена. Data-Pipeline: новый коннектор PostgreSQL, загрузка быстрее на 35 процентов. Бюджет следующего квартала — 2400000 рублей. Решение по MLOps-",
+          "latency_ms": 4407.4,
+          "error": null,
+          "tokens": 137
+        },
+        {
+          "model": "mimo-v2.5",
+          "text": "Протокол от 12.04.2024. Участники: Сергей Иванов (тимлид Data-Science-Core), Ольга Жукова (PM Research), Никита Лебедев (ML-инженер). Спринт 42: 15/18 задач выполнено, 2 перенесены, 1 отменена. Проект Data-Pipeline: новый коннектор PostgreSQL, снижение загрузки на 35%. Бюджет следующего квартала — 2",
+          "latency_ms": 42055.8,
+          "error": null,
+          "tokens": 153
+        }
+      ],
+      "pairwise_similarity": {
+        "glm-4.7 <-> mimo-v2.5": 0.896
+      },
+      "avg_similarity": 0.896,
+      "consensus_fragments_count": 6,
+      "divergent_fragments_count": 2,
+      "entity_coverage": {
+        "person": {
+          "glm-4.7": 1.0,
+          "mimo-v2.5": 1.0
+        },
+        "date": {
+          "glm-4.7": 1.0,
+          "mimo-v2.5": 1.0
+        },
+        "number": {
+          "glm-4.7": 1.0,
+          "mimo-v2.5": 1.0
+        },
+        "project": {
+          "glm-4.7": 1.0,
+          "mimo-v2.5": 1.0
+        }
+      },
+      "hallucination_risk": 0.0,
+      "confidence": 1.0
+    }
+  ]
+}

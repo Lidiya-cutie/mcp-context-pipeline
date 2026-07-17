@@ -1,0 +1,208 @@
+{
+  "experiment": "DS-742-cross-validation",
+  "timestamp": "2026-07-01T14:30:34Z",
+  "total_cases": 5,
+  "results": [
+    {
+      "test_case_id": "tc1",
+      "responses": [
+        {
+          "model": "glm-4.7",
+          "text": "Инфраструктура Data-Science-Core на сервере ml6 (62.152.32.131). Администратор Иван Петров настраивает деплой через GitLab CI/CD: https://git.example.com/internal-dep/data-science. Версия платформы 2",
+          "latency_ms": 4879.5,
+          "error": null,
+          "tokens": 130
+        },
+        {
+          "model": "gpt-4o-mini",
+          "text": "",
+          "latency_ms": 110.6,
+          "error": "Client error '403 Forbidden' for url 'https://api.openai.com/v1/chat/completions'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403",
+          "tokens": 0
+        }
+      ],
+      "pairwise_similarity": {},
+      "avg_similarity": 0.0,
+      "consensus_fragments_count": 0,
+      "divergent_fragments_count": 6,
+      "entity_coverage": {
+        "person": {
+          "glm-4.7": 1.0
+        },
+        "email": {
+          "glm-4.7": 1.0
+        },
+        "number": {
+          "glm-4.7": 1.0
+        },
+        "url": {
+          "glm-4.7": 1.0
+        },
+        "project": {
+          "glm-4.7": 1.0
+        }
+      },
+      "hallucination_risk": 0.0,
+      "confidence": 1.0
+    },
+    {
+      "test_case_id": "tc2",
+      "responses": [
+        {
+          "model": "glm-4.7",
+          "text": "Алексей Смирнов принят 15.01.2023 в отдел Data Science, оклад 180000 рублей, премия Q1 45000. Руководитель — Елена Кузнецова, аттестация 10.02.2025. Окончил МФТИ в 2019, опыт NLP 3 года. Email: a.smir",
+          "latency_ms": 3472.1,
+          "error": null,
+          "tokens": 88
+        },
+        {
+          "model": "gpt-4o-mini",
+          "text": "",
+          "latency_ms": 104.9,
+          "error": "Client error '403 Forbidden' for url 'https://api.openai.com/v1/chat/completions'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403",
+          "tokens": 0
+        }
+      ],
+      "pairwise_similarity": {},
+      "avg_similarity": 0.0,
+      "consensus_fragments_count": 0,
+      "divergent_fragments_count": 4,
+      "entity_coverage": {
+        "person": {
+          "glm-4.7": 0.5
+        },
+        "date": {
+          "glm-4.7": 1.0
+        },
+        "email": {
+          "glm-4.7": 1.0
+        },
+        "number": {
+          "glm-4.7": 1.0
+        }
+      },
+      "hallucination_risk": 0.1,
+      "confidence": 0.9
+    },
+    {
+      "test_case_id": "tc3",
+      "responses": [
+        {
+          "model": "glm-4.7",
+          "text": "Релиз MLOps-Stack 3.0.0 запланирован на 20.06.2025. Включает Data-Pipeline 1.8.2, Tools 2.1.0 и Research 0.9.5. Документация: https://docs.example.com/mlops/v3. Координатор: Мария Сидорова, финаль",
+          "latency_ms": 12934.6,
+          "error": null,
+          "tokens": 111
+        },
+        {
+          "model": "gpt-4o-mini",
+          "text": "",
+          "latency_ms": 110.4,
+          "error": "Client error '403 Forbidden' for url 'https://api.openai.com/v1/chat/completions'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403",
+          "tokens": 0
+        }
+      ],
+      "pairwise_similarity": {},
+      "avg_similarity": 0.0,
+      "consensus_fragments_count": 0,
+      "divergent_fragments_count": 6,
+      "entity_coverage": {
+        "person": {
+          "glm-4.7": 1.0
+        },
+        "date": {
+          "glm-4.7": 1.0
+        },
+        "number": {
+          "glm-4.7": 1.0
+        },
+        "url": {
+          "glm-4.7": 1.0
+        },
+        "project": {
+          "glm-4.7": 1.0
+        }
+      },
+      "hallucination_risk": 0.0,
+      "confidence": 1.0
+    },
+    {
+      "test_case_id": "tc4",
+      "responses": [
+        {
+          "model": "glm-4.7",
+          "text": "INC-2024-0831: 03.03.2024 в 14:27 UTC упал сервис data-pipeline (ответственный Дмитрий Волков). Причина: отказ Redis-кластера на ноде redis-03. Простой: 23 минуты, затронуто 4200 пользователей. Отчёт ",
+          "latency_ms": 4445.6,
+          "error": null,
+          "tokens": 124
+        },
+        {
+          "model": "gpt-4o-mini",
+          "text": "",
+          "latency_ms": 113.3,
+          "error": "Client error '403 Forbidden' for url 'https://api.openai.com/v1/chat/completions'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403",
+          "tokens": 0
+        }
+      ],
+      "pairwise_similarity": {},
+      "avg_similarity": 0.0,
+      "consensus_fragments_count": 0,
+      "divergent_fragments_count": 6,
+      "entity_coverage": {
+        "person": {
+          "glm-4.7": 1.0
+        },
+        "date": {
+          "glm-4.7": 1.0
+        },
+        "email": {
+          "glm-4.7": 1.0
+        },
+        "number": {
+          "glm-4.7": 1.0
+        }
+      },
+      "hallucination_risk": 0.0,
+      "confidence": 1.0
+    },
+    {
+      "test_case_id": "tc5",
+      "responses": [
+        {
+          "model": "glm-4.7",
+          "text": "Протокол от 12.04.2024. Участники: Сергей Иванов (тимлид Data-Science-Core), Ольга Жукова (PM Research), Никита Лебедев (ML-инженер). Спринт 42: 15 из 18 задач, 2 перенесены, 1 отменена. Проект Data-P",
+          "latency_ms": 4845.0,
+          "error": null,
+          "tokens": 130
+        },
+        {
+          "model": "gpt-4o-mini",
+          "text": "",
+          "latency_ms": 103.2,
+          "error": "Client error '403 Forbidden' for url 'https://api.openai.com/v1/chat/completions'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403",
+          "tokens": 0
+        }
+      ],
+      "pairwise_similarity": {},
+      "avg_similarity": 0.0,
+      "consensus_fragments_count": 0,
+      "divergent_fragments_count": 7,
+      "entity_coverage": {
+        "person": {
+          "glm-4.7": 1.0
+        },
+        "date": {
+          "glm-4.7": 1.0
+        },
+        "number": {
+          "glm-4.7": 1.0
+        },
+        "project": {
+          "glm-4.7": 1.0
+        }
+      },
+      "hallucination_risk": 0.0,
+      "confidence": 1.0
+    }
+  ]
+}

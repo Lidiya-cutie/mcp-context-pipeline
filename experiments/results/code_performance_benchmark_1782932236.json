@@ -1,0 +1,205 @@
+{
+  "experiment": "DS-748: Performance measurement of generated code",
+  "timestamp": "2026-07-01T18:57:16Z",
+  "model": "glm-4.7",
+  "system_prompt": "You are a code generation system. Generate ONLY executable Python code. No markd...",
+  "max_exec_seconds": 10,
+  "max_memory_mb": 256,
+  "summary": {
+    "total_queries": 8,
+    "generated_ok": 8,
+    "executed_ok": 1,
+    "correct": 0,
+    "correctness_rate": 0.0,
+    "execution_rate": 0.125,
+    "avg_execution_time_ms": 837.96,
+    "stdev_execution_time_ms": 0,
+    "avg_memory_peak_mb": 39.51,
+    "avg_code_size_bytes": 5931.0,
+    "avg_complexity_lines": 120.6,
+    "avg_complexity_branches": 15.8
+  },
+  "results": [
+    {
+      "query_id": "CH-RU-001",
+      "query": "Как реализовать ClickHouse аналитика с минимальным latency и понятной структурой кода? Сценарий #1.",
+      "generated_code": "import clickhouse_connect\nimport random\nimport time\nimport uuid\nfrom datetime import datetime, timedelta\n\n# --- 1. Configuration ---\n# Connecting to ClickHouse. \n# For local testing using Docker: docker run -d --name ch --rm -p 8123:8123 --ulimit nofile=262144:262144 clickhouse/clickhouse-server\nHOST = 'localhost'\nPORT = 8123\nUSERNAME = 'default'\nPASSWORD = ''\nDATABASE = 'analytics_low_latency'\n\n# --- 2. Data Model & Schema Creation ---\ndef setup_database():\n    client = clickhouse_connect.get_client(host=HOST, port=PORT, username=USERNAME, password=PASSWORD)\n    \n    # Create database\n    client.command(f\"CREATE DATABASE IF NOT EXISTS {DATABASE}\")\n    \n    # Use MergeTree engine for high-performance reads/writes\n    # Optimizing for latency: \n    # 1. ORDER BY (event_date, user_id) for fast point queries and time-series filtering.\n    # 2. Sampling for approximate fast analytics (optional).\n    # 3. SETTINGS index_granularity = 8192 (default, good balance).\n    \n    create_table_sql = f\"\"\"\n    CREATE TABLE IF NOT EXISTS {DATABASE}.events_local\n    (\n        event_time DateTime64(3) DEFAULT now64(3),\n        event_date Date DEFAULT toDate(event_time),\n        user_id UInt64,\n        session_id UUID,\n        event_type String,\n        payload String,\n        value Int64\n    )\n    ENGINE = MergeTree()\n    PARTITION BY toYYYYMM(event_date)\n    ORDER BY (event_type, event_date, user_id)\n    SETTINGS index_granularity = 8192\n    \"\"\"\n    \n    client.command(create_table_sql)\n    print(f\"Table '{DATABASE}.events_local' created successfully.\")\n    return client\n\n# --- 3. Data Insertion (Batching for Performance) ---\ndef generate_batch_data(batch_size=1000):\n    data = []\n    event_types = ['click', 'view', 'purchase', 'error']\n    now = datetime.now()\n    \n    for _ in range(batch_size):\n        # Simulating recent data\n        t = now - timedelta(seconds=random.randint(0, 3600))\n        \n        row = (\n            t,                    # event_time\n            random.rand",
+      "code_size_bytes": 5018,
+      "execution_time_ms": 57.74,
+      "memory_peak_kb": 40336,
+      "correctness": false,
+      "keywords_found": [
+        "clickhouse"
+      ],
+      "keywords_missing": [
+        "working snippet",
+        "error handling",
+        "validation",
+        "implementation"
+      ],
+      "error": "Traceback (most recent call last):\n  File \"/tmp/tmp5mrh2724.py\", line 1, in <module>\n    import clickhouse_connect\nModuleNotFoundError: No module named 'clickhouse_connect'\n",
+      "exit_code": 1,
+      "output_snippet": "Traceback (most recent call last):\n  File \"/tmp/tmp5mrh2724.py\", line 1, in <module>\n    import clickhouse_connect\nModuleNotFoundError: No module named 'clickhouse_connect'\n",
+      "complexity_lines": 100,
+      "complexity_branches": 6
+    },
+    {
+      "query_id": "API-RU-008",
+      "query": "Покажи рабочий пример для FastAPI + gRPC API с обработкой ошибок и retry. Сценарий #8.",
+      "generated_code": "import asyncio\nimport logging\nfrom concurrent import futures\nfrom typing import Optional\n\nimport grpc\nfrom fastapi import FastAPI, HTTPException, status\nfrom grpc import StatusCode\nfrom tenacity import (\n    retry,\n    stop_after_attempt,\n    wait_exponential,\n    retry_if_exception_type,\n)\n\n# --- 1. gRPC Definitions (Simulated protobuf for standalone execution) ---\n\nimport sys\nfrom grpc.aio import AioRpcError\n\n# Define service descriptor manually to avoid external .proto file dependency\n# Usually you would import this from: import myservice_pb2, myservice_pb2_grpc\n\nclass _MethodDescriptor:\n    def __init__(self, name, input_class, output_class):\n        self.name = name\n        self.input_type = input_class\n        self.output_type = output_class\n\nclass Service servicer definition\nclass DummyRequest:\n    def __init__(self, message: str):\n        self.message = message\n\nclass DummyResponse:\n    def __init__(self, result: str):\n        self.result = result\n\nclass ServiceServicer:\n    async def ProcessRequest(self, request, context):\n        print(f\"[gRPC Server] Received: {request.message}\")\n        \n        # Simulate temporary failure for demonstration of retry logic\n        if request.message == \"fail_once\":\n            print(\"[gRPC Server] Simulating UNAVAILABLE error\")\n            await context.abort(StatusCode.UNAVAILABLE, \"Database connection lost\")\n            \n        # Simulate permanent failure\n        if request.message == \"permanent_error\":\n            print(\"[gRPC Server] Simulating INVALID_ARGUMENT error\")\n            await context.abort(StatusCode.INVALID_ARGUMENT, \"Bad input data\")\n\n        print(\"[gRPC Server] Processing successful\")\n        return DummyResponse(result=f\"Processed: {request.message}\")\n\ndef add_Servicer_to_server(servicer, server):\n    # Manual registration of generic handler\n    from grpc.aio import server_method_handler\n    \n    async def handler(request, context):\n        return await servicer.ProcessRequest(request, context)\n    ",
+      "code_size_bytes": 8674,
+      "execution_time_ms": 56.76,
+      "memory_peak_kb": 40336,
+      "correctness": false,
+      "keywords_found": [],
+      "keywords_missing": [
+        "working snippet",
+        "error handling",
+        "validation",
+        "fastapi",
+        "implementation"
+      ],
+      "error": "  File \"/tmp/tmpws8xjhw5.py\", line 30\n    class Service servicer definition\n                  ^^^^^^^^\nSyntaxError: invalid syntax\n",
+      "exit_code": 1,
+      "output_snippet": "  File \"/tmp/tmpws8xjhw5.py\", line 30\n    class Service servicer definition\n                  ^^^^^^^^\nSyntaxError: invalid syntax\n",
+      "complexity_lines": 182,
+      "complexity_branches": 22
+    },
+    {
+      "query_id": "PREF-EN-013",
+      "query": "Implement Prefect orchestration with robust retries, error handling, and observability. Scenario #13.",
+      "generated_code": "import prefect\nfrom prefect import task, flow, get_run_logger\nfrom prefect.utilities.annotations import quote\nimport random\nimport time\nfrom datetime import timedelta\n\n# Simulating an external failure source\nclass ExternalServiceFailure(Exception):\n    pass\n\n@task(\n    name=\"Ingest Data\",\n    description=\"Ingests raw data from an external source.\",\n    retries=3,\n    retry_delay_seconds=5,\n    retry_jitter_factor=0.5\n)\ndef ingest_data(dataset_id: str):\n    logger = get_run_logger()\n    logger.info(f\"Starting ingestion for dataset: {dataset_id}\")\n    \n    # Simulate transient failure (e.g., network timeout)\n    if random.random() < 0.4:\n        logger.warning(\"Simulated network timeout during ingestion.\")\n        raise ConnectionError(\"Network timeout\")\n        \n    logger.info(\"Data ingested successfully.\")\n    return {\"data_id\": dataset_id, \"rows\": random.randint(100, 1000)}\n\n@task(\n    name=\"Transform Data\",\n    description=\"Cleans and transforms the ingested data.\",\n    retries=2,\n    retry_delay_seconds=timedelta(seconds=2)\n)\ndef transform_data(payload: dict):\n    logger = get_run_logger()\n    logger.info(f\"Transforming data for payload: {payload['data_id']}\")\n    \n    # Simulate processing error that retries might not fix immediately\n    # Or just a random flake\n    if random.random() < 0.3:\n        logger.error(\"Data format validation failed.\")\n        raise ValueError(\"Invalid data format\")\n        \n    # Simulate processing time\n    time.sleep(1)\n    payload[\"transformed\"] = True\n    payload[\"record_count\"] = payload[\"rows\"] * 2\n    logger.info(\"Data transformation complete.\")\n    return payload\n\n@task(\n    name=\"Persist to Warehouse\",\n    description=\"Saves processed data to the data warehouse.\",\n    retries=5,  # High retries for critical persistence step\n    retry_delay_seconds=10\n)\ndef persist_data(payload: dict):\n    logger = get_run_logger()\n    logger.info(f\"Persisting {payload['record_count']} records to warehouse.\")\n    \n    # Simulate a database de",
+      "code_size_bytes": 3471,
+      "execution_time_ms": 55.37,
+      "memory_peak_kb": 40336,
+      "correctness": false,
+      "keywords_found": [
+        "prefect"
+      ],
+      "keywords_missing": [
+        "working snippet",
+        "error handling",
+        "validation",
+        "implementation"
+      ],
+      "error": "Traceback (most recent call last):\n  File \"/tmp/tmpusr1mz9l.py\", line 1, in <module>\n    import prefect\nModuleNotFoundError: No module named 'prefect'\n",
+      "exit_code": 1,
+      "output_snippet": "Traceback (most recent call last):\n  File \"/tmp/tmpusr1mz9l.py\", line 1, in <module>\n    import prefect\nModuleNotFoundError: No module named 'prefect'\n",
+      "complexity_lines": 78,
+      "complexity_branches": 12
+    },
+    {
+      "query_id": "MCP-EN-019",
+      "query": "Implement MCP external-knowledge router with robust retries, error handling, and observability. Scenario #19.",
+      "generated_code": "import asyncio\nimport json\nimport logging\nimport random\nimport time\nfrom dataclasses import dataclass, field\nfrom enum import Enum\nfrom typing import Any, Callable, Dict, List, Optional, Tuple\n\n# --- Configuration & Observability Setup ---\n\nlogging.basicConfig(\n    level=logging.INFO,\n    format=\"%(asctime)s [%(levelname)s] %(name)s - %(message)s\",\n    datefmt=\"%H:%M:%S\",\n)\nlogger = logging.getLogger(\"MCP-Router\")\n\n\nclass MetricCollector:\n    def __init__(self):\n        self.counters: Dict[str, int] = {}\n        self.timings: Dict[str, List[float]] = {}\n        self.errors: List[Dict[str, Any]] = []\n\n    def increment(self, metric_name: str, value: int = 1):\n        self.counters[metric_name] = self.counters.get(metric_name, 0) + value\n\n    def record_timing(self, operation: str, duration_ms: float):\n        if operation not in self.timings:\n            self.timings[operation] = []\n        self.timings[operation].append(duration_ms)\n\n    def record_error(self, error_type: str, context: str):\n        self.errors.append({\"time\": time.time(), \"type\": error_type, \"context\": context})\n        self.increment(\"errors.total\")\n\n    def report(self):\n        print(\"\\n--- Observability Report ---\")\n        print(\"Counters:\")\n        for k, v in self.counters.items():\n            print(f\"  {k}: {v}\")\n\n        print(\"Average Timings:\")\n        for k, v in self.timings.items():\n            avg = sum(v) / len(v)\n            print(f\"  {k}: {avg:.2f}ms\")\n\n        print(\"Recent Errors:\")\n        for e in self.errors[-5:]:\n            print(f\"  [{e['type']}] {e['context']}\")\n\n\nmetrics = MetricCollector()\n\n\n# --- Domain Definitions ---\n\nclass KnowledgeDomain(Enum):\n    FINANCE = \"finance\"\n    WEATHER = \"weather\"\n    GENERAL = \"general\"\n    CODE = \"code\"\n\n\n@dataclass\nclass ToolRequest:\n    query: str\n    domain: KnowledgeDomain\n    request_id: str\n\n\n@dataclass\nclass ToolResponse:\n    data: Any\n    source: str\n    success: bool\n    error: Optional[str] = None\n\n\n# --- Fake External Client",
+      "code_size_bytes": 9171,
+      "execution_time_ms": 56.82,
+      "memory_peak_kb": 40528,
+      "correctness": false,
+      "keywords_found": [],
+      "keywords_missing": [
+        "working snippet",
+        "error handling",
+        "validation",
+        "mcp",
+        "implementation"
+      ],
+      "error": "  File \"/tmp/tmpdssgvxwf.py\", line 274\n    if __name__ == \"__main__\":\nIndentationError: expected an indented block after 'if' statement on line 274\n",
+      "exit_code": 1,
+      "output_snippet": "  File \"/tmp/tmpdssgvxwf.py\", line 274\n    if __name__ == \"__main__\":\nIndentationError: expected an indented block after 'if' statement on line 274\n",
+      "complexity_lines": 196,
+      "complexity_branches": 26
+    },
+    {
+      "query_id": "LLM-RU-020",
+      "query": "Покажи рабочий пример для vLLM inference с обработкой ошибок и retry. Сценарий #20.",
+      "generated_code": "import time\nimport random\nfrom vllm import LLM, SamplingParams\nfrom vllm.engine.arg_utils import AsyncEngineArgs\nfrom vllm.engine.async_llm_engine import AsyncLLMEngine\nfrom vllm.sampling_params import SamplingParams\n\n# Scenario #20: Async Inference with Retry Logic and Robust Error Handling\n# This demonstrates handling temporary failures (e.g., overloads) and retrying requests.\n\ndef generate_prompt():\n    # Simple deterministic prompt for the example\n    return \"The future of AI is\"\n\nasync def run_inference_with_retry(engine, prompt, max_retries=3):\n    sampling_params = SamplingParams(temperature=0.8, top_p=0.95, max_tokens=20)\n    attempt = 0\n    \n    while attempt < max_retries:\n        attempt += 1\n        try:\n            print(f\"Attempt {attempt} for prompt: '{prompt}'\")\n            \n            # Request output generation\n            results_generator = engine.generate(prompt, sampling_params)\n            \n            # Process the result\n            async for request_output in results_generator:\n                if request_output.finished:\n                    print(f\"Success: {request_output.outputs[0].text}\")\n                    return request_output.outputs[0].text\n\n        except Exception as e:\n            print(f\"Error occurred: {e}\")\n            # Simulate a specific error condition for demonstration purposes \n            # if this was not the last attempt\n            if attempt < max_retries:\n                wait_time = 2 ** attempt  # Exponential backoff\n                print(f\"Retrying in {wait_time}s...\")\n                await asyncio.sleep(wait_time)\n            else:\n                print(\"Max retries reached. Giving up.\")\n                raise\n\nasync def main():\n    # Initialize AsyncLLMEngine\n    # Note: In a real scenario, use a valid model path. \n    # Using 'gpt2' here as it is small and widely available for quick testing.\n    engine_args = AsyncEngineArgs(model=\"gpt2\")\n    engine = AsyncLLMEngine.from_engine_args(engine_args)\n\n    prompt = ",
+      "code_size_bytes": 2223,
+      "execution_time_ms": 58.79,
+      "memory_peak_kb": 40528,
+      "correctness": false,
+      "keywords_found": [
+        "vllm"
+      ],
+      "keywords_missing": [
+        "working snippet",
+        "error handling",
+        "validation",
+        "implementation"
+      ],
+      "error": "Traceback (most recent call last):\n  File \"/tmp/tmpfb8wiezv.py\", line 3, in <module>\n    from vllm import LLM, SamplingParams\nModuleNotFoundError: No module named 'vllm'\n",
+      "exit_code": 1,
+      "output_snippet": "Traceback (most recent call last):\n  File \"/tmp/tmpfb8wiezv.py\", line 3, in <module>\n    from vllm import LLM, SamplingParams\nModuleNotFoundError: No module named 'vllm'\n",
+      "complexity_lines": 40,
+      "complexity_branches": 10
+    },
+    {
+      "query_id": "PGV-EN-025",
+      "query": "Implement pgvector retrieval layer with robust retries, error handling, and observability. Scenario #25.",
+      "generated_code": "import os\nimport time\nimport random\nimport logging\nimport json\nimport math\nfrom typing import List, Dict, Any, Optional, Tuple\nfrom dataclasses import dataclass, asdict\n\n# --- Configuration & Mocking ---\n# Since 'psycopg2' and 'pgvector' are not guaranteed to be installed in this environment,\n# we will mock the database driver interactions to ensure the code is executable.\n# In a real scenario, replace MockConnection with actual psycopg2 connection management.\n\nlogging.basicConfig(\n    level=logging.INFO,\n    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',\n    handlers=[logging.StreamHandler()]\n)\nlogger = logging.getLogger(\"pgvector_retrieval\")\n\n@dataclass\nclass EmbeddingResult:\n    id: int\n    content: str\n    metadata: Dict[str, Any]\n    similarity: float\n\n# --- Exceptions ---\nclass RetrievalError(Exception):\n    \"\"\"Base exception for retrieval errors.\"\"\"\n    pass\n\nclass DatabaseConnectionError(RetrievalError):\n    \"\"\"Failed to connect to database.\"\"\"\n    pass\n\nclass QueryTimeoutError(RetrievalError):\n    \"\"\"Query took too long.\"\"\"\n    pass\n\n# --- Mock Database Driver (Simulating psycopg2 + pgvector) ---\nclass MockCursor:\n    def __init__(self, data, should_fail=False):\n        self._data = data\n        self._should_fail = should_fail\n        self.rowcount = len(data) if isinstance(data, list) else 0\n        self.description = [['id'], ['content'], ['metadata'], ['distance']]\n\n    def execute(self, query, params=None):\n        logger.debug(f\"Mock Executing Query: {query[:50]}... with params: {params}\")\n        if self._should_fail:\n            # Simulate random transient DB errors ( deadlock, timeout )\n            if random.random() < 0.3:\n                raise Exception(\"Simulated DB Connection Lost\")\n            if \"timeout\" in query.lower() and random.random() < 0.2:\n                raise Exception(\"Simulated Query Timeout\")\n        time.sleep(0.05) # Simulate latency\n\n    def fetchall(self):\n        if self._should_fail and random.random() < 0.1",
+      "code_size_bytes": 8986,
+      "execution_time_ms": 57.93,
+      "memory_peak_kb": 40528,
+      "correctness": false,
+      "keywords_found": [],
+      "keywords_missing": [
+        "working snippet",
+        "error handling",
+        "validation",
+        "pgvector",
+        "implementation"
+      ],
+      "error": "  File \"/tmp/tmp2_z28rao.py\", line 245\n    \"\"\"\n    ^\nSyntaxError: unterminated triple-quoted string literal (detected at line 246)\n",
+      "exit_code": 1,
+      "output_snippet": "  File \"/tmp/tmp2_z28rao.py\", line 245\n    \"\"\"\n    ^\nSyntaxError: unterminated triple-quoted string literal (detected at line 246)\n",
+      "complexity_lines": 182,
+      "complexity_branches": 24
+    },
+    {
+      "query_id": "PREF-EN-026",
+      "query": "Provide a working code example for Prefect orchestration with idempotent behavior. Scenario #26.",
+      "generated_code": "import uuid\nfrom datetime import timedelta\nfrom prefect import task, flow, get_run_logger\nfrom prefect.orion.schemas.states import StateType\nfrom prefect.tasks import task_input_hash\n\n# --- Simulation of an external persistent store ---\n# In a real scenario, this would be a database (e.g., Postgres, Redis) \n# used to verify if a specific batch was already processed.\nclass MockDatabase:\n    def __init__(self):\n        self.processed_batches = set()\n\n    def mark_processed(self, batch_id):\n        self.processed_batches.add(batch_id)\n\n    def is_processed(self, batch_id):\n        return batch_id in self.processed_batches\n\ndb = MockDatabase()\n\n# --- Task Configuration ---\n\n@task(\n    name=\"extract_batch_data\",\n    cache_key_fn=task_input_hash,  # Caches based on input arguments\n    cache_expiration=timedelta(hours=1),\n    retries=2,\n    retry_delay_seconds=5\n)\ndef extract_batch_data(batch_id: str):\n    \"\"\"\n    Simulates data extraction. \n    Using task_input_hash ensures that if called twice with same batch_id \n    within the expiration window, the physical execution is skipped \n    (returns cached result).\n    \"\"\"\n    logger = get_run_logger()\n    logger.info(f\"Extracting data for batch: {batch_id}\")\n    # Simulate external API call latency\n    import time\n    time.sleep(0.5)\n    return {\"batch_id\": batch_id, \"data\": [1, 2, 3, 4, 5]}\n\n@task(name=\"transform_batch_data\")\ndef transform_batch_data(payload: dict):\n    \"\"\"\n    Simulates transformation.\n    \"\"\"\n    logger = get_run_logger()\n    logger.info(f\"Transforming data for batch: {payload['batch_id']}\")\n    return [x * 10 for x in payload['data']]\n\n@task(name=\"load_batch_data\")\ndef load_batch_data(processed_data: list, batch_id: str):\n    \"\"\"\n    Simulates loading. This step enforces logical idempotency.\n    Even if cached data flows in, we check the persistent store \n    to ensure we don't write duplicates.\n    \"\"\"\n    logger = get_run_logger()\n    \n    # --- IDEMPOTENCY CHECK ---\n    if db.is_processed(batch_id):\n  ",
+      "code_size_bytes": 4009,
+      "execution_time_ms": 57.23,
+      "memory_peak_kb": 40528,
+      "correctness": false,
+      "keywords_found": [
+        "prefect"
+      ],
+      "keywords_missing": [
+        "working snippet",
+        "error handling",
+        "validation",
+        "implementation"
+      ],
+      "error": "Traceback (most recent call last):\n  File \"/tmp/tmpbppep7eb.py\", line 3, in <module>\n    from prefect import task, flow, get_run_logger\nModuleNotFoundError: No module named 'prefect'\n",
+      "exit_code": 1,
+      "output_snippet": "Traceback (most recent call last):\n  File \"/tmp/tmpbppep7eb.py\", line 3, in <module>\n    from prefect import task, flow, get_run_logger\nModuleNotFoundError: No module named 'prefect'\n",
+      "complexity_lines": 81,
+      "complexity_branches": 11
+    },
+    {
+      "query_id": "MCP-EN-032",
+      "query": "Provide a working code example for MCP external-knowledge router with idempotent behavior. Scenario #32.",
+      "generated_code": "#!/usr/bin/env python3\nimport asyncio\nimport hashlib\nimport json\nimport time\nfrom dataclasses import dataclass, field\nfrom typing import Any, Callable, Dict, List, Optional\n\n# --- In-Memory Data Store Simulation ---\n\nclass IdempotencyStore:\n    \"\"\"\n    A thread-safe store for tracking request IDs to ensure idempotency.\n    In a production scenario, this would be backed by Redis or a Database.\n    \"\"\"\n    def __init__(self):\n        self._cache = {}\n\n    def get_result(self, request_id: str) -> Optional[Any]:\n        return self._cache.get(request_id)\n\n    def store_result(self, request_id: str, result: Any):\n        self._cache[request_id] = result\n\n    def exists(self, request_id: str) -> bool:\n        return request_id in self._cache\n\n# --- Mock External Knowledge Tools ---\n\nclass ExternalKnowledgeService:\n    \"\"\"\n    Simulates external knowledge tools (e.g., Database, API, Search Engine).\n    These tools are non-deterministic or stateful (e.g., timestamps or counters),\n    which makes idempotency necessary.\n    \"\"\"\n\n    async def query_database(self, query: str) -> Dict:\n        print(f\"  [External] Executing expensive DB query: '{query}'\")\n        await asyncio.sleep(0.5)  # Simulate network latency\n        return {\n            \"source\": \"Database\",\n            \"data\": f\"Result for {query}\",\n            \"timestamp\": time.time()\n        }\n\n    async def fetch_weather(self, city: str) -> Dict:\n        print(f\"  [External] Fetching weather data for: '{city}'\")\n        await asyncio.sleep(0.3)\n        return {\n            \"source\": \"WeatherAPI\",\n            \"city\": city,\n            \"temp_c\": 22,\n            \"condition\": \"Cloudy\",\n            \"fetched_at\": time.time()\n        }\n\n# --- Core Router Logic ---\n\nclass MCPExternalKnowledgeRouter:\n    def __init__(self, knowledge_service: ExternalKnowledgeService):\n        self.service = knowledge_service\n        self.idempotency_store = IdempotencyStore()\n        self.tool_registry = {\n            \"db_query\": self._route_",
+      "code_size_bytes": 5899,
+      "execution_time_ms": 837.96,
+      "memory_peak_kb": 40528,
+      "correctness": false,
+      "keywords_found": [
+        "mcp"
+      ],
+      "keywords_missing": [
+        "working snippet",
+        "error handling",
+        "validation",
+        "implementation"
+      ],
+      "error": null,
+      "exit_code": 0,
+      "output_snippet": "============================================================\nScenario #32: MCP External-Knowledge Router (Idempotent)\n============================================================\n\n--- Attempt 1: Initial Request ---\nProcessing request: db_query (Key: req-scen...)\n  [Router] Cache MISS. Executing tool.\n  [External] Executing expensive DB query: 'SELECT * FROM users WHERE id = 42'\nResult 1 Timestamp: 1782932235.8734875\n\n--- Attempt 2: Duplicate Request (Simulated Retransmission) ---\nProcessing requ",
+      "complexity_lines": 106,
+      "complexity_branches": 15
+    }
+  ]
+}

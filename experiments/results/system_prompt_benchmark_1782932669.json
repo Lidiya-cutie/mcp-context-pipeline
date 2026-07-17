@@ -1,0 +1,891 @@
+{
+  "experiment": "DS-747: LLM and system prompt stability benchmark",
+  "timestamp": "2026-07-01T19:04:29Z",
+  "models_tested": [
+    "glm-4.7",
+    "mimo-v2.5"
+  ],
+  "system_prompts_tested": [
+    "neutral",
+    "expert",
+    "strict",
+    "ru-expert",
+    "safety"
+  ],
+  "repeats_per_config": 2,
+  "queries": 3,
+  "total_runs": 60,
+  "summary": {
+    "glm-4.7|neutral": {
+      "model": "glm-4.7",
+      "system_prompt": "neutral",
+      "runs": 6,
+      "errors": 0,
+      "error_rate": 0.0,
+      "avg_latency_ms": 10875.0,
+      "latency_stdev": 3316.6,
+      "avg_f1": 0.1667,
+      "f1_stdev": 0.4082,
+      "avg_keyword_coverage": 0.48,
+      "stability": -1.4487
+    },
+    "glm-4.7|expert": {
+      "model": "glm-4.7",
+      "system_prompt": "expert",
+      "runs": 6,
+      "errors": 0,
+      "error_rate": 0.0,
+      "avg_latency_ms": 32302.0,
+      "latency_stdev": 13854.0,
+      "avg_f1": 0.0,
+      "f1_stdev": 0.0,
+      "avg_keyword_coverage": 0.44,
+      "stability": 1.0
+    },
+    "glm-4.7|strict": {
+      "model": "glm-4.7",
+      "system_prompt": "strict",
+      "runs": 6,
+      "errors": 0,
+      "error_rate": 0.0,
+      "avg_latency_ms": 12452.4,
+      "latency_stdev": 3422.7,
+      "avg_f1": 0.0,
+      "f1_stdev": 0.0,
+      "avg_keyword_coverage": 0.4,
+      "stability": 1.0
+    },
+    "glm-4.7|ru-expert": {
+      "model": "glm-4.7",
+      "system_prompt": "ru-expert",
+      "runs": 6,
+      "errors": 0,
+      "error_rate": 0.0,
+      "avg_latency_ms": 22060.5,
+      "latency_stdev": 1671.5,
+      "avg_f1": 0.0,
+      "f1_stdev": 0.0,
+      "avg_keyword_coverage": 0.4,
+      "stability": 1.0
+    },
+    "glm-4.7|safety": {
+      "model": "glm-4.7",
+      "system_prompt": "safety",
+      "runs": 6,
+      "errors": 0,
+      "error_rate": 0.0,
+      "avg_latency_ms": 18351.4,
+      "latency_stdev": 4198.7,
+      "avg_f1": 0.0,
+      "f1_stdev": 0.0,
+      "avg_keyword_coverage": 0.6,
+      "stability": 1.0
+    },
+    "mimo-v2.5|neutral": {
+      "model": "mimo-v2.5",
+      "system_prompt": "neutral",
+      "runs": 6,
+      "errors": 6,
+      "error_rate": 1.0,
+      "avg_latency_ms": 0,
+      "latency_stdev": 0,
+      "avg_f1": 0,
+      "f1_stdev": 0,
+      "avg_keyword_coverage": 0,
+      "stability": 0
+    },
+    "mimo-v2.5|expert": {
+      "model": "mimo-v2.5",
+      "system_prompt": "expert",
+      "runs": 6,
+      "errors": 6,
+      "error_rate": 1.0,
+      "avg_latency_ms": 0,
+      "latency_stdev": 0,
+      "avg_f1": 0,
+      "f1_stdev": 0,
+      "avg_keyword_coverage": 0,
+      "stability": 0
+    },
+    "mimo-v2.5|strict": {
+      "model": "mimo-v2.5",
+      "system_prompt": "strict",
+      "runs": 6,
+      "errors": 6,
+      "error_rate": 1.0,
+      "avg_latency_ms": 0,
+      "latency_stdev": 0,
+      "avg_f1": 0,
+      "f1_stdev": 0,
+      "avg_keyword_coverage": 0,
+      "stability": 0
+    },
+    "mimo-v2.5|ru-expert": {
+      "model": "mimo-v2.5",
+      "system_prompt": "ru-expert",
+      "runs": 6,
+      "errors": 6,
+      "error_rate": 1.0,
+      "avg_latency_ms": 0,
+      "latency_stdev": 0,
+      "avg_f1": 0,
+      "f1_stdev": 0,
+      "avg_keyword_coverage": 0,
+      "stability": 0
+    },
+    "mimo-v2.5|safety": {
+      "model": "mimo-v2.5",
+      "system_prompt": "safety",
+      "runs": 6,
+      "errors": 6,
+      "error_rate": 1.0,
+      "avg_latency_ms": 0,
+      "latency_stdev": 0,
+      "avg_f1": 0,
+      "f1_stdev": 0,
+      "avg_keyword_coverage": 0,
+      "stability": 0
+    }
+  },
+  "raw_results": [
+    {
+      "model": "glm-4.7",
+      "system_prompt": "neutral",
+      "run_index": 0,
+      "text": "**Cause: Event Loop Blocking**\nDuring burst traffic, the server receives numerous CPU-intensive requests (such as complex data parsing, encryption, or heavy computation) simultaneously. JavaScript runs on a single thread; these operations block the Event Loop, preventing the server from processing incoming connections or responding to health checks, leading to timeouts.\n\n**Fix: Offload to Worker Threads**\nMove CPU-intensive tasks off the main thread using **Worker Threads** (via `worker_threads` in Node.js) or a dedicated background queue (like BullMQ or Redis). This keeps the main Event Loop free to handle HTTP requests and the Next.js rendering process.",
+      "latency_ms": 5188.5,
+      "error": null,
+      "tokens": 126,
+      "keywords_hit": [],
+      "f1": 1.0
+    },
+    {
+      "model": "glm-4.7",
+      "system_prompt": "neutral",
+      "run_index": 1,
+      "text": "**Scenario #2: Node.js Event Loop Saturation from Dynamic Rendering**\n\nIn this scenario, the intermittent failures are caused by the Next.js server (Node.js) being blocked by CPU-intensive tasks. Under burst traffic, the **Event Loop** is overloaded with synchronous dynamic rendering or data processing. Since Node.js is single-threaded, it cannot process new incoming requests while it is calculating previous ones, causing requests to time out or fail.\n\n### The Diagnosis\n1.  **Dynamic Overhead:** The admin dashboard likely renders many dynamic charts, tables, or statistics server-side. Each request triggers heavy computation (e.g., complex aggregations) that blocks the main thread.\n2.  **No Concurrency:** During a burst, multiple requests arrive simultaneously. The server processes them sequentially. If request A takes 500ms to render, and 20 requests arrive, the last request waits 10 seconds, likely hitting a timeout threshold.\n3.  **Resource Exhaustion:** The CPU hits 100%, and the event loop lag skyrockets, causing the health check (or the load balancer) to mark the instance as unhealthy.\n\n### How to Fix\n\n**1. Implement Caching (Highest Impact)**\nAdmin data rarely changes second-by-second. Stop recalculating for every request.\n*   **Next.js ISR (Incremental Static Regeneration):** Use `revalidate` in `getStaticProps` (Pages) or `fetch` (App Router) to generate the page once and serve it from the cache, regenerating it in the background.\n*   **Redis/Memory Cache:** Cache the results of heavy database queries or API calls. Return the cached version immediately if available.\n\n**2. Offload Computation (Edge/Workers)**\nMove CPU-heavy tasks off the main Node.js thread.\n*   **API Route Optimization:** If the slowness comes from an API endpoint, move that endpoint logic to a **Serverless Function** or an **Edge Function** (which isolates execution better) or a background worker queue.\n*   **WebAssembly (Wasm):** If calculations are complex (e.g., data transformations), rewrite them in Rust/C++ and compile to Wasm to speed up execution time significantly.\n\n**3. Switch to Static Rendering where possible**\nAdmin dashboards often use Client-Side Rendering (CSR). If the data isn't critical for SEO:\n*   Serve a lightweight static shell immediately (loading state).\n*   Use `useEffect` to fetch data from the client. This removes the rendering burden from the Next.js server entirely.\n\n**4. Horizontal Scaling**\nIf you cannot reduce the CPU usage per request, you must handle the concurrency by adding more workers.\n*   Deploy your application in a multi-container setup (e.g., Kubernetes pods or multiple Vercel instances) behind a load balancer to distribute the burst across multiple Node.js processes.",
+      "latency_ms": 14440.4,
+      "error": null,
+      "tokens": 587,
+      "keywords_hit": [
+        "slo"
+      ],
+      "f1": 0.0
+    },
+    {
+      "model": "glm-4.7",
+      "system_prompt": "expert",
+      "run_index": 0,
+      "text": "**Scenario Diagnosis: The \"Route Handler Convoy\" Effect (and Memory Leaks)**\n\nIn a Next.js App Router application, intermittent failures during burst traffic are typically caused by **Race Conditions in shared mutable state** or **unbound memory growth inside API Routes**.\n\nWhen traffic bursts, Node.js (single-threaded) processes requests sequentially or via the worker pool. If a Route Handler holds a reference to a mutable variable (like a cache or database connection pool) that isn't thread-safe, or if it creates new connections without releasing them, you hit a resource ceiling.\n\nThe most common culprit in Scenario #2 is **Global Variable Mutation within API Routes** or **Improper Resource Management**.\n\n### The Root Cause\n\n1.  **The \"Convoy\" Effect:** When a burst hits, multiple requests enter the handler simultaneously. If the handler modifies a global object (e.g., `global.cache`) without a lock, subsequent reads may encounter corrupted or partially written data, leading to serialization errors or crashes.\n2.  **Memory Leaks (Common with ORMs):** If you instantiate a database client (like Prisma, Drizzle, or Mongoose) *inside* the route handler function instead of using a singleton pattern, you rapidly exhaust file descriptors and memory.\n3.  **Event Loop Blocking:** If the admin interface performs heavy computations or large aggregations synchronously, the event loop blocks. New requests queue up, triggering timeouts (HTTP 504) even if the server is technically \"up.\"\n\n---\n\n### The Fix\n\nHere is the production-ready strategy to resolve this.\n\n#### 1. Implement Singleton Pattern for Database Connections\nNever instantiate a database client inside the route handler scope. Use a global singleton to ensure connection pooling is reused across requests.\n\n**Code Example (Postgres with Prisma/Drizzle):**\n\n```typescript\n// lib/db.ts\nimport { PrismaClient } from '@prisma/client';\n\n// This prevents multiple instances in hot-reload (dev) \n// and ensures one single pool in production (lambda/serverless).\nconst globalForPrisma = global as unknown as { prisma: PrismaClient };\n\nexport const db =\n  globalForPrisma.prisma ??\n  new PrismaClient({\n    log: process.env.NODE_ENV === 'development' ? ['query', 'error', 'warn'] : ['error'],\n  });\n\nif (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = db;\n```\n\n#### 2. Use External Cache (Redis) instead of In-Memory Globals\nDo not use `const cache = {}` or `globalThis.cache` for admin data. Next.js serverless environments can spin up/down, causing cache evaporation, and concurrent writes corrupt memory.\n\nUse Upstash Redis or a similar edge-compatible cache.\n\n**Code Example (Route Handler with Rate Limiting & Caching):**\n\n```typescript\n// app/api/admin/stats/route.ts\nimport { NextResponse } from 'next/server';\nimport { db } from '@/lib/db'; // Singleton from step 1\nimport { Redis } from '@upstash/redis'; // or ioredis\n\nconst redis = new Redis({\n  url: process.env.UPSTASH_REDIS_REST_URL!,\n  token: process.env.UPSTASH_REDIS_REST_TOKEN!,\n});\n\nexport async function GET() {\n  try {\n    // 1. Cache Hit Prevention (Reduces DB load during bursts)\n    const cachedStats = await redis.get('admin:stats');\n    if (cachedStats) {\n      return NextResponse.json(cachedStats);\n    }\n\n    // 2. Robust Fetching with Timeout\n    // Using Promise.race to prevent Event Loop blocking from hanging DBs\n    const statsPromise = db.user.count(); \n    \n    const timeoutPromise = new Promise((_, reject) => \n      setTimeout(() => reject(new Error('Request Timeout')), 8000)\n    );\n\n    const count = await Promise.race([statsPromise, timeoutPromise]) as number;\n\n    const data = { userCount: count };\n\n    // 3. Set Cache with Short TTL for Admin freshness\n    await redis.set('admin:stats', JSON.stringify(data), { ex: 10 });\n\n    return NextResponse.json(data);\n\n  } catch (error) {\n    console.error('Admin Stats Error:', error);\n    \n    // Graceful Degradation: Return stale data or safe defaults instead of 500\n    return new NextResponse(\n      JSON.stringify({ error: 'Service temporarily unavailable', userCount: -1 }),\n      { status: 503, headers: { 'Retry-After': '5' } }\n    );\n  }\n}\n```\n\n#### 3. Implement \"Circuit Breaking\" for Admin Endpoints\nAdmin endpoints often run heavy queries. Protect them from flooding your system. Use a simple in-memory semaphore (for single-instance) or a Redis-based counter.\n\n**Code Example (Simple In-Memory Semaphore):**\n\n```typescript\n// lib/rate-limit.ts",
+      "latency_ms": 31217.5,
+      "error": null,
+      "tokens": 1024,
+      "keywords_hit": [
+        "root cause"
+      ],
+      "f1": 0.0
+    },
+    {
+      "model": "glm-4.7",
+      "system_prompt": "expert",
+      "run_index": 1,
+      "text": "**Scenario #2: API Route Memory Leaks / Event Loop Blocking**\n\nIn this scenario, the \"intermittent failures\" are caused by **Unbounded Growth** or **CPU Saturation** within server-side API routes (often used for admin data fetching) due to inefficient caching strategies or heavy synchronous processing during traffic bursts.\n\nWhen traffic bursts occur, Node.js's single-threaded Event Loop gets blocked processing heavy requests, or the Heap memory fills up faster than the Garbage Collector can clean it, causing the server to drop connections (502/504) or crash entirely (OOM restart).\n\n### The Root Cause\n\n1.  **In-Memory Caching (The \"Map\" Trap):** Developers often use a simple JavaScript `Map` or global object to cache admin data (e.g., user permissions, dashboard stats) to save database hits.\n    *   *The Bug:* Under burst traffic, entries are added to the cache but are never or rarely evicted. This causes a **Memory Leak**, leading to Out-Of-Memory (OOM) kills by the container orchestrator (Vercel/Kubernetes).\n2.  **Heavy Synchronous Loops:** Admin panels often perform data aggregation (calculating totals, formatting CSVs). Doing this on the main thread blocks the Event Loop. New incoming requests timeout waiting for the loop to finish.\n\n### The Fix\n\n1.  **Replace In-Memory Caches:** Use an external TTL-based store (like Redis or Upstash).\n2.  **Offload Heavy Processing:** Move aggregation to background jobs or edge compute.\n3.  **Implement Request Coalescing:** Prevent 100 simultaneous requests for the *same* admin data from hitting your database at once.\n\n---\n\n### Production-Ready Solution\n\nHere is a robust implementation pattern for a Next.js API Route (App Router) that solves both issues using **LRU Caching with Persistence** (if not using Redis) and **Request Coalescing** (Deduplication).\n\n#### 1. Install Dependencies\nWe need `lru-cache` for strict memory management and `upstash/redis` for distributed caching (recommended).\n\n```bash\nnpm install lru-cache @upstash/redis\n```\n\n#### 2. The Production Code (`app/api/admin/stats/route.ts`)\n\nThis implementation handles memory limits strictly and prevents \"Thundering Herd\" problems.\n\n```typescript\nimport { NextResponse } from 'next/server';\nimport { LRUCache } from 'lru-cache';\nimport { Redis } from '@upstash/redis';\n\n// Configuration for the in-memory LRU cache (Fallback or Local Layer)\nconst statsCache = new LRUCache<string, Promise<any>>({\n  max: 500, // Strict limit on number of items\n  ttl: 1000 * 60 * 5, // 5 minutes\n});\n\n// Initialize Redis (Best Practice: Use environment variables)\nconst redis = new Redis({\n  url: process.env.UPSTASH_REDIS_REST_URL!,\n  token: process.env.UPSTASH_REDIS_REST_TOKEN!,\n});\n\n// Simulated Heavy Database Operation\nasync function fetchStatsFromDB() {\n  // Simulate a 500ms query delay\n  await new Promise((resolve) => setTimeout(resolve, 500)); \n  return { users: 120, revenue: 4500, activeNow: 12 };\n}\n\nexport async function GET() {\n  try {\n    const cacheKey = 'admin:dashboard_stats_v1';\n\n    // 1. Check Local Memory (Fastest) - Check if promise exists to prevent thundering herd\n    let pendingPromise = statsCache.get(cacheKey);\n\n    if (!pendingPromise) {\n      // 2. Check Redis (Distributed Layer)\n      const redisData = await redis.get(cacheKey);\n      \n      if (redisData) {\n        return NextResponse.json(redisData);\n      }\n\n      // 3. Data Fetching with Coalescing\n      // We wrap the DB call in a Promise and cache the Promise itself, not just the data.\n      // This ensures that during a burst, only 1 DB query is made, and all others wait for this specific promise.\n      pendingPromise = fetchStatsFromDB()\n        .then(async (data) => {\n          // Update Redis for other server instances\n          if (process.env.UPSTASH_REDIS_REST_URL) {\n            await redis.setex(cacheKey, 300, JSON.stringify(data));\n          }\n          return data;\n        })\n        .catch((error) => {\n          // Critical: Delete the cache entry on failure so retries happen\n          statsCache.delete(cacheKey);\n          throw error;\n        });\n\n      // Store the promise in the LRU cache\n      statsCache.set(cacheKey, pendingPromise);\n    }\n\n    // Await the result (either just started or already running)\n    const data = await pendingPromise;\n\n    return NextResponse.json(data);\n\n  } catch (error) {\n    console.error('Admin Stats Fetch Error:', error);\n    //",
+      "latency_ms": 23842.3,
+      "error": null,
+      "tokens": 1024,
+      "keywords_hit": [
+        "root cause"
+      ],
+      "f1": 0.0
+    },
+    {
+      "model": "glm-4.7",
+      "system_prompt": "strict",
+      "run_index": 0,
+      "text": "**Reason: Unprotected Non-Idempotent Mutations**\n\nUnder burst traffic, multiple users (or retry mechanisms) may submit the same mutation request simultaneously. Without proper idempotency checks, the API route processes concurrent requests, leading to race conditions where database integrity checks fail or duplicate records are created, resulting in intermittent `500` or `409` errors.\n\n**Fix: Implement Idempotency Keys and Row-Level Locking**\n\nThis pattern ensures that repeated requests with the same key during a short window result in a single database action, while database locks prevent race conditions during creation.\n\n**Code Implementation:**\n\n```javascript\n// utils/idempotency.js\nimport crypto from 'crypto';\n\n// Generate a stable idempotency key if not provided\nexport function generateIdempotencyKey() {\n  return crypto.randomBytes(16).toString('hex');\n}\n\n// app/api/admin/revoke-access/route.js\nimport { NextResponse } from 'next/server';\nimport { db } from '@/lib/db';\nimport { generateIdempotencyKey } from '@/utils/idempotency';\n\nexport async function POST(req) {\n  const body = await req.json();\n  const idempotencyKey = req.headers['x-idempotency-key'] || generateIdempotencyKey();\n  const { userId } = body;\n\n  if (!userId) {\n    return NextResponse.json({ error: 'User ID required' }, { status: 400 });\n  }\n\n  try {\n    // Use a transaction to handle idempotency check and atomic update\n    const result = await db.transaction(async (tx) => {\n      // 1. Check if this key was already processed\n      const existingRecord = await tx.idempotencyKeys.findUnique({\n        where: { key: idempotencyKey },\n      });\n\n      if (existingRecord) {\n        // Return the previous result if it exists\n        return { status: 'success', cached: true, data: existingRecord.responseData };\n      }\n\n      // 2. Perform the business logic with Pessimistic Locking\n      // Locks the user row to prevent concurrent updates\n      const user = await tx.user.findUnique({\n        where: { id: userId },\n      });\n\n      if (!user) {\n        throw new Error('User not found');\n      }\n\n      const updatedUser = await tx.user.update({\n        where: { id: userId },\n        data: { role: 'USER', revokedAt: new Date() },\n      });\n\n      // 3. Store the idempotency key and result\n      await tx.idempotencyKeys.create({\n        data: {\n          key: idempotencyKey,\n          responseData: { userId: updatedUser.id, role: updatedUser.role },\n          expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000), // 24 hours TTL\n        },\n      });\n\n      return { status: 'success', cached: false, data: updatedUser };\n    });\n\n    return NextResponse.json(result.data, { status: 200 });\n  } catch (error) {\n    console.error('Admin revoke failed:', error);\n    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });\n  }\n}\n```",
+      "latency_ms": 13056.0,
+      "error": null,
+      "tokens": 676,
+      "keywords_hit": [],
+      "f1": 0.0
+    },
+    {
+      "model": "glm-4.7",
+      "system_prompt": "strict",
+      "run_index": 1,
+      "text": "**Cause**\nIn Next.js, the default Node.js server is single-threaded. Under burst traffic, long-running or blocking operations in the Admin interface (e.g., complex database queries, heavy data processing, or synchronous file operations) block the **Event Loop**. While the thread is blocked, it cannot process incoming requests or handle WebSocket connections, causing requests to time out or fail intermittently.\n\n**Fix**\nOffload blocking tasks to a background worker to keep the main server thread free to handle HTTP requests. This example uses a Bull queue with Redis, but you can use any message broker (AWS SQS, RabbitMQ, Kafka) or a simple worker thread for CPU-bound tasks.\n\n### 1. Install Dependencies\n```bash\nnpm install bull ioredis\n```\n\n### 2. Define the Worker (`lib/worker.ts`)\nCreate a worker that processes heavy jobs in the background, separate from the Next.js request lifecycle.\n\n```typescript\n// lib/worker.ts\nimport Queue from 'bull';\n\n// Connect to Redis (or your preferred message broker)\nconst exportQueue = new Queue('admin-exports', 'redis://127.0.0.1:6379');\n\nexportQueue.process(async (job) => {\n  console.log(`Processing job ${job.id}`);\n  \n  // Simulate a heavy blocking operation (e.g., PDF generation, CSV export)\n  // This blocking code runs here, preventing the admin UI from freezing.\n  await new Promise(resolve => setTimeout(resolve, 5000)); \n  \n  return { status: 'completed', url: '/exports/file.csv' };\n});\n\nexport { exportQueue };\n```\n\n### 3. Create an API Route to Dispatch Jobs (`app/api/jobs/route.ts`)\nThe API handler simply adds the job to the queue and returns immediately, preventing the HTTP request from hanging.\n\n```typescript\n// app/api/jobs/route.ts\nimport { exportQueue } from '@/lib/worker';\nimport { NextResponse } from 'next/server';\n\nexport async function POST(request: Request) {\n  const body = await request.json();\n\n  // Add job to queue and return immediately\n  const job = await exportQueue.add(body);\n\n  return NextResponse.json({ \n    jobId: job.id, \n    message: 'Job queued successfully' \n  });\n}\n```\n\n### 4. Poll for Job Status (Client-Side)\nThe frontend polls a status endpoint (omitted for brevity) to check when the worker has finished the task.\n\n```typescript\n// components/ExportButton.tsx\n'use client';\n\nimport { useState } from 'react';\n\nexport default function ExportButton() {\n  const [loading, setLoading] = useState(false);\n\n  const handleExport = async () => {\n    setLoading(true);\n    try {\n      const res = await fetch('/api/jobs', {\n        method: 'POST',\n        body: JSON.stringify({ type: 'export_data' }),\n      });\n      const data = await res.json();\n      console.log('Job Started:', data.jobId);\n      // Initiate polling logic here based on data.jobId\n    } catch (error) {\n      console.error('Failed to queue job', error);\n    } finally {\n      setLoading(false);\n    }\n  };\n\n  return (\n    <button \n      onClick={handleExport} \n      disabled={loading}\n      className=\"px-4 py-2 bg-blue-600 text-white rounded\"\n    >\n      {loading ? 'Queuing...' : 'Export Data'}\n    </button>\n  );\n}\n```",
+      "latency_ms": 11239.7,
+      "error": null,
+      "tokens": 719,
+      "keywords_hit": [],
+      "f1": 0.0
+    },
+    {
+      "model": "glm-4.7",
+      "system_prompt": "ru-expert",
+      "run_index": 0,
+      "text": "As a Senior Developer, I treat intermittent failures under burst traffic as a **resource contention** or **race condition** issue, not random bad luck. In a Next.js context, this typically stems from how the application handles concurrency limits, database connections, or middleware state.\n\nAssuming **Scenario #2** refers to the common architecture where the Admin Panel consumes a **Next.js API Route Handler** that interacts with a database (as opposed to Scenario #1, which might be static generation issues), here is the precise technical breakdown and the fix.\n\n### The Root Cause: Connection Pool Exhaustion & Unbounded Concurrency\n\nUnder burst traffic, your server receives hundreds of requests almost simultaneously. If you are using a serverless environment (Vercel, AWS Lambda) or a standalone Node server, the failure usually happens here:\n\n1.  **The Thundering Herd:** 100 requests hit your API endpoint instantly.\n2.  **Database Spin-up:** Each request tries to open a new connection to the database (or check one out from the pool).\n3.  **Pool Saturation:** If your DB connection pool limit (e.g., default for Prisma/Neon is often low) is 10, but you have 100 concurrent requests, 90 requests fail or timeout waiting for a connection.\n4.  **Memory/Event Loop Block:** If your API route does heavy processing synchronously, the Node.js Event Loop blocks, causing other requests to drop.\n\n### Diagnosis\n\nCheck your logs for these specific errors:\n*   `AcquireConnectionTimeoutError` (Prisma/TypeORM)\n*   `Too many connections` (PostgreSQL/MySQL)\n*   `ERR_HTTP_HEADERS_SENT` (Race conditions in response handling)\n*   `504 Gateway Timeout` (Vercel/Load Balancer killing the function)\n\n---\n\n### Solution 1: Fix Database Connection Pooling (Most Likely Fix)\n\nMost ORMs (Prisma, Drizzle, TypeORM) create a new client instance per file. In Next.js, during hot reloading or burst traffic in serverless environments, this can create hundreds of clients, hitting the database hard limit.\n\n**The Fix:** Use a singleton pattern for your database client and tune the `connection_limit`.\n\n**Example (Prisma with Singleton):**\n\n```typescript\n// lib/prisma.ts\nimport { PrismaClient } from '@prisma/client';\n\nconst prismaClientSingleton = () => {\n  return new PrismaClient({\n    log: ['query', 'error', 'warn'],\n  });\n};\n\ndeclare global {\n  var prismaGlobal: undefined | ReturnType<typeof prismaClientSingleton>;\n}\n\nconst prisma = globalThis.prismaGlobal ?? prismaClientSingleton();\n\n// In development, prevent exhausting your database connection limit\nif (process.env.NODE_ENV !== 'production') globalThis.prismaGlobal = prisma;\n\nexport default prisma;\n```\n\n**Configuration:**\nIn your `schema.prisma`, explicitly limit the pool size to match your compute concurrency. For Vercel (Hobby/Pro), serverless functions are short-lived.\n```prisma\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n  // Limit internal connection pool to prevent waiting forever\n  // Connect timeout should be aggressive (e.g., 5-10s)\n  connection_limit = 10 \n}\n```\n\n---\n\n### Solution 2: Implement Request Queuing (Rate Limiting)\n\nIf the burst is legitimate user traffic (e.g., a report generation run), you must throttle the requests entering your system. Node.js is unbounded by default; you need to make it bounded.\n\nUse `bottleneck` or `upstash/ratelimit` to ensure only $N$ requests process at once.\n\n**Example (In-Memory Throttling for Single Instance):**\n\n```typescript\n// utils/rate-limit.ts\nimport Bottleneck from 'bottleneck';\n\n// Max 10 requests at a time, strictly processed\nexport const dbLimiter = new Bottleneck({\n  maxConcurrent: 5, // Adjust based on your DB pool size\n  minTime: 100, // Minimum time between processing requests\n});\n```\n\n**Usage in API Route:**\n\n```typescript\n// pages/api/admin/users.ts\nimport type { NextApiRequest, NextApiResponse } from 'next';\nimport prisma from '@/lib/prisma';\nimport { dbLimiter } from '@/utils/rate-limit';\n\nexport default async function handler(req: NextApiRequest, res: NextApiResponse) {\n  if (req.method !== 'GET') return res.status(405).json({ error: 'Method not allowed' });\n\n  try {\n    // Wrap the heavy DB operation in the limiter\n    const users = await dbLimiter.schedule(() => \n      prisma.user.findMany({ /* ... */ })\n    );\n    \n    res.status(200).json(users);\n  } catch (error) {\n    // Handle specific DB timeout errors\n    console.error",
+      "latency_ms": 20078.2,
+      "error": null,
+      "tokens": 1024,
+      "keywords_hit": [
+        "root cause"
+      ],
+      "f1": 0.0
+    },
+    {
+      "model": "glm-4.7",
+      "system_prompt": "ru-expert",
+      "run_index": 1,
+      "text": "**Scenario #2: Next.js API Route Memory Leaks & Unhandled Promise Rejections**\n\nThis scenario is a classic \"death by a thousand cuts\" in Next.js serverless or containerized environments. Under normal traffic, the garbage collector (GC) cleans up effectively. Under burst traffic, **Unhandled Promise Rejections** or **Memory Leaks** in Admin API routes keep the event loop busy or bloat the memory, causing the process (or container) to crash and restart, resulting in intermittent 500 or 502 errors.\n\nHere is the technical breakdown and the fix.\n\n### The Root Cause\n\nIn an Admin interface, operations are often heavy (generating reports, fetching large aggregates, image processing). If these operations are not properly awaited or resources (streams, DB connections) are not closed during high concurrency:\n1.  **Micro-Task Queue Saturation:** Unhandled rejections flood the process, blocking the event loop.\n2.  **Memory Leaks:** Closures within `map` or `forEach` loops holding references to large request objects prevent garbage collection.\n3.  **Connection Pool Exhaustion:** Opening DB connections without `try/finally` closing them exhausts the pool, causing subsequent requests to fail.\n\n---\n\n### The Fixes\n\n#### 1. Implement Global Error Handling (Stability)\nYou cannot trust every `try/catch` in your code. You must install a global safety net to prevent the Node.js process from crashing due to unhandled rejections, which is the primary cause of \"intermittent\" total failure.\n\n**Fix:** Add this to your `custom-server.js` (if using one) or `_app.tsx` / layout files.\n\n```typescript\n// lib/errorHandler.ts (or in your custom server entry point)\n\nif (typeof process !== 'undefined') {\n  // Catch unhandled promise rejections\n  process.on('unhandledRejection', (reason, promise) => {\n    console.error('Unhandled Rejection at:', promise, 'reason:', reason);\n    // In a production burst, you might want to just log it \n    // rather than crashing the whole process.\n    // DO NOT: process.exit(1) here unless you have a robust restart policy.\n  });\n\n  // Catch uncaught exceptions\n  process.on('uncaughtException', (err) => {\n    console.error('Uncaught Exception thrown:', err);\n    // Clean up resources here if possible\n    process.exit(1); // It is safer to exit on uncaught exceptions\n  });\n}\n```\n\n#### 2. Enforce Proper Resource Disposal (Leak Prevention)\nAdmin routes often stream data or use database transactions. If the request is cancelled by the client (timeout) while the server is processing, you might leak memory or connections.\n\n**Fix:** Use `AbortController` and strict `try/finally` blocks.\n\n```typescript\n// app/api/admin/reports/route.ts\n\nimport { NextResponse } from 'next/server';\nimport { db } from '@/lib/db';\n\nexport async function GET(request: Request) {\n  // Create an abort controller linked to the request signal\n  const controller = new AbortController();\n  const signal = request.signal;\n  \n  // If the client disconnects, abort the DB operation\n  signal.addEventListener('abort', () => {\n    controller.abort();\n  });\n\n  let client;\n  try {\n    // Simulated heavy DB operation\n    const data = await db.query('SELECT * FROM heavy_logs', {\n      signal: controller.signal // Pass abort signal to DB driver if supported\n    });\n\n    return NextResponse.json(data);\n  } catch (error) {\n    // Distinguish between aborts and real errors\n    if (error.name === 'AbortError') {\n      console.log('Request aborted by client');\n      return new NextResponse('Client Closed Request', { status: 499 });\n    }\n    console.error('DB Error:', error);\n    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });\n  } finally {\n    // CRITICAL: Always ensure connections are released\n    if (client) await client.release(); \n  }\n}\n```\n\n#### 3. Optimize Heavy Admin Loops (CPU Saturation)\nBurst traffic often triggers \"report generation\" or bulk updates. Using synchronous loops or standard `Promise.all` on thousands of records blocks the CPU.\n\n**Fix:** Use batching for concurrency control.\n\n```typescript\n// ❌ BAD: Blocks the event loop and consumes too much memory\n// const results = await Promise.all(items.map(item => processItem(item)));\n\n// ✅ GOOD: p-limit or custom batching\nimport pLimit from 'p-limit';\n\n// Concurrency limit: Don't process 1000 items at once. Do 5 at a time.\nconst limit = pLimit(5);\n\nconst items = Array.from({ length: 100 }); // Simulate burst of work\n\nconst tasks = items.map(item => \n  limit(() => heavyCpuOperation(item))\n);\n\n//",
+      "latency_ms": 19965.2,
+      "error": null,
+      "tokens": 1024,
+      "keywords_hit": [
+        "root cause"
+      ],
+      "f1": 0.0
+    },
+    {
+      "model": "glm-4.7",
+      "system_prompt": "safety",
+      "run_index": 0,
+      "text": "Based on the scenario label \"Scenario #2\" (commonly associated with **Server Actions / Server Side Mutations** encountering queue limits in Next.js), the explanation focuses on behavior where specific API-like functions fail during high concurrency while standard page loads may succeed.\n\nHere is the analysis of the cause and the solution.\n\n### The Problem: Server Action Concurrency Limits\n\n**Why it fails:**\nNext.js uses a lightweight internal queue mechanism to handle **Server Actions**. By default, the internal concurrency limit for this queue is often set low (typically **15 concurrent requests**).\n\nWhen a burst of traffic occurs:\n1.  If the incoming rate of Server Actions exceeds the execution speed plus the queue limit, the internal queue fills up.\n2.  New incoming requests are rejected immediately by the queue handler before they even reach your database or server logic.\n3.  Next.js throws an internal error (often `Error: No matching signature.` or a generic 500/502 depending on the version), causing the admin interface to show intermittent failures despite the server CPU/Memory potentially being idle.\n\n### How to Fix\n\nYou must increase the concurrency limit to match your server's capacity and your expected traffic burst size.\n\n**Step 1: Create or update the Next.js config**\nCreate a file named `next.config.mjs` (or update your existing `.js` or `.ts` config file) in the root of your project.\n\n**Step 2: Increase the `experimental.serverActions` limit**\nAdd the `serverActions` configuration object and set `bodySizeLimit` (if payloads are large) and ensure your environment allows higher concurrency.\n\nNote: In standard Next.js deployments (like Vercel), the concurrency limit is handled by the platform, but for self-hosted or custom deployments using the standalone server, you may need to tune this specifically if using a version that exposes the queue config, or move to a dedicated API route handler.\n\nHowever, the most common fix for this specific scenario in recent Next.js versions involves moving away from the default queue for heavy administrative tasks or ensuring you are not hitting the default timeout.\n\n**The Recommended Solution:**\nMove high-load admin operations (like bulk imports or heavy analytics) from standard Server Actions to **API Route Handlers** (`app/api/.../route.ts`). API routes do not share the same restrictive internal queue as Server Actions and are better suited for handling bursts.\n\n**Example of migrating to an API Route:**\nInstead of a Server Action:\n```typescript\n// app/actions.ts (Prone to queue limits)\n'use server'\nexport async function heavyOperation() { ... }\n```\n\nUse an API Route:\n```typescript\n// app/api/admin/heavy-operation/route.ts\nimport { NextResponse } from 'next/server';\n\nexport async function POST() {\n  // This does not use the restrictive Server Action queue\n  // You can handle concurrency manually here if needed\n  await performHeavyTask();\n  return NextResponse.json({ success: true });\n}\n```\n\n**Summary:**\n*   **Cause:** The internal Next.js Server Action queue is hitting its default concurrency limit (often ~15).\n*   **Fix:** Refactor the failing admin endpoints to use **API Routes** (`route.ts`) instead of Server Actions, or if you must use Server Actions, ensure your deployment infrastructure scales horizontally to distribute the load, as the queue limit is often per-instance.",
+      "latency_ms": 14025.5,
+      "error": null,
+      "tokens": 690,
+      "keywords_hit": [],
+      "f1": 0.0
+    },
+    {
+      "model": "glm-4.7",
+      "system_prompt": "safety",
+      "run_index": 1,
+      "text": "### Scenario #2: API Route and Database Connection Exhaustion\n\n**Assumptions & Context**\n*   **Platform:** Next.js (Node.js server environment).\n*   **Mechanism:** The \"intermittent failures\" occur because the backend API routes (serving the Admin UI) crash or time out during concurrent spikes.\n*   **Burst Definition:** A sudden, high number of requests hitting the server simultaneously (e.g., a dashboard refresh loading multiple widgets).\n*   **Database:** You are using an external database (PostgreSQL, MySQL, MongoDB) via a driver that manages a connection pool.\n\n#### Why It Fails\nNext.js uses a single-process server model (in development) or multiple workers (in production). However, the database connection pool is the most common bottleneck here.\n\n1.  **Request Saturation:** During a burst, 50 requests arrive simultaneously for the `/api/admin/stats` endpoint.\n2.  **Pool Exhaustion:** Each request asks the database driver for a connection. If your pool size is set to the default (often 10) but you have 20 concurrent requests, the additional 10 requests must wait in a queue.\n3.  **Timeout Mismatch:** If the database query takes 500ms, but the connection pool timeout (or the HTTP request timeout) is set to something shorter (e.g., Vercel's 10s limit for Serverless, or a client-side fetch timeout), the waiting requests are killed.\n4.  **Waterfall Effect:** In an Admin interface, data is often fetched sequentially (e.g., \"Get User\" -> then \"Get User Permissions\"). This keeps connections occupied longer than necessary, increasing the likelihood of pool exhaustion during a burst.\n\n#### How to Fix\n\n1.  **Implement Data Caching (Immediate Impact):**\n    Stop hitting the database for data that doesn't change every millisecond.\n    *   **Use `fetch` with `revalidate`:** If using Next.js App Router, use the native `fetch` with `next.revalidate`.\n    *   **Redis/Upstash:** For high-traffic admin counters, offload the counting to Redis. Let the admin dashboard read from the cache rather than the primary database.\n\n2.  **Optimize Connection Pooling:**\n    Adjust your database client configuration to handle the concurrency of your specific environment.\n    *   **Serverless (Vercel/Netlify):** These environments spin up many ephemeral functions. You must limit the pool size per function to avoid hitting the database's overall connection limit (e.g., set pool size to `1` or `5`).\n    *   **Dedicated Server (VPS/Docker):** You can increase the pool size (e.g., to `20` or `50`) to match the server's CPU capacity.\n\n3.  **Parallelize Data Fetching:**\n    Ensure your Admin interface API routes fetch data in parallel, not sequentially.\n    *   *Bad:* `const user = await db.user.find(); const orders = await db.orders.find();`\n    *   *Good:* `const [user, orders] = await Promise.all([db.user.find(), db.orders.find()]);`\n    *   *Why:* This reduces the time a database connection is held open per request, freeing it up for the next request in the burst.\n\n4.  **Move Logic to Edge Middleware:**\n    For simple admin checks (e.g., \"Is this user an admin?\"), use Next.js Middleware. It runs on the Edge (V8 isolates) and is highly scalable, preventing the request from even reaching your database or API route if the user lacks permissions.\n\n5.  **Queue Heavy Writes:**\n    If the burst traffic involves write operations (e.g., \"Bulk Update\"), do not process them in the HTTP request handler. Offload them to a background job queue (like BullMQ or Inngest) and return a `202 Accepted` status immediately.",
+      "latency_ms": 19980.9,
+      "error": null,
+      "tokens": 816,
+      "keywords_hit": [],
+      "f1": 0.0
+    },
+    {
+      "model": "mimo-v2.5",
+      "system_prompt": "neutral",
+      "run_index": 0,
+      "text": "",
+      "latency_ms": 359.0,
+      "error": "Client error '404 Not Found' for url 'https://openrouter.ai/api/v1/chat/completions'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404",
+      "tokens": 0,
+      "keywords_hit": [],
+      "f1": 0.0
+    },
+    {
+      "model": "mimo-v2.5",
+      "system_prompt": "neutral",
+      "run_index": 1,
+      "text": "",
+      "latency_ms": 370.6,
+      "error": "Client error '404 Not Found' for url 'https://openrouter.ai/api/v1/chat/completions'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404",
+      "tokens": 0,
+      "keywords_hit": [],
+      "f1": 0.0
+    },
+    {
+      "model": "mimo-v2.5",
+      "system_prompt": "expert",
+      "run_index": 0,
+      "text": "",
+      "latency_ms": 320.8,
+      "error": "Client error '404 Not Found' for url 'https://openrouter.ai/api/v1/chat/completions'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404",
+      "tokens": 0,
+      "keywords_hit": [],
+      "f1": 0.0
+    },
+    {
+      "model": "mimo-v2.5",
+      "system_prompt": "expert",
+      "run_index": 1,
+      "text": "",
+      "latency_ms": 314.3,
+      "error": "Client error '404 Not Found' for url 'https://openrouter.ai/api/v1/chat/completions'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404",
+      "tokens": 0,
+      "keywords_hit": [],
+      "f1": 0.0
+    },
+    {
+      "model": "mimo-v2.5",
+      "system_prompt": "strict",
+      "run_index": 0,
+      "text": "",
+      "latency_ms": 1074.9,
+      "error": "Client error '404 Not Found' for url 'https://openrouter.ai/api/v1/chat/completions'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404",
+      "tokens": 0,
+      "keywords_hit": [],
+      "f1": 0.0
+    },
+    {
+      "model": "mimo-v2.5",
+      "system_prompt": "strict",
+      "run_index": 1,
+      "text": "",
+      "latency_ms": 91.4,
+      "error": "Client error '404 Not Found' for url 'https://openrouter.ai/api/v1/chat/completions'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404",
+      "tokens": 0,
+      "keywords_hit": [],
+      "f1": 0.0
+    },
+    {
+      "model": "mimo-v2.5",
+      "system_prompt": "ru-expert",
+      "run_index": 0,
+      "text": "",
+      "latency_ms": 33.4,
+      "error": "Client error '404 Not Found' for url 'https://openrouter.ai/api/v1/chat/completions'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404",
+      "tokens": 0,
+      "keywords_hit": [],
+      "f1": 0.0
+    },
+    {
+      "model": "mimo-v2.5",
+      "system_prompt": "ru-expert",
+      "run_index": 1,
+      "text": "",
+      "latency_ms": 41.5,
+      "error": "Client error '404 Not Found' for url 'https://openrouter.ai/api/v1/chat/completions'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404",
+      "tokens": 0,
+      "keywords_hit": [],
+      "f1": 0.0
+    },
+    {
+      "model": "mimo-v2.5",
+      "system_prompt": "safety",
+      "run_index": 0,
+      "text": "",
+      "latency_ms": 45.0,
+      "error": "Client error '404 Not Found' for url 'https://openrouter.ai/api/v1/chat/completions'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404",
+      "tokens": 0,
+      "keywords_hit": [],
+      "f1": 0.0
+    },
+    {
+      "model": "mimo-v2.5",
+      "system_prompt": "safety",
+      "run_index": 1,
+      "text": "",
+      "latency_ms": 47.3,
+      "error": "Client error '404 Not Found' for url 'https://openrouter.ai/api/v1/chat/completions'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404",
+      "tokens": 0,
+      "keywords_hit": [],
+      "f1": 0.0
+    },
+    {
+      "model": "glm-4.7",
+      "system_prompt": "neutral",
+      "run_index": 0,
+      "text": "Assuming this refers to **Scenario #5: Managing Resource Limits (Quotas and Constraints)** from common Terraform learning paths or architectural patterns, here are the main constraints and trade-offs involved:\n\n### Main Constraints\n\n1.  **Cloud Provider Quotas:** The most rigid constraint. Every AWS account, Azure subscription, or GCP project has hard limits on resources (e.g., number of VPCs, vCPUs, or API request rates). Terraform cannot bypass these; if you attempt to provision past a limit, the `apply` will fail.\n2.  **Terraform State Size:** Very large infrastructures with thousands of resources can lead to massive state files, which slow down the `terraform refresh` and `plan` operations and increase memory usage.\n3.  **API Rate Limiting:** Terraform makes many API calls to providers. Concurrent operations or large-scale deployments can trigger provider-side throttling (e.g., AWS API throttling), causing failures or delays.\n4.  **Resource Dependencies:** Hard dependency chains (e.g., a VM depends on a Subnet, which depends on a VPC) force sequential provisioning, slowing down the overall deployment time.\n\n### Main Trade-offs\n\n1.  **Monolith vs. Modular State:**\n    *   *Trade-off:* Splitting infrastructure into multiple states/teams improves performance and reduces blast radius, but it complicates shared resource management (requiring remote state data sources) and makes cross-module references harder.\n2.  **Parallelism vs. Stability:**\n    *   *Trade-off:* Terraform defaults to 10 parallel operations. Increasing this speeds up deployment but significantly increases the risk of hitting API rate limits or race conditions. Decreasing it improves stability but slows down execution.\n3.  **Provisioning Speed vs. Resource Efficiency:**\n    *   *Trade-off:* Creating highly granular resources (individual security rules vs. security groups) offers precision but results in more API calls and slower state management. Batching resources improves speed but reduces configuration granularity.\n4.  **Custom Logic vs. Drift Detection:**\n    *   *Trade-off:* Using `ignore_changes` or `lifecycle` blocks can prevent Terraform from overwriting externally managed configurations (essential for some limits), but it reduces the effectiveness of drift detection and infrastructure immutability.",
+      "latency_ms": 9004.4,
+      "error": null,
+      "tokens": 477,
+      "keywords_hit": [
+        "sources",
+        "trade-offs",
+        "terraform"
+      ],
+      "f1": 0.0
+    },
+    {
+      "model": "glm-4.7",
+      "system_prompt": "neutral",
+      "run_index": 1,
+      "text": "Based on the context of common Terraform infrastructure challenges, here are the main constraints and trade-offs typically associated with **Scenario #5: Multi-Region or Multi-Cloud Disaster Recovery (DR) and Replication**.\n\n**Constraints**\n\n1.  **Data Consistency & Latency:** Maintaining state consistency across regions is difficult. Cross-region data replication introduces significant latency (RPO/RTO trade-offs), making synchronous operations impractical over long distances.\n2.  **Tooling Homogeneity:** Terraform providers behave differently across clouds (e.g., AWS IAM vs. Azure RBAC). You are constrained by the \"lowest common denominator\" of features; functionality available in one region/cloud may be absent or incompatible in another.\n3.  **Network Limits:** You are constrained by physical bandwidth limits and data egress costs (egress fees) when replicating data or state between regions/cloud providers.\n4.  **State Management Complexity:** Managing separate Terraform state files for each region (versus a monolithic state) creates operational overhead and requires strict locking mechanisms to prevent configuration drift during failover events.\n\n**Trade-offs**\n\n1.  **Cost vs. Speed:** To achieve near-instant Recovery Time Objectives (RTO), you must keep infrastructure active (hot standby) in the secondary region, which doubles compute costs. To save money (cold standby), you accept a much longer recovery time to provision resources during an emergency.\n2.  **Abstraction vs. Granularity:** Using generic modules to support multiple regions reduces duplication (DRY principle) but often limits you from utilizing region-specific, high-performance features (like specialized hardware instances) that could optimize the workload.\n3.  **Automation vs. Control:** Fully automated failover via Terraform reduces human error but introduces the risk of \"thundering herd\" problems or accidental destruction of the primary environment if the automation logic is flawed.\n4.  **State Isolation vs. Visibility:** Isolating state by region improves security and reduces blast radius, but it makes it harder to visualize the global status of the infrastructure in a single pane of glass.",
+      "latency_ms": 13064.0,
+      "error": null,
+      "tokens": 427,
+      "keywords_hit": [
+        "sources",
+        "trade-offs",
+        "terraform"
+      ],
+      "f1": 0.0
+    },
+    {
+      "model": "glm-4.7",
+      "system_prompt": "expert",
+      "run_index": 0,
+      "text": "Based on **Scenario #5** (which implies a scenario involving **multi-region deployment, disaster recovery, or complex state synchronization**), the constraints and trade-offs in Terraform shift significantly from basic usage to architectural scalability.\n\nHere is an analysis of the specific constraints and trade-offs involved in distributing infrastructure across regions or environments, followed by a production-ready code pattern to handle them.\n\n### Scenario Context\n**Scenario #5: Multi-Region/Multi-Cloud Active-Active or DR Setup.**\nIn this scenario, you are not just deploying resources; you are ensuring that State A (Region East) and State B (Region West) remain loosely coupled while application-level consistency is maintained.\n\n---\n\n### 1. The Constraint: State Fragmentation vs. Drift\nTerraform state is the single source of truth. In a multi-region setup, you have two opposing architectural choices:\n*   **Monolithic State:** One state file containing resources for Region A, Region B, and the networking glue.\n*   **Fragmented State:** Separate state files for `network-global`, `region-east-app`, and `region-west-app`.\n\n**The Trade-off:**\n*   **Monolithic:** Easier to manage dependencies (e.g., VPC Peering requires IDs from both sides), but **severely limits execution speed** (apply happens serially) and creates a \"blast radius\" where a typo in one region can lock the state file for the other.\n*   **Fragmented:** Maximizes parallelism and isolation, but introduces **data dependency complexity**. You must manually pass outputs (like VPC IDs) from one state to another using `terraform_remote_state`.\n\n**Production Decision:** Use **Fragmented State**. The operational overhead of passing data is lower than the risk of a global deployment lock.\n\n### 2. The Constraint: Data Consistency and Race Conditions\nTerraform is not a runtime configuration management tool (like Ansible). It lacks awareness of the \"live\" traffic state of your application.\n\n**The Trade-off:**\n*   When performing a blue/green deployment or a failover in Terraform, you must update the Route53/DNS record to point from Region A to Region B.\n*   **Risk:** If the state file contains the DNS record, and a developer runs `terraform apply` on the secondary region thinking they are only scaling up compute, they might inadvertently revert the DNS record if the code is not perfectly partitioned.\n\n**Production Decision:** Isolate \"Global Routing\" (DNS/Global Load Balancers) into a completely separate, locked-down state repository from \"Regional Compute.\"\n\n### 3. The Constraint: Provider Rate Limits and API Throttling\nCreating infrastructure in two regions simultaneously essentially doubles your API hit rate against the cloud provider (AWS, Azure, GCP).\n\n**The Trade-off:**\n*   **Parallelism:** High parallelism (`-parallelism=n`) speeds up provisioning but triggers `RateExceeded` errors from the cloud provider, causing the plan to fail.\n*   **Speed:** Reducing parallelism avoids errors but increases deployment time, potentially violating maintenance window SLAs.\n\n**Production Decision:** Implement a **retry mechanism** or explicit provider-level throttling configuration, rather than relying solely on Terraform's internal retries.\n\n---\n\n### Production-Ready Implementation\n\nBelow is a robust pattern for **Scenario #5** using a **Module Composition** strategy. This pattern allows you to deploy identical infrastructure to multiple regions without duplicating code, while strictly handling state isolation.\n\n#### Directory Structure\n```text\n/\n├── modules/\n│   └── web_app_cluster/         # Reusable regional logic\n│       ├── main.tf\n│       ├── outputs.tf\n│       └── variables.tf\n├── environments/\n│   └── prod/\n│       ├── us-east-1/           # State A\n│       │   ├── backend.tf\n│       │   └── main.tf\n│       ├── eu-west-1/           # State B\n│       │   ├── backend.tf\n│       │   └── main.tf\n│       └── global-routing/      # State C (DNS/LB)\n│           ├── backend.tf\n│           └── main.tf\n```\n\n#### 1. The Reusable Module (`modules/web_app_cluster/main.tf`)\nThis module contains the logic for a single region. It accepts the region name and specific instance counts as variables.\n\n```hcl\nresource \"aws_lb\" \"regional_lb\" {\n  name               = \"${var.project}-${var.region}-alb\"\n  internal           = false\n  load_balancer_type = \"application\"\n  subnets            = var.subnet_ids\n\n  tags = {\n    Environment = var.env\n    Region      = var.region\n  }\n}\n\nresource \"aws_autoscaling_group\" \"app_asg\" {\n  desired_capacity    = var.instance_count\n  max_size            = var.instance_count + 2\n  min_size            =",
+      "latency_ms": 26212.8,
+      "error": null,
+      "tokens": 1024,
+      "keywords_hit": [
+        "sources",
+        "trade-offs",
+        "terraform",
+        "implementation"
+      ],
+      "f1": 0.0
+    },
+    {
+      "model": "glm-4.7",
+      "system_prompt": "expert",
+      "run_index": 1,
+      "text": "This analysis covers **Scenario #5: Managing a Polyglot, Multi-Cloud Hybrid Environment**.\n\nIn this scenario, your organization has mandated avoiding vendor lock-in by distributing workloads across AWS (compute-heavy), Azure (enterprise identity/AD integration), and Google Cloud (machine learning/BigQuery), while maintaining on-premise legacy servers.\n\nHere are the main constraints and trade-offs you will face, followed by a production-ready code pattern to manage them.\n\n---\n\n### 1. The \"Least Common Denominator\" Constraint\n**Constraint:**\nCloud providers offer fundamentally different services. AWS has Lambda, Azure has Functions, GCP has Cloud Run. While Terraform supports hundreds of providers, there is no standard \"Compute\" resource abstraction layer. You cannot write a single `resource \"server\"` block that works across all three.\n\n**Trade-off:**\n*   **Code Duplication vs. Abstraction:** You must write distinct configuration blocks (`aws_instance`, `azurerm_linux_virtual_machine`, `google_compute_instance`).\n*   **Operational Overhead:** You sacrifice the \"write once, run anywhere\" ideal for \"write specifically, optimize locally.\"\n\n### 2. Asynchronous State Consistency & Locking\n**Constraint:**\nTerraform relies on a state file to map real-world resources to your configuration. In a hybrid environment, network latency to cloud APIs varies wildly. If Terraform applies changes to AWS (fast) and Azure (slower) simultaneously, and the latter fails, your state file may become desynchronized or \"tainted.\"\n\n**Trade-off:**\n*   **Speed vs. Reliability:** To ensure state integrity, you must prioritize robust remote backend locking (e.g., DynamoDB, S3, or Azure Storage Account locks) over raw parallelization speed.\n*   **Partial Failure Handling:** You must accept that a failure in one cloud provider (e.g., Azure quota exceeded) should generally halt the entire pipeline to prevent a drifted infrastructure state.\n\n### 3. Authentication Drift (Credential Management)\n**Constraint:**\nTerraform needs credentials for all providers simultaneously during a `plan` or `apply`. Managing static access keys for AWS, Service Principals for Azure, and Service Account keys for GCP in a single CI/CD pipeline is a security nightmare and a rotation logistics hell.\n\n**Trade-off:**\n*   **Security vs. Complexity:** You must implement dynamic credential injection (e.g., using OIDC federation) rather than static secrets. This increases initial setup complexity but is mandatory for production security.\n\n---\n\n### Production-Ready Solution: The Module Composition Pattern\n\nTo mitigate these trade-offs, do not write a monolithic `main.tf`. Instead, use the **Module Composition Pattern**. This abstracts the provider-specific logic behind standardized interfaces (inputs/outputs).\n\n#### Strategy\n1.  **Standardize Inputs:** All modules accept the same variable naming convention (e.g., `instance_count`, `node_size`).\n2.  **Isolate Provider Logic:** Keep provider definitions strictly within their respective modules or using explicit `provider` alias blocks.\n3.  **Map-based Workflows:** Use Terraform `for_each` to deploy variations of the same module across different providers without repeating the resource logic.\n\n#### Code Example\n\n**Directory Structure:**\n```text\n├── main.tf\n├── providers.tf\n└── modules/\n    ├── aws-web-server/\n    │   └── main.tf\n    └── azure-web-server/\n        └── main.tf\n```\n\n**1. Root Configuration (`main.tf`)**\nThis file acts as the orchestrator. It maps a generic \"environment\" definition to specific cloud modules.\n\n```hcl\n# Define a generic map of workload requirements\nlocals {\n  # In production, this might come from a YAML or JSON data source\n  workload_config = {\n    \"app-server-aws\" = {\n      cloud   = \"aws\"\n      region  = \"us-east-1\"\n      size    = \"t3.medium\"\n      ami_id  = \"ami-0c55b159cbfafe1f0\" # Specific to AWS\n    },\n    \"app-server-azure\" = {\n      cloud       = \"azure\"\n      region      = \"eastus\"\n      size        = \"Standard_DS1_v2\"\n      image_sku   = \"18.04-LTS\" # Specific to Azure\n    }\n  }\n}\n\n# Deploy to AWS\nmodule \"aws_compute\" {\n  source   = \"./modules/aws-web-server\"\n  \n  # Filter for AWS instances using for_each\n  for_each = {\n    for k, v in local.workload_config : k => v\n    if v.cloud == \"aws\"\n  }\n\n  name       = each.key\n  instance_type = each.value.size\n  ami_id     = each.value.ami_id\n  region     = each.value.region\n  \n  # Explicit provider passing ensures correct credentials\n  providers = {\n    aws = aws.aws_east\n",
+      "latency_ms": 28333.5,
+      "error": null,
+      "tokens": 1024,
+      "keywords_hit": [
+        "sources",
+        "trade-offs",
+        "terraform"
+      ],
+      "f1": 0.0
+    },
+    {
+      "model": "glm-4.7",
+      "system_prompt": "strict",
+      "run_index": 0,
+      "text": "```hcl\n# Scenario #5: Managing Terraform State and Collaboration Constraints\n# Focus: State file locking, remote backends, and drift detection.\n\n# 1. State Storage Backend\n# Constraint: Local state files cannot be used safely in team environments due to \n# race conditions. A remote backend with locking is required.\nterraform {\n  # Trade-off: Managed services (TFC/Cloud) offer ease of use but cost money.\n  # S3/DynamoDB is cheaper but requires manual maintenance of the locking table.\n  backend \"s3\" {\n    bucket         = \"my-terraform-state\"\n    key            = \"prod/terraform.tfstate\"\n    region         = \"us-east-1\"\n    encrypt        = true\n    # Trade-off: DynamoDB adds operational overhead but provides necessary locking\n    # capabilities to prevent state corruption.\n    dynamodb_table = \"terraform-locks\"\n  }\n}\n\n# 2. Dependency Management\n# Constraint: Implicit dependencies rely on graph interpretation which can be brittle.\n# Trade-off: Explicit `depends_on` improves clarity but makes the code rigid and \n# harder to refactor.\nresource \"aws_instance\" \"web\" {\n  ami           = \"ami-12345678\"\n  instance_type = \"t3.micro\"\n\n  # Explicitly waiting for the security group ensures safety, but couples these\n  # specific resources tightly together.\n  depends_on = [aws_security_group.web]\n}\n\nresource \"aws_security_group\" \"web\" {\n  name = \"web-sg\"\n}\n\n# 3. Lifecycle Constraints\n# Constraint: Terraform attempts to manage the full lifecycle of a resource.\n# Trade-off: The `ignore_changes` argument prevents fighting against external \n# agents, but creates \"configuration drift\" where the code does not match reality.\nresource \"aws_instance\" \"web\" {\n  # ... other config ...\n\n  lifecycle {\n    # Ignores tags applied outside of Terraform (e.g., by a monitoring agent).\n    # Risk: Future manual changes intended to be permanent might be ignored.\n    ignore_changes = [tags]\n  }\n}\n```",
+      "latency_ms": 11628.5,
+      "error": null,
+      "tokens": 434,
+      "keywords_hit": [
+        "sources",
+        "terraform"
+      ],
+      "f1": 0.0
+    },
+    {
+      "model": "glm-4.7",
+      "system_prompt": "strict",
+      "run_index": 1,
+      "text": "```hcl\n# SCENARIO #5: Multi-Region High Availability with Strict Cost Controls\n#\n# CONSTRAINTS & TRADE-OFFS:\n#\n# 1. State Management (Complexity vs. Portability)\n#    - Constraint: State files must be stored remotely and locked to prevent corruption during simultaneous execution.\n#    - Trade-off: Using Terraform Cloud/Enterprise offers best-in-class locking and UI, but creates vendor lock-in. \n#      Using S3/DynamoDB is portable but requires manual setup of IAM policies and DynamoDB tables.\n#\n# 2. Cloud Provider Specifics (Abstraction vs. Optimization)\n#    - Constraint: High availability requires deploying resources across multiple Availability Zones (AZs) or Regions.\n#    - Trade-off: Using generic modules (e.g., `terraform-aws-modules/vpc/aws`) accelerates development but often \n#      includes \"bloat\" (unused features). Writing custom resources is optimized but increases maintenance burden \n#      and abstracts away cloud-native optimizations.\n#\n# 3. Drift Detection (Automation vs. Stability)\n#    - Constraint: Infrastructure must remain consistent with the defined code.\n#    - Trade-off: Enabling `refresh_only` or running `plan` frequently detects drift, but high-frequency API calls \n#      may trigger rate limits or incur costs. Ignoring drift lowers operational overhead but risks configuration \n#      divergence.\n#\n# 4. Execution Time (Parallelism vs. Dependency Accuracy)\n#    - Constraint: Multi-region deployment is time-sensitive.\n#    - Trade-off: Relying on implicit dependencies (`-target` or auto-graph) is easier but can lead to race conditions \n#      or failures if resources aren't actually ready. Explicit `depends_on` or `null_resource` waiters ensure \n#      stability but serialize the deployment, significantly increasing runtime.\n\nresource \"aws_instance\" \"example\" {\n  ami           = data.aws_ami.ubuntu.id\n  instance_type = \"t3.micro\"\n\n  # Trade-off Example: Explicit dependency to ensure stability at the cost of parallelism\n  depends_on = [aws_security_group.main]\n\n  tags = {\n    Name = \"Scenario5-Instance\"\n  }\n}\n```",
+      "latency_ms": 8496.4,
+      "error": null,
+      "tokens": 457,
+      "keywords_hit": [
+        "sources",
+        "trade-offs",
+        "terraform"
+      ],
+      "f1": 0.0
+    },
+    {
+      "model": "glm-4.7",
+      "system_prompt": "ru-expert",
+      "run_index": 0,
+      "text": "As a Senior Developer with 15 years of experience, I approach Terraform not just as a tool for provisioning, but as a state management system with distributed consensus problems. In **Scenario #5** (which typically refers to **large-scale, multi-team/enterprise environments** or **complex state management scenarios**), the constraints shift from simple syntax errors to architectural bottlenecks.\n\nHere are the main constraints and trade-offs in Terraform infrastructure, specifically tailored for complex scenarios.\n\n---\n\n### 1. The State Constraint (Single Source of Truth vs. Scalability)\n\n**Constraint:** Terraform relies on a state file (`terraform.tfstate`) to map real-world resources to your configuration. In Scenario #5 (large scale), this state file becomes a bottleneck. It must be locked during operations, preventing concurrent modifications.\n\n**Trade-off:**\n*   **Monolith State (Simplicity vs. Speed):** Keeping all infrastructure in one state makes it easy to reference data (e.g., `aws_vpc.main.id`) but drastically slows down `plan` and `apply` times. It creates a single point of failure where a broken lock freezes all deployments.\n*   **Fragmented State (Speed vs. Complexity):** Breaking state into modules (e.g., `network/`, `compute/`, `database/`) improves speed and parallelism but introduces **Data Drift** and configuration complexity. You now need to reliably pass state outputs (like VPC IDs) between states, often requiring remote state data sources or a separate orchestration layer.\n\n**Solution:**\nUse a robust remote backend with locking (S3 + DynamoDB, Consul, or Terraform Cloud).\n\n### 2. The Drift Constraint (Declarative vs. Imperative Reality)\n\n**Constraint:** Terraform is declarative (\"I want world X\"). It assumes it controls the lifecycle of resources entirely. However, in enterprise environments, manual changes (via console/CLI) or external orchestration tools often create **Drift**.\n\n**Trade-off:**\n*   **Strict Enforcement (Safety vs. Flexibility):** Running `terraform refresh` or `plan` often. If drift is detected, Terraform wants to revert or destroy the drifted resource. This is safe but can be disruptive if the manual change was an emergency fix.\n*   **Ignoring Drift (Stability vs. Hygiene):** Using `lifecycle { ignore_changes = [...] }`. This keeps Terraform happy but allows configuration divergence between code and reality, leading to \"Configuration-as-Code\" becoming a lie.\n\n**Code Example (Handling Drift):**\n```hcl\nresource \"aws_instance\" \"web\" {\n  ami           = \"ami-12345678\"\n  instance_type = \"t3.micro\"\n\n  # Trade-off: We accept that tags might be changed manually \n  # or by a security tool outside of Terraform.\n  lifecycle {\n    ignore_changes = [tags, volume_size]\n  }\n}\n```\n\n### 3. The Iteration Constraint (Mutable Infrastructure vs. Downtime)\n\n**Constraint:** Terraform creates a dependency graph. If you change a fundamental attribute of a resource (like an AWS RDS database engine version or an S3 bucket name), Terraform often forces a \"destroy and recreate\" operation.\n\n**Trade-off:**\n*   **Immutable (Blue/Green):** Creating new resources and switching traffic (DNS/Load Balancers) is safest but costs double (run two environments) during the migration.\n*   **Mutable (In-place):** Some resources support `create_before_destroy`. This minimizes downtime but is complex to configure and isn't supported by all resource types.\n\n**Code Example (Zero Downtime Strategy):**\n```hcl\nresource \"aws_lb_listener\" \"front_end\" {\n  # ... configuration ...\n\n  lifecycle {\n    create_before_destroy = true\n  }\n}\n```\n\n### 4. The Abstraction Constraint (HCL vs. General Purpose Languages)\n\n**Constraint:** Terraform uses HCL (HashiCorp Configuration Language). It is domain-specific, which limits logic capabilities compared to Python, Go, or CDK.\n\n**Trade-off:**\n*   **Pure HCL (Portability vs. Logic):** HCL is readable and easy to learn, but complex logic (loops, conditional API calls) results in verbose, hard-to-maintain \"spaghetti\" HCL.\n*   **CDK / JSON Generation (Power vs. Debugging):** Using the Cloud Development Kit (CDK for Terraform) or generating JSON via scripts allows for full programming language power. However, debugging the synthesized Terraform plan becomes harder, and the learning curve steepens.\n\n### 5. The Provider Constraint (API Latency and Fragility)\n\n**Constraint:** Terraform is only as stable as the underlying Cloud Provider APIs. In Scenario #5, you are hitting API rate limits and dealing with eventual consistency.\n\n**Trade-off:**\n*   **Throttling Handling:** You must implement retries and pagination,",
+      "latency_ms": 22033.4,
+      "error": null,
+      "tokens": 1024,
+      "keywords_hit": [
+        "sources",
+        "trade-offs",
+        "terraform"
+      ],
+      "f1": 0.0
+    },
+    {
+      "model": "glm-4.7",
+      "system_prompt": "ru-expert",
+      "run_index": 1,
+      "text": "As a Senior Developer with 15 years of experience, I approach Terraform not just as a provisioning tool, but as a distributed system that manages state. Since you labeled this **Scenario #5**, I will treat it as a \"Post-Migration/Mature Scale\" scenario—where you have existing infrastructure, a team, and the realization that \"it works on my machine\" isn't enough.\n\nHere are the main constraints and trade-offs you will face in a mature Terraform environment, focusing on State Management, Refactoring, and Execution Speed.\n\n---\n\n### 1. The State Management Constraint (Single Source of Truth)\n\nTerraform relies on a state file (`terraform.tfstate`) to map real-world resources to your configuration. This is both its greatest strength and its biggest bottleneck.\n\n#### **Constraint: Concurrency & Locking**\nYou cannot have two processes running `terraform apply` on the same state file simultaneously. Terraform utilizes a locking mechanism (via DynamoDB, Consul, Azure Storage, etc.) to prevent race conditions.\n\n*   **The Problem:** In large teams or CI/CD pipelines with multiple environments (dev/stage/prod), pipeline failures can leave locks \"dangling,\" blocking deployments.\n*   **Trade-off:** **Performance vs. Consistency.**\n*   **Solution:** Use a robust backend with automated locking.\n\n**Code Example: S3 Backend with Locking (AWS)**\n```hcl\nterraform {\n  backend \"s3\" {\n    bucket         = \"my-terraform-state\"\n    key            = \"prod/terraform.tfstate\"\n    region         = \"us-east-1\"\n    encrypt        = true\n    # Critical for teams: prevents concurrent applies\n    dynamodb_table = \"terraform-locks\" \n  }\n}\n```\n\n### 2. The Refactoring Trap (State Drift vs. History)\n\nA common error in Scenario #5 is renaming a resource and expecting Terraform to simply \"update\" it.\n**Warning:** Changing a resource name (e.g., `aws_instance.web` to `aws_instance.app`) tells Terraform: \"Delete the old one and create a new one.\" This causes downtime and data loss.\n\n#### **Constraint: Declarative Immutability**\nTerraform matches resources by ID, not by semantic meaning.\n\n*   **Trade-off:** **Clean Code vs. Operational Safety.**\n*   **Solution:** Use `terraform state mv` to refactor without destruction.\n\n**Operational Steps (CLI):**\n```bash\n# 1. Rename the resource in your .tf file first\n# 2. Move the state reference to match the new name\nterraform state mv aws_instance.web aws_instance.app\n\n# 3. Apply safely (Terraform will now see zero changes)\nterraform apply\n```\n\n### 3. The \"Monolith\" Trade-off (Plan Time vs. Modularity)\n\nAs infrastructure grows, a single `main.tf` file becomes unmanageable. However, splitting into modules isn't free.\n\n#### **Constraint: The \"Graph\" Overhead**\nEvery time you run `terraform plan`, Terraform must build a dependency graph of your entire infrastructure.\n*   **The Problem:** If you modularize too heavily (e.g., 50 micro-modules) or have a massive monolith, the `plan` time can exceed 10-20 minutes. This slows down developer velocity significantly.\n*   **Trade-off:** **Abstraction/Reusability vs. Latency.**\n\n**Best Practice:** Architectural Compartmentalization.\nDo not split by \"layer\" (network, compute, db). Split by **boundary**.\n*   **Bad:** `modules/network`, `modules/compute` (Tight coupling, hard to plan).\n*   **Good:** `environments/prod/app-group` (Loose coupling, faster plans for specific teams).\n\n### 4. External State Drift\n\nTerraform assumes it is the *only* actor modifying infrastructure. If a manual change is made via the Console (AWS/Azure CLI), Terraform will detect a difference.\n\n#### **Constraint: Drift Detection**\n*   **The Problem:** `terraform plan` will output changes that you didn't make in code. Ignoring this leads to \"Configuration Divergence.\" Re-applying might revert critical manual hotfixes.\n*   **Trade-off:** **Strict Governance vs. Emergency Agility.**\n\n**Solution:**\n1.  **Lifecycle Management:** Use `ignore_changes` for specific volatile tags (e.g., deployment dates).\n2.  **Import:** If a resource was added manually, import it immediately.\n\n**Code Example: Ignoring Drift**\n```hcl\nresource \"aws_instance\" \"web\" {\n  # ... config ...\n\n  lifecycle {\n    # If an external script changes this tag, don't try to revert it\n    ignore_changes = [ \n      tags[\"LastBackedUp\"]\n    ]\n  }\n}\n```\n\n### 5. The Provider Version & API Limit Constraints\n\nTerra",
+      "latency_ms": 23570.9,
+      "error": null,
+      "tokens": 1024,
+      "keywords_hit": [
+        "sources",
+        "trade-offs",
+        "terraform"
+      ],
+      "f1": 0.0
+    },
+    {
+      "model": "glm-4.7",
+      "system_prompt": "safety",
+      "run_index": 0,
+      "text": "I am unable to provide the specific constraints and trade-offs for **Scenario #5** because the context for that scenario has not been provided.\n\nHowever, based on standard Terraform usage, I can outline the general constraints and trade-offs inherent in the tool. If \"Scenario #5\" refers to a specific platform (like AWS) or an architecture pattern (like multi-region), please provide those details.\n\n### 1. General Constraints in Terraform\n*   **State File Dependency:** Terraform relies on a state file (`.tfstate`) to map real-world resources to your configuration. This file is a single source of truth and a potential single point of failure.\n*   **Declarative Language (HCL):** You define *what* the infrastructure should look like, not *how* to create it. This makes it difficult to handle complex logic or procedural workflows (e.g., \"Create A, wait 5 minutes, check status, then create B\").\n*   **Provider Limitations:** Terraform is only as capable as the underlying providers (e.g., AWS, Azure, GCP providers). If a provider lacks support for a specific API feature, Terraform cannot manage it.\n*   **No Drift Detection on Auto-Apply:** Terraform only detects drift (changes made outside of Terraform) when you run `plan` or `apply`. It does not actively monitor resources in real-time.\n\n### 2. Main Trade-offs\n*   **Simplicity vs. Flexibility:**\n    *   *Trade-off:* Terraform is excellent for standard, repeatable infrastructure. However, managing complex, heterogeneous environments or legacy systems often requires \"workarounds\" like using the `null_resource` or `external` provider, which reduces the purity and safety of the IaC approach.\n*   **Automation vs. Control:**\n    *   *Trade-off:* Terraform allows for rapid provisioning and destruction. This speed can be dangerous if access controls (RBAC) are not strictly enforced, as a single command can tear down critical production infrastructure.\n*   **Modularity vs. Complexity:**\n    *   *Trade-off:* Breaking code into reusable modules improves organization and reduces duplication. However, over-abstraction can make debugging difficult. When an error occurs in a deeply nested module, tracing the root cause through layers of input variables is often challenging.\n*   **Open Source vs. Enterprise:**\n    *   *Trade-off:* The open-source CLI is free and flexible but lacks built-in team collaboration features (history, access control, secrets management). Terraform Cloud/Enterprise solves this but introduces cost and vendor lock-in.\n\n**If you can describe the specific environment or problem defined in \"Scenario #5,\" I can give you a tailored analysis of the constraints and trade-offs relevant to that situation.**",
+      "latency_ms": 13571.0,
+      "error": null,
+      "tokens": 574,
+      "keywords_hit": [
+        "sources",
+        "trade-offs",
+        "limitations",
+        "terraform"
+      ],
+      "f1": 0.0
+    },
+    {
+      "model": "glm-4.7",
+      "system_prompt": "safety",
+      "run_index": 1,
+      "text": "**I do not have access to the specific context of \"Scenario #5.\"**\n\nBecause you referenced a specific scenario that I cannot see, I cannot address the particular nuances or variables contained within it.\n\nHowever, based on general Terraform best practices, here are the main constraints and trade-offs inherent to Terraform infrastructure that likely apply to your scenario.\n\n### 1. State File Constraints vs. Benefits\nTerraform relies on a state file (`terraform.tfstate`) to map real-world resources to your configuration.\n\n*   **Trade-off:**\n    *   **Benefit:** It allows Terraform to calculate dependencies and perform incremental updates efficiently.\n    *   **Constraint:** It creates a \"single source of truth\" that must be managed carefully. If the state file is deleted or corrupted, Terraform loses knowledge of the existing infrastructure.\n    *   **Constraint (Collaboration):** State files cannot be stored locally when working in teams. You must use Remote State (e.g., AWS S3, Terraform Cloud, Azure Blob) to lock the state during updates, which introduces complexity and reliance on external services.\n\n### 2. Immutable Infrastructure vs. Resource Downtime\nTerraform generally follows an immutable infrastructure philosophy (destroying and recreating resources rather than modifying them in-place).\n\n*   **Trade-off:**\n    *   **Benefit:** Drift is minimized, and configuration consistency is guaranteed.\n    *   **Constraint:** Changing a fundamental attribute of a resource (like the instance type of an AWS EC2 VM or the engine version of an RDS database) forces Terraform to destroy and recreate the resource. This inevitably results in downtime unless external orchestration (like zero-downtime deployment strategies) is manually implemented.\n\n### 3. Declarative Language (HCL) vs. Procedural Logic\nTerraform uses HashiCorp Configuration Language (HCL), which is declarative (you define *what* you want, not *how* to get there).\n\n*   **Trade-off:**\n    *   **Benefit:** The code is easier to read and understand. Terraform calculates the dependency graph and execution order automatically.\n    *   **Constraint:** Implementing complex logic (loops, conditional branching, data manipulation) is more difficult and verbose in HCL compared to procedural languages like Python, Bash, or JavaScript. While features like `for_each` and `dynamic` blocks help, they are not as flexible as general-purpose programming.\n\n### 4. Provider Maturity vs. Feature Parity\nTerraform relies on \"Providers\" to interact with cloud APIs (AWS, Azure, Google, etc.).\n\n*   **Trade-off:**\n    *   **Benefit:** You can manage hundreds of services across multiple clouds with a single tool.\n    *   **Constraint:** There is often a lag between a cloud provider releasing a new feature/API and the Terraform provider being updated to support it. Additionally, documentation for specific provider resources can sometimes be sparse or incorrect compared to the cloud provider's native documentation.\n\n### 5. Granularity vs. Complexity\n*   **Trade-off:**\n    *   **Benefit (Small Modules):** Breaking infrastructure into small, reusable modules promotes reusability and readability.\n    *   **Constraint (Module Bloat):** Over-modularization can lead to an overwhelming number of modules and variable definitions, making the codebase difficult to navigate and debug. Passing data between deeply nested modules can become complex.\n\n**If you can provide the details of Scenario #5, I can give you a specific analysis of how these trade-offs apply to your particular situation.**",
+      "latency_ms": 16889.5,
+      "error": null,
+      "tokens": 740,
+      "keywords_hit": [
+        "sources",
+        "trade-offs",
+        "terraform"
+      ],
+      "f1": 0.0
+    },
+    {
+      "model": "mimo-v2.5",
+      "system_prompt": "neutral",
+      "run_index": 0,
+      "text": "",
+      "latency_ms": 349.9,
+      "error": "Client error '404 Not Found' for url 'https://openrouter.ai/api/v1/chat/completions'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404",
+      "tokens": 0,
+      "keywords_hit": [],
+      "f1": 0.0
+    },
+    {
+      "model": "mimo-v2.5",
+      "system_prompt": "neutral",
+      "run_index": 1,
+      "text": "",
+      "latency_ms": 353.5,
+      "error": "Client error '404 Not Found' for url 'https://openrouter.ai/api/v1/chat/completions'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404",
+      "tokens": 0,
+      "keywords_hit": [],
+      "f1": 0.0
+    },
+    {
+      "model": "mimo-v2.5",
+      "system_prompt": "expert",
+      "run_index": 0,
+      "text": "",
+      "latency_ms": 328.4,
+      "error": "Client error '404 Not Found' for url 'https://openrouter.ai/api/v1/chat/completions'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404",
+      "tokens": 0,
+      "keywords_hit": [],
+      "f1": 0.0
+    },
+    {
+      "model": "mimo-v2.5",
+      "system_prompt": "expert",
+      "run_index": 1,
+      "text": "",
+      "latency_ms": 37.2,
+      "error": "Client error '404 Not Found' for url 'https://openrouter.ai/api/v1/chat/completions'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404",
+      "tokens": 0,
+      "keywords_hit": [],
+      "f1": 0.0
+    },
+    {
+      "model": "mimo-v2.5",
+      "system_prompt": "strict",
+      "run_index": 0,
+      "text": "",
+      "latency_ms": 280.4,
+      "error": "Client error '404 Not Found' for url 'https://openrouter.ai/api/v1/chat/completions'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404",
+      "tokens": 0,
+      "keywords_hit": [],
+      "f1": 0.0
+    },
+    {
+      "model": "mimo-v2.5",
+      "system_prompt": "strict",
+      "run_index": 1,
+      "text": "",
+      "latency_ms": 70.7,
+      "error": "Client error '404 Not Found' for url 'https://openrouter.ai/api/v1/chat/completions'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404",
+      "tokens": 0,
+      "keywords_hit": [],
+      "f1": 0.0
+    },
+    {
+      "model": "mimo-v2.5",
+      "system_prompt": "ru-expert",
+      "run_index": 0,
+      "text": "",
+      "latency_ms": 40.9,
+      "error": "Client error '404 Not Found' for url 'https://openrouter.ai/api/v1/chat/completions'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404",
+      "tokens": 0,
+      "keywords_hit": [],
+      "f1": 0.0
+    },
+    {
+      "model": "mimo-v2.5",
+      "system_prompt": "ru-expert",
+      "run_index": 1,
+      "text": "",
+      "latency_ms": 63.1,
+      "error": "Client error '404 Not Found' for url 'https://openrouter.ai/api/v1/chat/completions'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404",
+      "tokens": 0,
+      "keywords_hit": [],
+      "f1": 0.0
+    },
+    {
+      "model": "mimo-v2.5",
+      "system_prompt": "safety",
+      "run_index": 0,
+      "text": "",
+      "latency_ms": 37.3,
+      "error": "Client error '404 Not Found' for url 'https://openrouter.ai/api/v1/chat/completions'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404",
+      "tokens": 0,
+      "keywords_hit": [],
+      "f1": 0.0
+    },
+    {
+      "model": "mimo-v2.5",
+      "system_prompt": "safety",
+      "run_index": 1,
+      "text": "",
+      "latency_ms": 41.9,
+      "error": "Client error '404 Not Found' for url 'https://openrouter.ai/api/v1/chat/completions'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404",
+      "tokens": 0,
+      "keywords_hit": [],
+      "f1": 0.0
+    },
+    {
+      "model": "glm-4.7",
+      "system_prompt": "neutral",
+      "run_index": 0,
+      "text": "Based on the provided Scenario #11 context (implying a standard, complex, or specific architectural challenge often associated with this index), here are the main constraints and trade-offs typically encountered in a Kafka streaming pipeline.\n\n### **1. Throughput vs. Latency**\n*   **Trade-off:** Increasing batch sizes or batching intervals (`linger.ms`) improves throughput and network efficiency but increases end-to-end latency.\n*   **Constraint:** You must meet specific latency SLAs (e.g., processing data in under 100ms) which prevents maximizing batch sizes.\n\n### **2. Data Ordering vs. Parallelism**\n*   **Trade-off:** Kafka guarantees ordering only within a single partition. To achieve strict ordering for a specific entity (e.g., User A), all events for User A must go to one partition.\n*   **Constraint:** This limits parallelism. If one \"hot\" key (like a popular user) generates massive traffic, that specific partition becomes a bottleneck, preventing the consumer from scaling out to utilize all CPU cores.\n\n### **3. Exactly-Once Semantics (EOS) vs. Performance/Complexity**\n*   **Trade-off:** Enabling \"Exactly-Once\" processing (via Idempotent Producers and Transactions) adds significant overhead due to transaction coordination and cross-partition commits.\n*   **Constraint:** This reduces throughput by 20-30% or more compared to \"At-Least-Once\" and increases code complexity to handle transactional IDs and fencing.\n\n### **4. Consumer Lag vs. Resource Costs**\n*   **Trade-off:** Processing a backlog (consumer lag) quickly requires scaling up consumer instances (more partitions, higher CPU/RAM).\n*   **Constraint:** Infrastructure costs increase. Furthermore, you cannot scale consumers beyond the number of partitions in the topic, forcing a decision between re-partitioning (expensive) or suffering slow recovery times.\n\n### **5. Storage Retention vs. Backpressure**\n*   **Trade-off:** Long retention periods (e.g., 7 days) allow for replaying data or fixing bugs but require massive disk storage and put memory pressure on the broker (cleaner threads).\n*   **Constraint:** If consumers go down, you risk filling the disk if retention isn't aggressively managed, or losing data if you drop retention too low to save space.\n\n### **6. Data freshness vs. Schema Evolution**\n*   **Trade-off:** Relying on a Schema Registry (Avro/Protobuf) ensures data compatibility but requires strict governance.\n*   **Constraint:** Allowing backward-incompatible schema changes breaks the pipeline. Strictly enforcing compatibility slows down feature development and data model changes.",
+      "latency_ms": 11912.0,
+      "error": null,
+      "tokens": 540,
+      "keywords_hit": [
+        "trade-offs",
+        "kafka"
+      ],
+      "f1": 0.0
+    },
+    {
+      "model": "glm-4.7",
+      "system_prompt": "neutral",
+      "run_index": 1,
+      "text": "Assuming **Scenario #11** refers to the challenge of **\"Exactly-Once Processing with High Throughput in a Distributed Environment\"** (a common architectural challenge or interview question), here are the main constraints and trade-offs:\n\n### 1. Guarantees vs. Throughput & Latency\n*   **Constraint:** Achieving **Exactly-Once Semantics (EOS)** is often the hardest non-functional requirement. It requires idempotent producers, transactional writes, and atomic offset commits.\n*   **Trade-off:**\n    *   **EOS:** Significantly reduces throughput and increases latency due to the coordination overhead (managing transaction IDs and cross-partition atomic commits).\n    *   **At-Least-Once:** Offers much higher throughput and lower latency but risks data duplication, requiring downstream deduplication logic.\n\n### 2. Consumer Lag vs. Resource Cost\n*   **Constraint:** **Consumer Lag** (the delay between production and processing) must be minimized to ensure real-time analytics.\n*   **Trade-off:**\n    *   **Reducing Lag:** Requires aggressively scaling up consumer instances (parallelism) and partition counts. This increases operational costs and infrastructure complexity.\n    *   **Cost Optimization:** Limiting resources saves money but increases lag, causing the pipeline to become \"backlogged\" during traffic spikes.\n\n### 3. Ordering vs. Parallelism\n*   **Constraint:** maintaining the order of events for a specific key (e.g., user actions) is usually a business requirement.\n*   **Trade-off:**\n    *   **Strict Ordering:** Kafka guarantees order only **within a single partition**. To maintain global order, you must reduce the number of partitions (reducing parallelism/concurrency) or stick to a single consumer thread per partition.\n    *   **High Parallelism:** Increasing partitions allows for more consumer threads, maximizing throughput but making global ordering impossible (you must rely on windowing or timestamps to reorder events later).\n\n### 4. Back-Pressure Handling (Bursts vs. Consistency)\n*   **Constraint:** Producers may generate data bursts that exceed consumer processing speed.\n*   **Trade-off:**\n    *   **Buffering:** Increasing Kafka **retention** and **replication factor** acts as a massive buffer, protecting consumers from crashes or bursts. However, this increases storage costs and disk I/O.\n    *   **Dropping Data:** In some \"best effort\" scenarios, pipelines may drop old messages or slow down producers (back-pressure) to prevent system overload, sacrificing data completeness.\n\n### 5. Operational Complexity: Replication Factor vs. Durability\n*   **Constraint:** System durability (surviving node failures) is critical.\n*   **Trade-off:**\n    *   **High Durability:** A higher replication factor (e.g., 3) ensures zero data loss if a broker fails.\n    *   **Write Performance:** Higher replication factors increase the latency required to acknowledge a write (`acks=all`), as data must be copied to more nodes before the commit is confirmed.",
+      "latency_ms": 11640.5,
+      "error": null,
+      "tokens": 626,
+      "keywords_hit": [
+        "sources",
+        "trade-offs",
+        "kafka"
+      ],
+      "f1": 0.0
+    },
+    {
+      "model": "glm-4.7",
+      "system_prompt": "expert",
+      "run_index": 0,
+      "text": "Based on a typical interpretation of \"Scenario #11\" in distributed systems design interviews—often characterized by **High-Volume Ingestion, Event Ordering Guarantees, and Strict Exactly-Once Processing (EOS)**—the constraints and trade-offs below focus on balancing throughput with data integrity.\n\nHere is a breakdown of the main constraints and trade-offs, followed by a production-grade code pattern for handling the most common pitfall: **Idempotency and Exactly-Once Processing.**\n\n---\n\n### 1. The Ordering vs. Parallelism Trade-off\n**Constraint:** Kafka guarantees ordering only within a single partition. If a specific business entity (e.g., a `userID` or `orderID`) must have its events processed in strict time-order, all events for that entity must land in the same partition.\n\n**Trade-off:**\n*   **Choice:** High Consumer Parallelism vs. Strict Ordering.\n*   **Impact:** To maintain order for a specific key, you route traffic using a partitioning key. This limits your consumer parallelism to the number of partitions in the topic. If you have 100 `orderID` keys but only 5 partitions, only 5 consumer instances can work simultaneously. The throughput is capped by the partition count, not the consumer count.\n\n### 2. Exactly-Once vs. Throughput & Latency\n**Constraint:** In financial or transactional scenarios (Scenario #11), you cannot tolerate duplicates (`at-least-once`) or data loss (`at-most-once`). You require Exactly-Once Semantics (EOS).\n\n**Trade-off:**\n*   **Choice:** Data Integrity vs. Throughput/Latency.\n*   **Impact:** Enabling EOS in Kafka Streams (via `processing.guarantee`) requires frequent coordination with the transaction coordinator and writing to the internal `__transaction_state` topic. This introduces significant overhead (network I/O and disk writes).\n    *   *Result:* Throughput can drop by 20-50%, and latency typically increases compared to `at-least-once`.\n\n### 3. Consumer Lag vs. Resource Cost\n**Constraint:** Backpressure. If the rate of data ingestion exceeds the rate of processing, consumer lag grows, creating an ever-increasing data debt.\n\n**Trade-off:**\n*   **Choice:** Real-time processing vs. Infrastructure Cost.\n*   **Impact:**\n    *   **Scale Up:** Increase partition count and consumer instances. This costs money.\n    *   **Scale Down:** Batching records. Increasing `fetch.max.bytes` or `max.poll.records` improves throughput but increases latency per event (the time it takes for an event to travel from Producer to Consumer).\n\n### 4. Schema Evolution vs. Compatibility\n**Constraint:** Data contracts change over time. You must handle fields being added or removed from events.\n\n**Trade-off:**\n*   **Choice:** Flexibility (Avro/Protobuf) vs. Operational Overhead.\n*   **Impact:** Using a Schema Registry (like Confluent) ensures safety but introduces a dependency. If you set compatibility rules to `NONE`, you risk breaking your consumers. If you set them to `BACKWARD` or `FORWARD`, you must write defensive code in your consumers to handle missing fields (null checks) or unknown fields, increasing code complexity.\n\n---\n\n### Production-Ready Code Pattern: Idempotent Consumer\nIn \"Scenario #11\" scenarios, relying solely on Kafka's EOS is not always enough if the downstream sink is not transactional (e.g., a legacy SQL database or a REST API).\n\nYou must implement **Idempotency** at the application level. The standard pattern is using a \"Deduplication Store\" (usually a database with unique constraints or Redis).\n\nBelow is a robust Java Spring Boot/Kafka example using the **\"Transactional Outbox Pattern\"** approach logic for a consumer.\n\n```java\nimport org.apache.kafka.clients.consumer.ConsumerRecord;\nimport org.springframework.kafka.annotation.KafkaListener;\nimport org.springframework.kafka.support.Acknowledgment;\nimport org.springframework.stereotype.Service;\nimport org.springframework.transaction.annotation.Transactional;\nimport org.springframework.dao.DataIntegrityViolationException;\n\nimport java.util.UUID;\n\n@Service\npublic class OrderPaymentService {\n\n    private final PaymentRepository paymentRepository;\n    private final DeduplicationRepository deduplicationRepository;\n\n    // Constructor Injection\n    public OrderPaymentService(PaymentRepository paymentRepository, \n                               DeduplicationRepository deduplicationRepository) {\n        this.paymentRepository = paymentRepository;\n        this.deduplicationRepository = deduplicationRepository;\n    }\n\n    /**\n     * Listener handles high-volume payment events.\n     * Uses manual ack for control in case of transient failures.\n     */\n    @KafkaListener(\n        topics = \"${kafka.topic.payments}\", \n        groupId = \"payment-service-group\",\n        containerFactory = \"kafkaListenerContainerFactory\"\n    )\n    @Transactional // Ensures DB and Dedup table update atomically\n    public void processPaymentEvent(ConsumerRecord<String, PaymentEvent> record, Acknowled",
+      "latency_ms": 24186.8,
+      "error": null,
+      "tokens": 1024,
+      "keywords_hit": [
+        "trade-offs",
+        "kafka"
+      ],
+      "f1": 0.0
+    },
+    {
+      "model": "glm-4.7",
+      "system_prompt": "expert",
+      "run_index": 1,
+      "text": "",
+      "latency_ms": 60019.2,
+      "error": "",
+      "tokens": 0,
+      "keywords_hit": [],
+      "f1": 0.0
+    },
+    {
+      "model": "glm-4.7",
+      "system_prompt": "strict",
+      "run_index": 0,
+      "text": "```java\nimport org.apache.kafka.streams.KafkaStreams;\nimport org.apache.kafka.streams.StreamsBuilder;\nimport org.apache.kafka.streams.Topology;\nimport org.apache.kafka.streams.kstream.KStream;\nimport org.apache.kafka.streams.kstream.TimeWindows;\nimport org.apache.kafka.streams.kstream.Materialized;\n\nimport java.time.Duration;\nimport java.util.Properties;\n\npublic class Scenario11_ConstraintsTradeoffs {\n\n    public static void main(String[] args) {\n        Properties props = new Properties();\n        props.put(\"application.id\", \"scenario-11-constraints\");\n        props.put(\"bootstrap.servers\", \"localhost:9092\");\n        \n        // CONSTRAINT 1: Exactly-Once Processing Semantics (EOS)\n        // Trade-off: Higher latency and throughput overhead due to transactional commits.\n        props.put(\"processing.guarantee\", \"exactly_once_v2\");\n\n        // CONSTRAINT 2: State Store Management (RocksDB)\n        // Trade-off: High disk I/O potential vs. memory usage.\n        // Cache sizing must be tuned to balance between latency (RAM) and capacity (Disk).\n        props.put(\"default.deserialization.exception.handler\", \"logAndContinue\");\n\n        StreamsBuilder builder = new StreamsBuilder();\n\n        // CONSTRAINT 3: Out-of-Order Data Handling\n        // Trade-off: Grace period defines how long we wait for late data.\n        // Longer windows increase result completeness but significantly increase latency and state size.\n        KStream<String, String> source = builder.stream(\"input-topic\");\n\n        source.groupByKey()\n              .windowedBy(TimeWindows.ofSizeWithNoGrace(Duration.ofMinutes(5))\n                      .advanceBy(Duration.ofMinutes(1)))\n              // Trade-off: Materializing stores allows fault tolerance but consumes disk space.\n              .aggregate(() -> 0L, (k, v, agg) -> agg + 1, \n                      Materialized.as(\"aggregated-store\"))\n              .toStream()\n              .to(\"output-topic\");\n\n        Topology topology = builder.build();\n        \n        // CONSTRAINT 4: Threading and Parallelism\n        // Trade-off: Increasing threads increases parallelism but adds context-switching overhead.\n        // KafkaStreams instances > 1 provides HA but requires coordination.\n        KafkaStreams streams = new KafkaStreams(topology, props);\n        \n        // CONSTRAINT 5: Consumer Lag / Backpressure\n        // If processing time > ingestion rate, lag grows. Must partition effectively or scale horizontally.\n        streams.start();\n\n        Runtime.getRuntime().addShutdownHook(new Thread(streams::close));\n    }\n}\n```",
+      "latency_ms": 11549.1,
+      "error": null,
+      "tokens": 519,
+      "keywords_hit": [
+        "kafka"
+      ],
+      "f1": 0.0
+    },
+    {
+      "model": "glm-4.7",
+      "system_prompt": "strict",
+      "run_index": 1,
+      "text": "```java\n/**\n * CONSTRAINTS AND TRADE-OFFS: Kafka Streaming Pipeline\n * Scenario #11: High-Volume Event Processing with Strict SLAs\n *\n * 1. MESSAGE ORDERING GUARANTEEES\n *    - Constraint: Ordering is guaranteed only within a single partition.\n *    - Trade-off: To scale, you must increase partitions, which breaks global ordering.\n *    - Scenario Impact: Maintaining causal relationships between events may require complex partitioning strategies (e.g., sticky partitioning by entity ID) that can lead to data skew.\n *\n * 2. LATENCY VS. THROUGHPUT\n *    - Constraint: Lower latency typically requires smaller batch sizes and frequent commits.\n *    - Trade-off: Smaller batches reduce throughput and increase CPU load due to frequent network I/O and context switching.\n *    - Scenario Impact: Tuning `linger.ms` and `batch.size` is critical; optimizing for millisecond latency (Scenario #11) may significantly reduce total volume capacity.\n *\n * 3. EXACTLY-ONCE SEMANTICS (EOS)\n *    - Constraint: Enabling EOS (`isolation.level=read_committed` and `processing.guarantee=exactly_once_v2`) relies on Kafka transactions.\n *    - Trade-off: Transactions introduce significant overhead (typically 2-3x performance degradation) and require managing multiple consumer offsets in a single transaction group.\n *    - Scenario Impact: If \"at-least-once\" with idempotency is acceptable, throughput is much higher than full EOS.\n *\n * 4. BACKPRESSURE HANDLING\n *    - Constraint: Kafka producers are fast; consumers/processors might be slow (e.g., database writes).\n *    - Trade-off: If the consumer cannot keep up, lag increases.\n *    - Mitigation: You must drop data, scale consumers, or implement complex buffering (e.g., adding a Redis buffer between Kafka and the DB), adding system complexity.\n *\n * 5. DATA REPROCESSING AND SCHEMA EVOLUTION\n *    - Constraint: Topics are append-only logs. Changing the message format (schema) breaks old consumers.\n *    - Trade-off: Using the Schema Registry (Avro/Protobuf) ensures compatibility but adds an infrastructure dependency.\n *    - Scenario Impact: Reprocessing historic data for \"correction\" requires resetting offsets, which is risky if the log retention period has expired or if the code cannot handle old schemas.\n *\n * 6. RESOURCE CONSUMPTION (MEMORY/CPU)\n *    - Constraint: Kafka Streams (or ksqlDB) maintains local state stores (RocksDB) for fast joins and aggregations.\n *    - Trade-off: State stores require high disk I/O and RAM. Rebalancing or instance failure requires \"restoring\" state by re-reading the changelog topic, which can take hours for large state, delaying startup.\n *\n * 7. COUPLING AND AVAILABILITY\n *    - Constraint: Streaming pipelines are often tightly coupled to the real-time availability of upstream services.\n *    - Trade-off: If downstream systems (databases, APIs) go down, the pipeline must buffer or stall.\n *    - Scenario Impact: Dead Letter Queues (DLQs) are necessary to prevent a single \"poison pill\" message from halting the entire stream processing.\n */\n```",
+      "latency_ms": 18744.8,
+      "error": null,
+      "tokens": 691,
+      "keywords_hit": [
+        "trade-offs",
+        "kafka"
+      ],
+      "f1": 0.0
+    },
+    {
+      "model": "glm-4.7",
+      "system_prompt": "ru-expert",
+      "run_index": 0,
+      "text": "Based on **Scenario #11** (which typically refers to **high-throughput, low-latency data ingestion with strict ordering guarantees** in distributed systems interviews), here are the main constraints and trade-offs you must manage in a Kafka streaming pipeline.\n\nAs a senior engineer, I approach this not just as \"what does Kafka do,\" but \"how does Kafka behave under failure and load.\"\n\n---\n\n### 1. Throughput vs. Latency (The Producer Trade-off)\nThis is the most immediate constraint. You cannot have maximum throughput and minimum latency simultaneously on the same stream without significant resource overhead.\n\n*   **Constraint:** Network bandwidth and IOPS.\n*   **Trade-off:**\n    *   **High Throughput:** Requires `linger.ms` > 0 (batching) and large `batch.size`. This adds wait time before sending data, increasing latency.\n    *   **Low Latency:** Requires `linger.ms` = 0 and `batch.size` small. This sends data immediately but causes excessive network requests, lowering throughput and spiking CPU.\n*   **Solution:** Use separate clusters or topics for hot-path (low latency) and cold-path (high throughput) data, or tune `compression.type` (snappy/lz4) to save network bandwidth at the cost of CPU.\n\n### 2. Ordering Guarantees vs. Parallelism\nIn Scenario #11, if you need to process events in the order they occurred (e.g., financial transactions), you face a severe scalability constraint.\n\n*   **Constraint:** Kafka only guarantees order within a single partition.\n*   **Trade-off:**\n    *   To maintain global order, you must use a **single partition**. This limits your consumer parallelism to 1 instance per consumer group, creating a massive bottleneck.\n    *   To increase parallelism, you increase partitions. However, order is lost unless you implement a \"sticky partitioner\" or key-based routing, which can lead to **data skew** (one \"hot\" partition handling 80% of traffic).\n*   **Solution:** Use **partition keys** (e.g., `userID` or `orderID`) to ensure *per-entity* ordering. Accept that global ordering across different entities is impossible.\n\n### 3. Consumer Lag vs. Processing Complexity\nCan your consumers keep up with the producers?\n\n*   **Constraint:** Consumer processing time must be faster (on average) than producer ingestion rate.\n*   **Trade-off:**\n    *   **At-Least-Once Processing:** Ensures no data loss but requires idempotency handling on the consumer side (complex logic).\n    *   **Exactly-Once Processing:** Uses Kafka Transactions. This adds significant overhead (transaction coordination) and reduces throughput by 20-30% or more depending on the library.\n*   **Solution:** Scale consumer instances to `number_of_partitions`. Monitor **Consumer Lag** religiously using Prometheus/Grafana or Burrow. If lag increases, you must either scale consumers or optimize the serialization/deserialization (SerDe).\n\n### 4. Data Retention vs. Storage Cost\nKafka is often used as a \"store,\" but it is expensive storage.\n\n*   **Constraint:** Disk space on the brokers.\n*   **Trade-off:**\n    *   **Long Retention:** Great for re-processing bugs in downstream logic (replayability). Terabytes of SSDs are expensive.\n    *   **Short Retention:** Cheaper, but if a downstream service (DB, S3) goes down for longer than retention, data is lost forever.\n*   **Solution:** Implement **Tiered Storage** (offloading old data to S3/HDFS) if using newer Kafka versions, or strictly separate \"Commit Logs\" (Kafka) from \"Long-term Storage\" (Data Lake).\n\n### 5. Availability vs. Consistency (The Broker/ISR Trade-off)\nWhat happens when a broker dies?\n\n*   **Constraint:** In-Sync Replicas (ISR) count.\n*   **Trade-off:**\n    *   **High Availability (`min.insync.replicas=1`):** Acknowledges writes immediately. If the leader crashes before replication, data is lost.\n    *   **High Durability (`min.insync.replicas=2` + `acks=all`):** Leader waits for followers. Throughput drops (latency increases) because the write isn't considered \"done\" until replicated.\n*   **Code Implication:** You must handle `NotEnoughReplicasException` in your producer error handling logic.\n\n---\n\n### Code Example: Handling Exactly-Once (Transactional Producer)\n\nTo mitigate the data loss vs. duplication trade-off in a critical pipeline, we use Transactions. Note that this requires careful error handling.\n\n```java\nimport org.apache.kafka.clients.producer.KafkaProducer;\nimport org.apache.kafka.clients.producer.ProducerRecord;\nimport org.apache.kafka.common.errors.OutOfOrderSequenceException;\nimport org.apache.kafka.common.errors.AuthorizationException;\nimport org.apache.kafka.common.errors.Producer",
+      "latency_ms": 23394.1,
+      "error": null,
+      "tokens": 1024,
+      "keywords_hit": [
+        "trade-offs",
+        "kafka"
+      ],
+      "f1": 0.0
+    },
+    {
+      "model": "glm-4.7",
+      "system_prompt": "ru-expert",
+      "run_index": 1,
+      "text": "As a Senior Developer with 15 years of experience in distributed systems, I'll break down the constraints and trade-offs of a Kafka streaming pipeline, specifically tailoring the analysis to a hypothetical **Scenario #11**.\n\nSince \"Scenario #11\" isn't a standard industry definition, I will define it as a common, high-complexity architectural pattern often encountered at this level:\n\n> **Scenario #11: High-Volume Stateful Enrichment with Strict \"Exactly-Once\" Requirements.**\n> *   **Input:** High-velocity clickstream/telemetry data (10k+ msg/sec).\n> *   **Processing:** Stream processing (e.g., Kafka Streams or ksqlDB) joining real-time events with a changing state store (e.g., user profiles or product catalog).\n> *   **Output:** Enriched events to a sink, requiring no duplicates and no data loss.\n\nHere is the breakdown of constraints and trade-offs for this scenario.\n\n---\n\n### 1. Consistency vs. Latency (The CAP Theorem in Action)\n\nIn a stateful streaming pipeline (Scenario #11), you are likely performing joins or aggregations. This requires maintaining state in **RocksDB** (local state store) or an external store (Redis/Postgres).\n\n*   **Constraint:** To ensure consistency across multiple replicas (e.g., standby replicas for high availability), Kafka Streams must commit offsets and replicate state changes to the changelog topic.\n*   **Trade-off:**\n    *   **High Consistency (Exactly-Once):** You must increase the `commit.interval.ms`. The producer waits for acknowledgments from all replicas (`acks=all`). This increases end-to-end latency.\n    *   **Low Latency:** You decrease the commit interval and maybe relax acknowledgment requirements (`acks=1`). However, if a instance crashes, you will reprocess data, causing duplicates or slight state corruption during recovery.\n\n**Senior Dev Insight:**\nDon't blindly set `processing.guarantee=exactly_once_v2`. It adds significant overhead (transactional coordinators). If your business logic is idempotent (e.g., \"UPDATE table SET count = count + 1 WHERE id = X\"), use `at_least_once` with idempotent writes. It’s often 20-30% faster.\n\n### 2. State Store Size vs. Rebalancing Time (The \"Warm-up\" Penalty)\n\nIn Scenario #11, you are enriching data. If your state store (e.g., user profile cache) grows to 100GB, your nodes need significant disk and RAM.\n\n*   **Constraint:** Kafka Streams keeps state local to reduce network I/O. When a consumer group rebalances (a node joins/fails), partition ownership transfers.\n*   **Trade-off:**\n    *   **Large Local State:** Fast processing (no network calls for lookups). **Downside:** Massive rebalancing downtime. The new node must restore 100GB from the changelog topic over the network before it can start processing. This can take hours.\n    *   **External State Store (e.g., Redis):** Fast rebalancing (state is remote, minimal local data). **Downside:** Every single event requires a network RPC. This limits throughput and introduces latency dependency on the external system.\n\n**Code Example (Kafka Streams Configuration):**\n```java\nProperties props = new Properties();\n// Trade-off: Smaller cache = more writes to disk, safer but slower.\nprops.put(StreamsConfig.ROCKSDB_CONFIG_SETTER_CLASS_CONFIG, CustomRocksDBConfig.class);\n// Trade-off: Standby replicas speed up recovery but double disk usage and network traffic.\nprops.put(KafkaConfig.NUM_STANDBY_REPLICAS_CONFIG, 1); \n```\n\n### 3. Throughput vs. Consumer Lag (Backpressure)\n\nIn Scenario #11, if the enrichment logic (database lookup or complex calculation) takes 50ms per event, your max throughput per thread is only 20 events/sec.\n\n*   **Constraint:** Producers produce data faster than consumers can process if the bottleneck is CPU or I/O bound.\n*   **Trade-off:**\n    *   **Scale Horizontally (More Partitions):** You increase partitions to allow more consumer instances.\n        *   *Risk:* Too many partitions increase latency and load on the Zookeeper/Kafka Controller. There is a ceiling (usually 2k-4k per cluster depending on hardware).\n    *   **Scale Vertically (Bigger Machines):** Faster CPU/SSD.\n        *   *Risk:* Expensive and eventually hits physical limits.\n    *   **Micro-batching:** Buffer records and process them in bulk.\n        *   *Risk:* Increases latency significantly. You are trading real-time processing for batch throughput.\n\n### 4. Ordering Guarantees vs. Parallelism\n\nKafka guarantees order only within a single partition.\n\n*   **Constraint:** Scenario #11 often requires ordering (e.g., processing a \"",
+      "latency_ms": 23321.3,
+      "error": null,
+      "tokens": 1024,
+      "keywords_hit": [
+        "trade-offs",
+        "kafka"
+      ],
+      "f1": 0.0
+    },
+    {
+      "model": "glm-4.7",
+      "system_prompt": "safety",
+      "run_index": 0,
+      "text": "Based on the standard architecture of Kafka streaming pipelines (using Kafka Connect for ingress/egress and Kafka Streams or ksqlDB for processing), here are the main constraints and trade-offs.\n\n**Note:** I do not have access to a specific document or context titled \"Scenario #11.\" The analysis below applies to a general, production-grade Kafka streaming architecture. If \"Scenario #11\" refers to a specific topological constraint (e.g., exactly-once vs. latency, or a specific cloud provider limit), please provide those details.\n\n### 1. Throughput vs. Latency\nThis is the most fundamental trade-off in stream processing.\n*   **The Trade-off:** You can either maximize the volume of data processed per second (Throughput) or minimize the time it takes for a single event to travel from source to sink (Latency).\n*   **Constraints:**\n    *   **Batch Size (`linger.ms`):** To increase throughput, you wait longer to accumulate more messages before sending a batch (higher `linger.ms`). This directly increases latency.\n    *   **Compression:** Enabling compression (e.g., Snappy, LZ4) reduces network bandwidth usage (helping throughput) but consumes CPU cycles and adds slight processing latency.\n*   **Decision Point:** If your use case is fraud detection (milliseconds matter), you optimize for latency. If your use case is log aggregation (volume matters), you optimize for throughput.\n\n### 2. Ordering Guarantees vs. Parallelism\n*   **The Constraint:** Kafka guarantees order only within a single partition. It does *not* guarantee global order across a topic.\n*   **The Trade-off:**\n    *   **Strict Ordering:** To maintain strict order for a specific entity (e.g., User A's updates must be processed 1, 2, 3), you must route all events for User A to the same partition. This limits your parallelism to the number of partitions in that topic.\n    *   **High Parallelism:** If you want to maximize processing speed across many consumer instances, you want many partitions. However, this makes global ordering impossible to enforce.\n*   **Result:** High scalability (many partitions) often comes at the cost of complex handling of out-of-order data if strict sequencing is required.\n\n### 3. Exactly-Once Semantics (EOS) vs. Performance/Cost\n*   **The Constraint:** Achieving \"exactly-once\" processing (no data loss, no duplicates) requires heavy coordination.\n*   **The Trade-off:**\n    *   **EOS (v2 / Transactions):** Requires brokers to manage transaction logs and producers to generate unique IDs. This significantly increases CPU load on the broker and adds latency to the producer.\n    *   **At-Least-Once:** This is faster and cheaper but allows for duplicate records. The system must be idempotent (able to handle the same message twice without error) on the consumer side.\n*   **Decision Point:** Most financial pipelines pay the performance cost for EOS. Log analytics pipelines often choose At-Least-Once.\n\n### 4. Backpressure Handling (Consumer Lag)\n*   **The Constraint:** Producers often produce data faster than consumers can process it (spikes in traffic).\n*   **The Trade-off:**\n    *   **Dropping Data:** You can configure consumers to skip data or fail fast, ensuring the system stays real-time but losing accuracy.\n    *   **Buffering (Scaling Up):** Rely on Kafka's massive retention to buffer the spike. This preserves data but introduces \"Consumer Lag.\" The pipeline becomes a historical pipeline rather than a real-time one until the lag is cleared.\n    *   **Scaling Out:** Adding more consumer instances helps, but is limited by the number of partitions in the topic (you cannot have more consumers than partitions in a consumer group).\n\n### 5. Schema Evolution vs. Compatibility\n*   **The Constraint:** Data contracts change over time (adding a field, changing a type).\n*   **The Trade-off:**\n    *   **Strict Compatibility (Avro/Protobuf with Schema Registry):** Ensures upstream and downstream don't break each other. However, it adds operational overhead (managing the registry) and can block deployment if not planned carefully.\n    *   **Loose Schema (JSON/Plain Text):** Easier to evolve, but high risk of runtime errors (e.g., a consumer crashes because it expects an Integer and receives a String).\n\n### 6. Operational Complexity (Stateful Processing)\n*   **The Constraint:** Stream processing often requires \"state\" (e.g., joining a stream with a table, or windowed aggregations).\n*   **The Trade-off:**\n    *   **Stateless Processing:** Simple (filter/map), easy to scale, no infrastructure burden. Limited in analytical capability.\n    *   **Stateful Processing:** Powerful (joins/aggregations), but requires local state stores (RocksDB) on the consumer nodes and interactive",
+      "latency_ms": 21862.3,
+      "error": null,
+      "tokens": 1024,
+      "keywords_hit": [
+        "trade-offs",
+        "kafka"
+      ],
+      "f1": 0.0
+    },
+    {
+      "model": "glm-4.7",
+      "system_prompt": "safety",
+      "run_index": 1,
+      "text": "Based on the phrasing \"Scenario #11,\" this likely refers to a specific **System Design Interview (SDI)** context (such as a card from a deck or a specific course module). Because the exact definition of \"Scenario #11\" is not provided in your prompt, I must state the assumptions I am making to answer correctly.\n\n**Assumption:** \"Scenario #11\" refers to a standard **Real-time Event Processing Pipeline** (ingesting high-volume events, processing/transformation, and storing for serving).\n\nBelow are the main constraints and trade-offs inherent in building and maintaining an Apache Kafka streaming pipeline.\n\n### 1. Constraints\nConstraints are hard limitations you must work within.\n\n*   **Strict Ordering Guarantees (Per Partition):**\n    *   Kafka guarantees order only within a single partition.\n    *   **Constraint:** If your use case requires strict global ordering (e.g., total order of financial transactions), you are constrained to using a **single partition**, which destroys parallelism and limits throughput.\n*   **Consumer Scalability vs. Parallelism:**\n    *   The maximum parallelism of a consumer group is capped by the number of partitions in the topic.\n    *   **Constraint:** You cannot add more consumer instances than partitions to increase speed; the extra instances will sit idle.\n*   **Seek Latency vs. Throughput (Producer):**\n    *   **Constraint:** Kafka optimizes for throughput by batching records. To achieve maximum throughput, you must tolerate higher latency (`linger.ms`) while waiting for batches to fill. If you need ultra-low latency, your throughput will decrease.\n*   **Retained State Size (Stateful Processing):**\n    *   In Kafka Streams (or ksqlDB), state (e.g., aggregates, joins) is stored locally on the application instance disk (RocksDB).\n    *   **Constraint:** The state size on a single node is limited by the local disk capacity. If the key-space window grows too large (e.g., a daily window for millions of users), you run out of local disk space, requiring expensive re-partitioning or infrastructure changes.\n*   **Backpressure Propagation:**\n    *   **Constraint:** Kafka decouples producers and consumers. If a downstream consumer (Database/Sink) is slow, it cannot \"tell\" the upstream Producer to slow down via the TCP protocol. This leads to **Consumer Lag**, where the message queue grows indefinitely, potentially causing data loss if retention limits are hit.\n\n### 2. Trade-offs\nTrade-offs are choices you make between two opposing desirable qualities.\n\n*   **Throughput vs. Latency (The Batching Trade-off):**\n    *   *Decision:* Increase `batch.size` and `linger.ms`.\n    *   *Benefit:* Higher throughput (more messages per second).\n    *   *Cost:* Higher end-to-end latency (messages wait in the client buffer before being sent).\n*   **Durability vs. Cost/Performance:**\n    *   *Decision:* Set `acks=all` and `min.insync.replicas > 1`.\n    *   *Benefit:* Zero data loss (strong durability).\n    *   *Cost:* Higher latency (waiting for replicas to acknowledge) and increased storage cost (more replicas without utilizing them for reads).\n*   **Exactly-Once vs. Performance and Complexity:**\n    *   *Decision:* Enable Idempotent Producers and Transactions (EOS - Exactly Once Semantics).\n    *   *Benefit:* No duplicates, even during failures.\n    *   *Cost:* Significant performance overhead (usually 2-3x throughput reduction) and operational complexity (managing transactional IDs, consumer isolation levels).\n*   **Cohesive Partitioning (Key-based) vs. Load Balancing:**\n    *   *Decision:* Use a Message Key (e.g., `UserID`) to partition data.\n    *   *Benefit:* All data for a user goes to one place, enabling stateful processing (joins/aggregations) and ordering per user.\n    *   *Cost:* **Data Skewing.** If one user is significantly more active than others (a \"hot partition\"), that specific broker/consumer gets overloaded while others sit idle.\n*   **Compaction vs. Retention (Topic Cleanup):**\n    *   *Decision:* Enable \"Log Compaction\" instead of \"Time-based Retention.\"\n    *   *Benefit:* Keeps the \"latest\" state of every key forever (useful for change-data-capture or changelogs).\n    *   *Cost:* Higher broker load (compaction process scans segments) and potential delays in seeing the \"true\" latest state if churn is high.\n\n### 3. Operational Constraints (The \"Gotchas\")\n*   **Rebalancing Downtime:**\n    *   When a consumer joins or leaves, the consumer group pauses processing to \"rebalance\" partitions.\n    *   *Impact:* During this time (seconds to minutes), the pipeline stops",
+      "latency_ms": 23779.0,
+      "error": null,
+      "tokens": 1024,
+      "keywords_hit": [
+        "trade-offs",
+        "limitations",
+        "kafka"
+      ],
+      "f1": 0.0
+    },
+    {
+      "model": "mimo-v2.5",
+      "system_prompt": "neutral",
+      "run_index": 0,
+      "text": "",
+      "latency_ms": 679.3,
+      "error": "Client error '404 Not Found' for url 'https://openrouter.ai/api/v1/chat/completions'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404",
+      "tokens": 0,
+      "keywords_hit": [],
+      "f1": 0.0
+    },
+    {
+      "model": "mimo-v2.5",
+      "system_prompt": "neutral",
+      "run_index": 1,
+      "text": "",
+      "latency_ms": 311.1,
+      "error": "Client error '404 Not Found' for url 'https://openrouter.ai/api/v1/chat/completions'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404",
+      "tokens": 0,
+      "keywords_hit": [],
+      "f1": 0.0
+    },
+    {
+      "model": "mimo-v2.5",
+      "system_prompt": "expert",
+      "run_index": 0,
+      "text": "",
+      "latency_ms": 374.0,
+      "error": "Client error '404 Not Found' for url 'https://openrouter.ai/api/v1/chat/completions'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404",
+      "tokens": 0,
+      "keywords_hit": [],
+      "f1": 0.0
+    },
+    {
+      "model": "mimo-v2.5",
+      "system_prompt": "expert",
+      "run_index": 1,
+      "text": "",
+      "latency_ms": 169.3,
+      "error": "Client error '404 Not Found' for url 'https://openrouter.ai/api/v1/chat/completions'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404",
+      "tokens": 0,
+      "keywords_hit": [],
+      "f1": 0.0
+    },
+    {
+      "model": "mimo-v2.5",
+      "system_prompt": "strict",
+      "run_index": 0,
+      "text": "",
+      "latency_ms": 42.2,
+      "error": "Client error '404 Not Found' for url 'https://openrouter.ai/api/v1/chat/completions'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404",
+      "tokens": 0,
+      "keywords_hit": [],
+      "f1": 0.0
+    },
+    {
+      "model": "mimo-v2.5",
+      "system_prompt": "strict",
+      "run_index": 1,
+      "text": "",
+      "latency_ms": 51.7,
+      "error": "Client error '404 Not Found' for url 'https://openrouter.ai/api/v1/chat/completions'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404",
+      "tokens": 0,
+      "keywords_hit": [],
+      "f1": 0.0
+    },
+    {
+      "model": "mimo-v2.5",
+      "system_prompt": "ru-expert",
+      "run_index": 0,
+      "text": "",
+      "latency_ms": 111.1,
+      "error": "Client error '404 Not Found' for url 'https://openrouter.ai/api/v1/chat/completions'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404",
+      "tokens": 0,
+      "keywords_hit": [],
+      "f1": 0.0
+    },
+    {
+      "model": "mimo-v2.5",
+      "system_prompt": "ru-expert",
+      "run_index": 1,
+      "text": "",
+      "latency_ms": 48.5,
+      "error": "Client error '404 Not Found' for url 'https://openrouter.ai/api/v1/chat/completions'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404",
+      "tokens": 0,
+      "keywords_hit": [],
+      "f1": 0.0
+    },
+    {
+      "model": "mimo-v2.5",
+      "system_prompt": "safety",
+      "run_index": 0,
+      "text": "",
+      "latency_ms": 82.1,
+      "error": "Client error '404 Not Found' for url 'https://openrouter.ai/api/v1/chat/completions'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404",
+      "tokens": 0,
+      "keywords_hit": [],
+      "f1": 0.0
+    },
+    {
+      "model": "mimo-v2.5",
+      "system_prompt": "safety",
+      "run_index": 1,
+      "text": "",
+      "latency_ms": 38.5,
+      "error": "Client error '404 Not Found' for url 'https://openrouter.ai/api/v1/chat/completions'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404",
+      "tokens": 0,
+      "keywords_hit": [],
+      "f1": 0.0
+    }
+  ]
+}
