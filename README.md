@@ -370,7 +370,7 @@ python tests/run_all_tests.py
 
 Важно:
 - `tests/` — целевой, поддерживаемый набор регрессионных и интеграционных тестов.
-- `test_*.py` в корне проекта и `src/test_*.py` — операционные/отладочные проверки (smoke/debug), они не считаются основным CI-набором.
+- `archive/smoke/test_*.py` и `src/test_*.py` — операционные/отладочные проверки (smoke/debug), не основной CI-набор.
 - Для `pytest` по умолчанию ограничен `testpaths = tests` (см. `pytest.ini`).
 
 ### Тесты PII Guard 🛡️
@@ -749,7 +749,7 @@ ALL_PROXY=socks5://127.0.0.1:10809
 
 5. Проверьте работу:
 ```bash
-python3 test_vless.py
+python3 archive/smoke/test_vless.py
 ```
 
 Если контейнер `mcp-xray-vless` уходит в `Restarting` с ошибкой:
@@ -782,7 +782,7 @@ HTTP_PROXY=socks5://127.0.0.1:1080
 
 3. Проверьте работу прокси:
 ```bash
-python3 test_proxy.py
+python3 archive/smoke/test_proxy.py
 ```
 
 Подробнее:

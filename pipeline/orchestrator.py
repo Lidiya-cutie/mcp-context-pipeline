@@ -48,8 +48,10 @@ ANTHROPIC_API_KEY = os.environ.get("ANTHROPIC_API_KEY", "")
 ANTHROPIC_BASE_URL = os.environ.get("ANTHROPIC_BASE_URL", "https://api.z.ai/api/anthropic")
 LLM_MODEL = os.environ.get("ANTHROPIC_MODEL", "glm-4.7")
 
-F1_THRESHOLD = 0.95
-DRIFT_THRESHOLD = 0.18  # context_drift = 1 - similarity; must be < 0.18
+F1_THRESHOLD = float(os.environ.get("PIPELINE_F1_THRESHOLD", "0.95"))
+# Default 0.18 — calibrated on pilot (5/5 converged in ≤2 iters).
+# Stricter research baseline is 0.15; set PIPELINE_DRIFT_THRESHOLD=0.15 to enforce it.
+DRIFT_THRESHOLD = float(os.environ.get("PIPELINE_DRIFT_THRESHOLD", "0.18"))
 MAX_TOKENS = 1024
 LLM_TIMEOUT = 60.0  # seconds
 

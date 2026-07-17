@@ -39,26 +39,38 @@
 | `run_pilot.py`    | Запуск пилота на всех примерах, сохранение результатов  |
 | `logger.py`       | Логирование итераций в JSONL                            |
 
+### Пороги схождения
+
+Значения по умолчанию калиброваны на пилоте (5/5 кейсов, ≤2 итерации):
+
+| Параметр | Env | Default | Примечание |
+|----------|-----|---------|------------|
+| F1 | `PIPELINE_F1_THRESHOLD` | `0.95` | сохранение сущностей |
+| context_drift | `PIPELINE_DRIFT_THRESHOLD` | `0.18` | `1 - similarity`; строгий research baseline — `0.15` |
+| max iterations | `PIPELINE_MAX_ITERATIONS` | `5` | стоп по N, если пороги не достигнуты |
+
+Пример строгого режима:
+
+```bash
+PIPELINE_DRIFT_THRESHOLD=0.15 PIPELINE_MAX_ITERATIONS=3 python -m pipeline.run_pilot
+```
+
+В алгоритме ниже используются текущие значения из env/default (не захардкоженные 0.15/3 из ранней спецификации).
+
 ### Алгоритм
 
 ```
 for iteration in 1..max_iterations:
     1. coder_agent генерирует текст через LLM API
     2. evaluator_agent валидирует: compute_f1 + compute_similarity
-    3. Если F1 >= 0.95 И context_drift < 0.15 -> СХОДИТСЯ, выход
+    3. Если F1 >= F1_THRESHOLD И context_drift < DRIFT_THRESHOLD -> СХОДИТСЯ, выход
     4. Иначе: формируется hint на основе ошибок:
        - Какие entity types потеряны (precision/recall)
-       - Семантический дрейф
+       - Семантический дрейф / слабо переданные фрагменты
        - Конкретные lost entities
     5. Перегенерация с hint в system prompt
     6. Логирование в JSONL
 ```
-
-### Пороги схождения
-
-- **F1 >= 0.95** — все сущности сохранены
-- **context_drift < 0.15** — семантика не разрушилась
-- Максимум **3 итерации** на тестовый кейс
 
 ## Интеграция
 

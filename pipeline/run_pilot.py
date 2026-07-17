@@ -32,7 +32,7 @@ from pipeline.test_cases import TEST_CASES
 RESULTS_DIR = Path(__file__).resolve().parent / "results"
 RESULTS_DIR.mkdir(parents=True, exist_ok=True)
 
-MAX_ITERATIONS = 5
+MAX_ITERATIONS = int(os.environ.get("PIPELINE_MAX_ITERATIONS", "5"))
 
 
 async def run_pilot() -> dict:

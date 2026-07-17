@@ -79,7 +79,7 @@ HTTP_PROXY=http://127.0.0.1:10808
 ./run_vless.sh test
 
 # Проверка подключения к Anthropic
-python3 test_proxy.py
+python3 archive/smoke/test_proxy.py
 ```
 
 ## Управление Xray клиентом

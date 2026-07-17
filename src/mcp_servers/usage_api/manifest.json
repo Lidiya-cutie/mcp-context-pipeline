@@ -5,6 +5,18 @@
   "transport": "stdio",
   "protocolVersion": "2024-11-05",
   "entry": "server.py",
+  "tools": [
+    "track_usage",
+    "get_daily_usage",
+    "get_model_breakdown",
+    "get_provider_breakdown",
+    "get_cost_summary",
+    "set_budget",
+    "check_budget",
+    "get_rate_limits",
+    "get_efficiency_metrics",
+    "check_health"
+  ],
   "env": {
     "USAGE_DB_PATH": {
       "description": "Path to SQLite database file",

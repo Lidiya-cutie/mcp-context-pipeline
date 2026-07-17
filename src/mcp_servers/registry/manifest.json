@@ -3,6 +3,17 @@
   "version": "1.0.0",
   "description": "Docker Registry API v2 MCP server",
   "transport": "stdio",
+  "tools": [
+    "list_repositories",
+    "list_tags",
+    "get_manifest",
+    "get_blob",
+    "delete_tag",
+    "get_image_size",
+    "get_tag_history",
+    "gc_candidates",
+    "check_health"
+  ],
   "env": {
     "REGISTRY_URL": {
       "description": "Registry base URL",

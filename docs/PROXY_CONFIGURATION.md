@@ -91,7 +91,7 @@ async_client = clients["async"]
 Запустите тестовый скрипт:
 
 ```bash
-python3 test_proxy.py
+python3 archive/smoke/test_proxy.py
 ```
 
 ## Устранение неполадок
