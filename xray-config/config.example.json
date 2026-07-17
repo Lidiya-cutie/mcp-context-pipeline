@@ -25,11 +25,11 @@
       "settings": {
         "vnext": [
           {
-            "address": "vscode.internal.tech",
-            "port": 3443,
+            "address": "YOUR_VLESS_HOST",
+            "port": 443,
             "users": [
               {
-                "id": "550fa88a-1193-4dfd-8ad3-6b9d01af145c",
+                "id": "00000000-0000-0000-0000-000000000000",
                 "encryption": "none",
                 "flow": "xtls-rprx-vision"
               }
@@ -41,15 +41,9 @@
         "network": "tcp",
         "security": "reality",
         "realitySettings": {
-          "target": "ads.x5.ru:443",
-          "serverNames": [
-            "ads.x5.ru"
-          ],
-          "privateKey": "YUqEB7wMp5gZv9tW8h0VnXqKjP3mLzYvN5wR6sC7tH8=",
-          "shortIds": [
-            "e7f9540c0e"
-          ],
-          "publicKey": "FQ_KxAqeA5Fb3QAs8DHE5loBj895THT2f_Uz-7DhdAE",
+          "serverName": "YOUR_SNI_DOMAIN",
+          "shortId": "YOUR_SHORT_ID",
+          "publicKey": "YOUR_REALITY_PUBLIC_KEY",
           "fingerprint": "chrome",
           "spiderX": "/"
         }
@@ -60,6 +54,11 @@
       "protocol": "freedom",
       "settings": {},
       "tag": "direct"
+    },
+    {
+      "protocol": "blackhole",
+      "settings": {},
+      "tag": "block"
     }
   ],
   "routing": {
@@ -67,10 +66,13 @@
     "rules": [
       {
         "type": "field",
-        "ip": [
-          "geoip:private"
-        ],
+        "ip": ["geoip:private"],
         "outboundTag": "direct"
+      },
+      {
+        "type": "field",
+        "domain": ["geosite:category-ads-all"],
+        "outboundTag": "block"
       },
       {
         "type": "field",
