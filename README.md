@@ -1,5 +1,31 @@
 # MCP Context Pipeline
 
+**Context management for MCP-based LLM applications: PII masking, context compression, MCP servers and evaluation gates.**
+
+- **PII protection**: Microsoft Presidio plus Russian-specific entities (passport, INN, SNILS, phone). Reference run: 84 tests, 100% pass, 0 leaks detected. A secure middleware masks data before any LLM call.
+- **Context management**: auto-compression, proactive summarization, temporary context injection, session checkpoints, stress tests at 100k+ tokens.
+- **MCP platform**: 31 MCP servers and ~61 skills, with a NiceGUI management console.
+- **Iterative correction**: generate → measure F1 and semantic drift → add a hint → regenerate, stopping at quality thresholds or a maximum number of iterations.
+- **Evaluation in CI**: GitHub Actions gates for external knowledge retrieval (Recall@K ≥ 0.60, MRR ≥ 0.45, p95 latency ≤ 8 s) and REST API quality.
+- **Providers**: Anthropic-compatible endpoints, OpenAI, OpenRouter.
+
+**Stack:** Python, MCP, Presidio, spaCy, Redis, PostgreSQL, NiceGUI, Docker Compose, pytest, GitHub Actions.
+
+**Quick start**
+
+```bash
+docker compose up -d          # Redis, PostgreSQL
+python -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt
+cp .env.example .env          # add API keys
+python verify_setup.py
+./run_nicegui.sh              # console on :7860
+```
+
+Detailed documentation in Russian follows below.
+
+---
+
 ML-пайплайн для управления контекстом в MCP (Model Context Protocol) приложениях: PII-маскирование, сжатие контекста, набор MCP-серверов и навыков, eval-гейты и итеративная коррекция.
 
 ## Описание
