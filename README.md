@@ -34,7 +34,7 @@ ML-пайплайн для управления контекстом в MCP (Mod
 - **Windows** — локальная разработка
 - **Ubuntu/Linux** — серверное окружение
 
-Оркестрация инфраструктуры через **Docker Compose** (Redis, PostgreSQL, опционально Xray). Python-компоненты работают локально (stdio) или в контейнерах (SSE/HTTP). Управляющая консоль — **NiceGUI** (`mcp_ui.py`).
+Оркестрация инфраструктуры через **Docker Compose** (Redis, PostgreSQL). Python-компоненты работают локально (stdio) или в контейнерах (SSE/HTTP). Управляющая консоль — **NiceGUI** (`mcp_ui.py`).
 
 ## Ключевые возможности
 
@@ -82,7 +82,6 @@ ML-пайплайн для управления контекстом в MCP (Mod
 ```
 mcp_context_pipeline/
 |-- docker-compose.yml
-|-- docker-compose-xray.yml
 |-- docker-compose-singbox.yml
 |-- .env.example
 |-- requirements.txt
@@ -90,7 +89,6 @@ mcp_context_pipeline/
 |-- mcp_ui.py                  # NiceGUI-консоль (порт 7860)
 |-- run_nicegui.sh
 |-- run_host.sh / run_host.bat
-|-- run_vless.sh
 |-- run_unified_eval.py
 |-- run_rest_api_eval.py
 |-- run_external_knowledge_eval.py
@@ -128,7 +126,6 @@ mcp_context_pipeline/
 |   |-- gradio/                # прежняя UI
 |   |-- smoke/                 # отладочные test_*.py (не CI)
 |-- Навыки/                    # определения навыков
-|-- xray-config/
 |   |-- config.example.json    # шаблон без секретов
 |   |-- config-singbox.example.json
 |   |-- config.json            # локальный runtime (gitignore)
@@ -193,17 +190,9 @@ PIPELINE_MAX_ITERATIONS=5
 HTTP_PROXY=
 HTTPS_PROXY=
 ALL_PROXY=
-VLESS_URL=
-VLESS_SUBSCRIPTION=
 ```
 
-При региональных 403 к LLM API — прокси или VLESS (`docs/VLESS_HIDDIFY_SETUP.md`, `docs/PROXY_CONFIGURATION.md`).
-
-**Xray:** runtime-конфиг не хранится в git. Скопируйте шаблон и заполните:
-
 ```bash
-cp xray-config/config.example.json xray-config/config.json
-# затем ./run_vless.sh start  — или сгенерируйте конфиг скриптом из VLESS_URL / подписки
 ```
 
 ### Шаг 4: Проверка
@@ -376,7 +365,6 @@ Leakage Detected: 0
 ### Инфраструктура
 - **Redis** — сессии, кэш, саммари
 - **PostgreSQL** — долгосрочная память
-- **Xray/sing-box** (опционально) — прокси к LLM API
 
 ### Слой MCP
 - `src/server.py` — compress_context, checkpoint, search_memory + PII
@@ -400,7 +388,6 @@ Leakage Detected: 0
 ## Безопасность
 
 - PII-маскирование перед LLM
-- Runtime Xray/VLESS-конфиги и `.env` не коммитятся
 - TTL памяти/чекпоинтов; security logging
 
 | Тип | Плейсхолдер | Пример |
@@ -449,34 +436,26 @@ docker compose down -v   # с volumes
 
 **spaCy:** `python -m spacy download en_core_web_lg`
 
-**403 к LLM API:** настроить VLESS/прокси. Проверки:
+```bash
+**403 к LLM API:** настроить HTTPS_PROXY/ALL_PROXY. Проверка:
 
 ```bash
-./run_vless.sh start
-python3 archive/smoke/test_vless.py
 python3 archive/smoke/test_proxy.py
 ```
-
-Compose монтирует `./xray-config/config.json` (локальный файл из example или `run_vless.sh`).  
-При `invalid "privateKey"`: `./run_vless.sh stop && ./run_vless.sh start`, затем `docker logs --tail 30 mcp-xray-vless`.
 
 ## Чеклист перед push
 
 ```bash
 git status
 git check-ignore -v .env
-git check-ignore -v xray-config/config.json
-git ls-files .env xray-config/config.json
 git diff --cached --name-only
 ```
 
-- `.env` и `xray-config/config.json` (и прочие runtime Xray-конфиги) — не в индексе
 - нет hardcoded API keys в staged diff
 - author коммита — владелец репозитория (не agent identity)
 
 ```bash
 git add .
-git restore --staged .env xray-config/config.json 2>/dev/null || true
 git commit -m "your message"
 git push origin master
 ```
@@ -487,7 +466,6 @@ git push origin master
 - `docs/CI_CD_INTEGRATION.md`
 - `docs/CONTEXT7_INTEGRATION.md`
 - `docs/PII_GUARD.md` / `docs/RUSSIAN_PII_SUPPORT.md`
-- `docs/PROXY_CONFIGURATION.md` / `docs/VLESS_HIDDIFY_SETUP.md`
 - `docs/REST_API_METRICS.md` / `docs/REST_API_IMPROVEMENTS.md`
 - `pipeline/README.md`
 - `README_COMPAT.md`

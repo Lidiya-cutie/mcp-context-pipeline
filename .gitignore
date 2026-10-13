@@ -53,8 +53,3 @@ logs/
 .coverage
 htmlcov/
 
-# Xray / proxy runtime configs (contain credentials; use *.example.json)
-xray-config/config.json
-xray-config/config-reality.json
-xray-config/config-simple.json
-xray-config/config-singbox.json
